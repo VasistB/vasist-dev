@@ -265,7 +265,6 @@
                     </button>
                 </div>
 
-                <!-- Quick Metric Cards -->
                 <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 md:pt-10 max-w-4xl mx-auto">
                     <div class="glass-card p-4 sm:p-5 rounded-2xl text-left border border-white/5 flex flex-col justify-center">
                         <div class="text-lg sm:text-2xl font-black text-white">Kotlin & UI</div>
@@ -352,21 +351,41 @@
                                     <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
                                         <div class="md:col-span-2 space-y-5 sm:space-y-6">
                                             <p class="text-sm sm:text-base text-slate-400 leading-relaxed">A fully featured offline media application engineered from scratch, focusing on seamless audio pipelines, custom playback architectures, and native Android performance.</p>
+                                            
+                                            <!-- NEW DETAILED IPLAY SECTIONS -->
                                             <div class="space-y-2">
-                                                <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="cpu" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i> The Challenge</h3>
-                                                <p class="text-slate-300 leading-relaxed text-sm">Standard music players often use a destructive item-removal queue mechanism. When a song finishes, the item is destroyed from the active playlist, making it impossible to smoothly navigate backward through the exact historical session without relying on a separate database query.</p>
+                                                <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="layers" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i> Architecture & Core Stack</h3>
+                                                <ul class="list-disc list-outside ml-4 space-y-1.5 text-[13px] text-slate-300 leading-relaxed">
+                                                    <li>Decoupled business logic and UI layer using MVVM, Repository pattern, and Dagger Hilt, minimizing boilerplate and ensuring modular, maintainable code.</li>
+                                                    <li>Employed Kotlin Coroutines and StateFlow across the data and presentation layers for structured concurrency, background I/O operations, and predictable state transitions.</li>
+                                                </ul>
                                             </div>
+
                                             <div class="space-y-2">
-                                                <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 sm:w-5 sm:h-5 text-purple-400"></i> Architecture & Solution</h3>
-                                                <div class="text-slate-300 leading-relaxed text-sm">
-                                                    <p>To solve this, I engineered a custom <strong>index-based hidden list mechanism</strong> for the queue UI.</p>
-                                                    <ul class="list-disc list-inside space-y-1.5 mt-2">
-                                                        <li><strong>Non-Destructive Queue:</strong> We don't remove songs from the playlist anymore. Instead, the UI hides previously played items based on the current playing index.</li>
-                                                        <li><strong>Seamless Reversal:</strong> Going backwards natively retrieves the previous index directly from the active queue in memory, guaranteeing state accuracy.</li>
-                                                        <li><strong>Media3 Integration:</strong> Leveraged Google's ExoPlayer/Media3 for the audio rendering, ensuring background playback and notification controls stay perfectly in sync.</li>
-                                                    </ul>
-                                                </div>
+                                                <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="music" class="w-4 h-4 sm:w-5 sm:h-5 text-purple-400"></i> Audio Engine & Media3</h3>
+                                                <ul class="list-disc list-outside ml-4 space-y-1.5 text-[13px] text-slate-300 leading-relaxed">
+                                                    <li>Engineered a custom index-based hidden list queue mechanism to ensure a non-destructive playback history that acts as a distinct display list, allowing seamless session reversals.</li>
+                                                    <li>Implemented Media3 MediaController and MediaSession APIs to synchronize UI state with background playback services across lock screens, quick settings, and external devices.</li>
+                                                    <li>Handled transient and permanent audio focus changes (calls, notifications, navigation prompts) with smooth ducking and automatic playback resumption.</li>
+                                                </ul>
                                             </div>
+
+                                            <div class="space-y-2">
+                                                <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="database" class="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400"></i> Storage & Library Indexing</h3>
+                                                <ul class="list-disc list-outside ml-4 space-y-1.5 text-[13px] text-slate-300 leading-relaxed">
+                                                    <li>Built a background media scanner utilizing Android’s MediaStore API and Realm DB to parse, categorize, and cache thousands of audio tracks, albums, and artists in milliseconds.</li>
+                                                    <li>Implemented real-time reactive search, multi-criteria sorting (duration, artist, date added), and automated metadata updates.</li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="space-y-2">
+                                                <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="sliders" class="w-4 h-4 sm:w-5 sm:h-5 text-rose-400"></i> UI & Audio Effects</h3>
+                                                <ul class="list-disc list-outside ml-4 space-y-1.5 text-[13px] text-slate-300 leading-relaxed">
+                                                    <li>Crafted a custom Equalizer UI in Jetpack Compose, binding slider states directly to Android's AudioEffect engine for low-latency sound shaping.</li>
+                                                    <li>Utilized Compose animations and gestures to deliver fluid screen transitions, bottom-sheet player controls, and custom playback scrubbers.</li>
+                                                </ul>
+                                            </div>
+
                                         </div>
                                         <div class="bg-white/5 rounded-2xl p-5 sm:p-6 h-fit border border-white/5 mt-4 md:mt-0 flex flex-col justify-between">
                                             <div>
@@ -714,30 +733,24 @@
                             <span><span id="typewriter-text"></span><span class="w-1.5 h-4 sm:h-5 bg-emerald-400 inline-block align-middle ml-1 animate-pulse"></span></span>
                         </div>
                         
-                        <!-- 5 CONTACT BUTTONS WITH FULL ICONS -->
                         <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-6">
                             
-                            <!-- Phone Call -->
                             <a href="tel:+919966955443" class="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 font-medium text-sm transition-all hover:scale-105 flex items-center gap-2 shadow-lg">
                                 <i data-lucide="phone" class="w-4 h-4"></i> Call
                             </a>
 
-                            <!-- Email -->
                             <a href="mailto:vasistvr@gmail.com" class="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 font-medium text-sm transition-all hover:scale-105 flex items-center gap-2 shadow-lg">
                                 <i data-lucide="mail" class="w-4 h-4"></i> Email
                             </a>
 
-                            <!-- WhatsApp -->
                             <a href="https://wa.me/919966955443" target="_blank" rel="noopener noreferrer" class="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-medium text-sm transition-all hover:scale-105 flex items-center gap-2 shadow-lg">
                                 <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
                             </a>
                             
-                            <!-- LinkedIn -->
                             <a href="https://www.linkedin.com/in/vasist-vamsi-bhukya-03304723a/" target="_blank" rel="noopener noreferrer" class="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-300 font-medium text-sm transition-all hover:scale-105 flex items-center gap-2 shadow-lg">
                                 <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
                             </a>
                             
-                            <!-- Naukri -->
                             <a href="https://www.naukri.com/mnjuser/profile" target="_blank" rel="noopener noreferrer" class="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-medium text-sm transition-all hover:scale-105 flex items-center gap-2 shadow-lg">
                                 <i data-lucide="briefcase" class="w-4 h-4"></i> Naukri
                             </a>
