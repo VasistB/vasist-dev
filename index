@@ -218,8 +218,8 @@
                     <div class="pixel-camera"></div>
                     
                     <!-- Hero iPlay UI screenshot -->
-                    <img src="GPS Cam Homr.jpeg" alt="iPlay Music Player" class="absolute inset-0 w-full h-full object-cover object-top z-10" />
-                    
+                    <img src="assets/iplay-screenshot.png" alt="iPlay Music Player" class="absolute inset-0 w-full h-full object-cover object-top z-10" />
+
                     <!-- Optional glass highlight over the screen -->
                     <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent z-20"></div>
                 </div>
@@ -231,7 +231,7 @@
             <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-6 flex items-center gap-2">
                 <i data-lucide="settings-2" class="w-4 h-4"></i> How I Build
             </div>
-            
+
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-slate-700">
                     <div class="text-2xl font-black text-slate-700 font-mono">01</div>
@@ -278,7 +278,7 @@
             <!-- 01: iPlay Music Player -->
             <div class="glass-card rounded-3xl p-6 sm:p-10 space-y-10 relative overflow-hidden">
                 <div class="absolute top-0 right-0 p-8 text-6xl font-black text-white/5 select-none pointer-events-none">01</div>
-                
+
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
                     <div class="space-y-2">
                         <div class="flex flex-wrap items-center gap-2">
@@ -294,7 +294,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
-                    
+
                     <!-- Screenshots Column -->
                     <div class="lg:col-span-4 flex justify-center lg:justify-start">
                         <div class="relative w-[260px] aspect-[9/19.5] pixel-frame ring-1 ring-white/10 shadow-2xl">
@@ -306,7 +306,7 @@
 
                     <!-- Engineering Copy Column -->
                     <div class="lg:col-span-8 space-y-10">
-                        
+
                         <!-- Core Engineering Text -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                             <div class="space-y-3">
@@ -332,18 +332,18 @@
                         <!-- Architecture Diagram -->
                         <div class="subtle-card p-6 rounded-2xl space-y-4 shadow-inner">
                             <div class="text-[10px] font-mono text-slate-400 uppercase tracking-wider mb-2">System Architecture</div>
-                            
+
                             <div class="flex flex-col items-center gap-2 font-mono text-xs w-full">
                                 <div class="w-48 p-2.5 rounded-lg border border-blue-500/30 bg-blue-500/10 text-center text-blue-200">Compose UI</div>
                                 <div class="text-slate-600">↓</div>
                                 <div class="w-48 p-2.5 rounded-lg border border-blue-500/30 bg-blue-500/10 text-center text-blue-200">ViewModel</div>
                                 <div class="text-slate-600">↓</div>
                                 <div class="w-48 p-2.5 rounded-lg border border-indigo-500/30 bg-indigo-500/10 text-center text-indigo-200">StateFlow & Use Cases</div>
-                                
+
                                 <div class="w-full flex justify-center text-slate-600 gap-[110px] px-8">
                                     <span>↙</span><span>↘</span>
                                 </div>
-                                
+
                                 <div class="w-full grid grid-cols-2 gap-4">
                                     <div class="p-2.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-center text-emerald-200 flex flex-col items-center">
                                         <span>Media Repository</span>
@@ -358,7 +358,7 @@
                                 <div class="w-full flex justify-center text-slate-600 gap-[110px] px-8">
                                     <span>↘</span><span>↙</span>
                                 </div>
-                                
+
                                 <div class="w-48 p-2.5 rounded-lg border border-white/20 bg-dark-950 text-center text-slate-300">
                                     Filter / Sort / Shuffle
                                 </div>
@@ -372,7 +372,7 @@
             <!-- 02: GPS Camera -->
             <div class="subtle-card rounded-3xl p-6 sm:p-10 space-y-10 relative overflow-hidden">
                 <div class="absolute top-0 right-0 p-8 text-6xl font-black text-white/5 select-none pointer-events-none">02</div>
-                
+
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
                     <div class="space-y-2">
                         <div class="flex items-center gap-2">
@@ -401,7 +401,7 @@
                                 Managing device camera lifecycles via CameraX while concurrently fetching high-accuracy GPS coordinates, timestamps, and address data to burn directly onto captured image frames natively.
                             </p>
                         </div>
-                        
+
                         <div class="space-y-3">
                             <h4 class="text-sm font-bold text-white">Architecture & Solution</h4>
                             <ul class="space-y-3 text-sm text-slate-300">
@@ -426,7 +426,7 @@
             <!-- 03: Vitals -->
             <div class="subtle-card rounded-3xl p-6 sm:p-10 space-y-10 relative overflow-hidden">
                 <div class="absolute top-0 right-0 p-8 text-6xl font-black text-white/5 select-none pointer-events-none">03</div>
-                
+
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
                     <div class="space-y-2">
                         <div class="flex items-center gap-2">
@@ -445,7 +445,7 @@
                     <div class="lg:col-span-4 flex justify-center lg:justify-start">
                         <div class="relative w-[260px] aspect-[9/19.5] pixel-frame ring-1 ring-white/10 shadow-2xl">
                             <div class="pixel-camera"></div>
-                            <img src="Vitals home.jpeg" alt="Vitals Diagnostics App" class="absolute inset-0 w-full h-full object-cover object-top z-10" />
+                            <img src="assets/vitals-screenshot.png" alt="Vitals Diagnostics App" class="absolute inset-0 w-full h-full object-cover object-top z-10" />
                             <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent z-20"></div>
                         </div>
                     </div>
@@ -477,7 +477,7 @@
                             <div class="hidden md:block absolute right-[-5px] top-1 w-2.5 h-2.5 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.8)] z-10"></div>
                             2022 — 2024
                         </div>
-                        
+
                         <div class="subtle-card rounded-2xl p-6 sm:p-8 flex-grow space-y-6">
                             <div>
                                 <h3 class="text-xl font-bold text-white">Junior Android Developer</h3>
@@ -595,26 +595,26 @@
                     <a href="https://www.linkedin.com/in/vasist-vamsi-bhukya-03304723a/" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
                         <i data-lucide="linkedin" class="w-4 h-4 text-blue-400"></i> <span>LinkedIn</span>
                     </a>
-                    <a href="https://github.com/vasistvr" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2"> 
-                        <i data-lucide="github" class="w-4 h-4 text-slate-300"></i> <span>GitHub</span> 
-                    </a> 
-                </div> 
-            </div> 
-        </section> 
- 
-    </main> 
- 
-    <footer class="w-full border-t border-white/5 py-8 mt-20 text-center"> 
-        <p class="text-xs font-mono text-slate-500"> 
-            Built with performance, accessibility, and clean architecture in mind.<br/> 
-            &copy; 2026 Vasist Vamsi Bhukya. 
-        </p> 
-    </footer> 
- 
-    <script> 
-        document.addEventListener("DOMContentLoaded", () => { 
-            lucide.createIcons(); 
-        }); 
-    </script> 
-</body> 
+                    <a href="https://github.com/vasistvr" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
+                        <i data-lucide="github" class="w-4 h-4 text-slate-300"></i> <span>GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="w-full border-t border-white/5 py-8 mt-20 text-center">
+        <p class="text-xs font-mono text-slate-500">
+            Built with performance, accessibility, and clean architecture in mind.<br/>
+            &copy; 2026 Vasist Vamsi Bhukya.
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
 </html>
