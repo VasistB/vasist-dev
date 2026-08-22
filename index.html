@@ -1,21 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" class="overflow-x-hidden max-w-full">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vasist Vamsi Bhukya — Android Software Engineer</title>
-    <meta name="description" content="Android Software Engineer portfolio specializing in Kotlin, Jetpack Compose, and offline media architecture.">
     
-    <!-- Resource Hints for Performance -->
+    <!-- SEO & Metadata -->
+    <meta name="description" content="Android engineer building production applications with Kotlin, Compose, Media3, Realm, and modern Android architecture.">
+    <meta name="author" content="Vasist Vamsi Bhukya">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://your-domain.com/">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Vasist Vamsi Bhukya — Android Software Engineer">
+    <meta property="og:description" content="Building high-performance native Android applications with offline-first data pipelines and robust media systems.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com/">
+    <meta property="og:image" content="https://your-domain.com/og-image.png">
+    <meta property="og:site_name" content="Vasist Vamsi Bhukya">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vasist Vamsi Bhukya — Android Software Engineer">
+    <meta name="twitter:description" content="Building high-performance native Android applications with offline-first data pipelines and robust media systems.">
+    <meta name="twitter:image" content="https://your-domain.com/og-image.png">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-    <link rel="dns-prefetch" href="https://unpkg.com">
-    
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS CDN -->
+
+    <!-- Tailwind CSS (Note: For production, replace CDN with Vite/Tailwind build process) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -25,15 +40,7 @@
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                         mono: ['"JetBrains Mono"', 'monospace'],
                     },
-                    colors: { dark: { 950: '#030712', 900: '#090d16' } },
-                    animation: { 'blob': 'blob 10s infinite' },
-                    keyframes: {
-                        blob: {
-                            '0%, 100%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -40px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.95)' },
-                        }
-                    }
+                    colors: { dark: { 950: '#030712', 900: '#090d16', 800: '#111827' } }
                 }
             }
         }
@@ -43,25 +50,16 @@
     <script defer src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        :root { --glow-x: 50vw; --glow-y: 30vh; }
         body {
             background-color: #030712;
             color: #f8fafc;
-            overflow-x: hidden; 
-            overflow-y: hidden;
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
         .bg-grid {
             background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        }
-        .mouse-spotlight {
-            background: radial-gradient(800px circle at var(--glow-x) var(--glow-y), rgba(59, 130, 246, 0.08), transparent 80%);
-            will-change: background;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
         }
         
         .glass-card {
@@ -69,15 +67,12 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
         
-        .glass-card-hover { transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; will-change: transform; }
-        .glass-card-hover:hover {
-            border-color: rgba(96, 165, 250, 0.4);
-            transform: translateY(-3px);
-            box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.15);
-            cursor: pointer;
+        .subtle-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
         .text-gradient {
@@ -90,830 +85,547 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        /* Seamless Infinite Ticker */
-        .ticker-wrapper {
-            width: 100%;
-            max-width: 600px;
+        
+        /* Pixel Device Mockup Frame */
+        .pixel-frame {
+            border: 8px solid #1e293b;
+            border-radius: 2.5rem;
+            box-shadow: 
+                inset 0 0 0 2px #334155,
+                0 30px 80px rgba(0,0,0,0.6);
+            background-color: #000;
             overflow: hidden;
-            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-        }
-        .tech-ticker {
-            display: flex;
-            width: max-content;
-            animation: ticker 25s linear infinite;
-        }
-        @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Fast Morphing Project Cards */
-        .project-card {
-            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-            will-change: top, left, width, height, border-radius, box-shadow;
-            background-color: #050a15; 
+            position: relative;
         }
         
-        .summary-content { transition: opacity 0.2s ease; }
-        .detailed-content {
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            transform: translateY(15px);
+        /* Pixel Punch-hole Camera */
+        .pixel-camera {
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 14px;
+            background-color: #0a0a0c;
+            border-radius: 50%;
+            z-index: 30;
+            box-shadow: inset 0 -1px 2px rgba(255,255,255,0.15), 0 0 1px rgba(0,0,0,0.8);
         }
         
-        .project-card.is-expanded { cursor: default; }
-        
-        /* Banner Transitions & Dynamic Height for Pills */
-        .project-card.is-expanded .banner { 
-            height: auto !important; 
-            min-height: 120px !important; 
-            padding: 1.5rem 1.5rem !important; 
-        } 
-        .project-card.is-expanded .banner-title { 
-            font-size: 1.5rem !important; 
-            line-height: 1.2 !important; 
-        }
-        
-        /* Pill Show/Hide Animations */
-        .hide-expanded { transition: opacity 0.2s ease; }
-        .project-card.is-expanded .hide-expanded { opacity: 0; pointer-events: none; }
-        
-        .show-expanded { 
-            opacity: 0; 
-            max-height: 0; 
-            margin-top: 0;
-            overflow: hidden; 
-            pointer-events: none; 
-            transform: translateY(-10px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-        .project-card.is-expanded .show-expanded { 
-            opacity: 1; 
-            max-height: 50px; 
-            margin-top: 0.75rem; 
-            pointer-events: auto; 
-            transform: translateY(0);
-        }
-
-        .project-card.is-expanded .summary-content { opacity: 0; pointer-events: none; }
-        .project-card.is-expanded .detailed-content {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0);
-            transition-delay: 0.15s; 
-        }
-        .project-card.is-expanded .close-btn { opacity: 1; pointer-events: auto; }
-        
-        /* Force exact screen heights */
-        .slide-section {
-            min-height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 5rem 1.5rem;
-            width: 100%;
-            max-width: 100vw;
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
     </style>
 </head>
-<body class="antialiased selection:bg-blue-600 selection:text-white bg-grid relative h-[100dvh] w-full max-w-full overflow-x-hidden">
+<body class="antialiased selection:bg-blue-600 selection:text-white bg-grid min-h-screen flex flex-col">
 
-    <!-- Interactive Mouse Spotlight -->
-    <div id="spotlight" class="pointer-events-none fixed inset-0 z-30 mouse-spotlight"></div>
-
-    <!-- Background Ambient Glow -->
-    <div class="fixed top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none -z-10 animate-blob"></div>
-    <div class="fixed bottom-10 right-10 w-[400px] h-[300px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none -z-10 animate-blob" style="animation-delay: 3s;"></div>
-
-    <!-- Floating HUD Navbar -->
-    <header id="main-nav" class="fixed top-4 inset-x-0 z-40 flex justify-center px-4 pointer-events-none transition-opacity duration-300">
-        <div class="glass-card rounded-full px-3 py-1.5 flex items-center justify-between w-full max-w-5xl shadow-xl border border-white/10 bg-dark-950/80 backdrop-blur-xl pointer-events-auto">
-            <div class="flex items-center gap-2.5 pl-2">
-                <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-600 p-[1px] shadow-lg">
+    <!-- Navigation -->
+    <header class="fixed top-4 inset-x-0 z-50 flex justify-center px-4">
+        <div class="glass-card rounded-full px-4 py-2 flex items-center justify-between w-full max-w-5xl bg-dark-950/90">
+            <a href="#" aria-label="Back to top" class="flex items-center gap-2.5 pl-1 group cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full">
+                <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-600 p-[1px]">
                     <div class="w-full h-full bg-dark-950 rounded-full flex items-center justify-center font-bold text-[10px] text-white">VB</div>
                 </div>
-                <div class="flex flex-col">
-                    <span class="text-[11px] font-bold text-white tracking-wide flex items-center gap-1.5">
-                        Vasist Vamsi <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
-                    </span>
-                </div>
-            </div>
+                <span class="text-xs font-bold text-white tracking-wide hidden sm:flex items-center gap-1.5">
+                    Vasist Vamsi <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                </span>
+            </a>
 
-            <nav class="hidden md:flex items-center gap-1 bg-white/[0.03] p-1 rounded-full border border-white/5">
-                <button onclick="scrollToSection('hero')" class="px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer">About</button>
-                <button onclick="scrollToSection('projects')" class="px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer">Projects</button>
-                <button onclick="scrollToSection('experience')" class="px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer">Experience</button>
-                <button onclick="scrollToSection('skills')" class="px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer">Stack</button>
+            <nav class="hidden md:flex items-center gap-1 bg-white/[0.03] p-1 rounded-full border border-white/5 text-xs">
+                <a href="#how-i-build" class="px-4 py-1.5 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition focus:outline-none focus:ring-2 focus:ring-blue-500">Methodology</a>
+                <a href="#work" class="px-4 py-1.5 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition focus:outline-none focus:ring-2 focus:ring-blue-500">Work</a>
+                <a href="#experience" class="px-4 py-1.5 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition focus:outline-none focus:ring-2 focus:ring-blue-500">Experience</a>
+                <a href="#depth" class="px-4 py-1.5 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition focus:outline-none focus:ring-2 focus:ring-blue-500">Depth</a>
             </nav>
 
-            <button onclick="scrollToSection('contact')" class="flex items-center gap-1.5 px-5 py-2 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white text-[11px] font-semibold shadow-lg transition-transform hover:scale-105 active:scale-95 cursor-pointer">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> <span>Connect</span>
-            </button>
+            <div class="flex items-center gap-2">
+                <a href="resume.pdf" target="_blank" aria-label="Download Resume PDF" class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition focus:outline-none focus:ring-2 focus:ring-blue-500 border border-white/5">
+                    <i data-lucide="file-down" class="w-3.5 h-3.5"></i> <span>Resume</span>
+                </a>
+                <a href="#contact" class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <i data-lucide="mail" class="w-3.5 h-3.5"></i> <span>Contact</span>
+                </a>
+            </div>
         </div>
     </header>
 
-    <!-- FULL SCREEN SWIPE/SNAP CONTAINER -->
-    <main id="scroll-container" class="h-[100dvh] w-full max-w-full overflow-y-scroll overflow-x-hidden snap-y snap-mandatory scroll-smooth relative z-10 no-scrollbar">
+    <main class="w-full flex-grow pt-32 pb-20 px-4 sm:px-6 max-w-6xl mx-auto space-y-32">
 
-        <!-- SLIDE 1: HERO -->
-        <section id="hero" class="snap-start snap-always slide-section">
-            <div class="space-y-6 md:space-y-8 max-w-5xl mx-auto flex flex-col items-center text-center w-full">
+        <!-- HERO SECTION -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-7 space-y-6 text-left">
                 
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-card text-xs font-mono text-slate-300 border-white/10 shadow-lg">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                    </span>
-                    <span>Available for Native Android Engineering Roles</span>
-                </div>
-
-                <div class="space-y-3 md:space-y-4">
-                    <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.05]">
-                        Crafting Fluid <br/> <span class="text-gradient">Android Experiences</span>
-                    </h1>
-                    
-                    <div class="ticker-wrapper mx-auto mt-2">
-                        <div class="tech-ticker text-base sm:text-xl font-mono text-slate-400">
-                            <div class="flex items-center">
-                                <span class="text-blue-500 font-bold">&lt;</span>
-                                <span class="text-indigo-200 mx-3">Kotlin • Jetpack Compose • MVVM • Hilt • Coroutines • Firebase • APIs • Room • Realm</span>
-                                <span class="text-blue-500 font-bold">/&gt;</span>
-                                <span class="mx-3 opacity-0">...</span>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="text-blue-500 font-bold">&lt;</span>
-                                <span class="text-indigo-200 mx-3">Kotlin • Jetpack Compose • MVVM • Hilt • Coroutines • Firebase • APIs • Room • Realm</span>
-                                <span class="text-blue-500 font-bold">/&gt;</span>
-                                <span class="mx-3 opacity-0">...</span>
-                            </div>
-                        </div>
+                <div class="space-y-4">
+                    <div class="text-xs font-mono text-blue-400 tracking-wider uppercase flex items-center gap-2">
+                        <i data-lucide="terminal" class="w-4 h-4"></i> Android Software Engineer
                     </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1]">
+                        Building systems <br/>that feel <span class="text-gradient">simple.</span>
+                    </h1>
                 </div>
 
-                <p class="text-sm sm:text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed font-light">
-                    Android Software Engineer focused on high-performance architecture, modern UI paradigms, offline media pipelines, and full-cycle Play Store deployments.
+                <p class="text-base sm:text-lg text-slate-300 max-w-xl leading-relaxed font-light">
+                    Android Engineer building production-grade native applications, media systems, and offline-first architectures with Kotlin.
                 </p>
 
-                <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-                    <button onclick="scrollToSection('projects')" class="px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm shadow-xl shadow-blue-500/25 transition-transform hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer">
-                        <span>Explore Work</span>
-                        <i data-lucide="arrow-down" class="w-4 h-4 animate-bounce"></i>
-                    </button>
+                <div class="flex flex-wrap items-center gap-2 font-mono text-xs text-slate-400 pb-2">
+                    <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10">Kotlin</span>
+                    <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10">Jetpack Compose</span>
+                    <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10">Media3</span>
+                    <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10">Realm</span>
+                    <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10">Hilt</span>
+                    <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10">Coroutines</span>
                 </div>
 
-                <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 md:pt-10 max-w-4xl mx-auto">
-                    <div class="glass-card p-4 sm:p-5 rounded-2xl text-left border border-white/5 flex flex-col justify-center">
-                        <div class="text-lg sm:text-2xl font-black text-white">Kotlin & UI</div>
-                        <div class="text-xs text-blue-400 font-mono mt-1">Jetpack Compose</div>
+                <!-- Credibility Metrics -->
+                <div class="flex flex-wrap items-center gap-6 font-mono text-[11px] text-slate-300 border-t border-white/10 pt-4">
+                    <div class="flex flex-col">
+                        <span class="text-white font-bold text-base">3+ YEARS</span>
+                        <span class="text-slate-500 uppercase tracking-widest">Android Dev</span>
                     </div>
-                    <div class="glass-card p-4 sm:p-5 rounded-2xl text-left border border-white/5 flex flex-col justify-center">
-                        <div class="text-lg sm:text-2xl font-black text-white">Media3 & DB</div>
-                        <div class="text-xs text-purple-400 font-mono mt-1">ExoPlayer / Realm</div>
+                    <div class="w-px h-8 bg-white/10"></div>
+                    <div class="flex flex-col">
+                        <span class="text-white font-bold text-base">3 NATIVE</span>
+                        <span class="text-slate-500 uppercase tracking-widest">Production Apps</span>
                     </div>
-                    <div class="glass-card p-4 sm:p-5 rounded-2xl text-left border border-white/5 flex flex-col justify-center">
-                        <div class="text-lg sm:text-2xl font-black text-white">Production</div>
-                        <div class="text-xs text-emerald-400 font-mono mt-1">Play Store Published</div>
+                    <div class="w-px h-8 bg-white/10"></div>
+                    <div class="flex flex-col">
+                        <span class="text-white font-bold text-base">GOOGLE PLAY</span>
+                        <span class="text-slate-500 uppercase tracking-widest">Published</span>
                     </div>
-                    <div class="glass-card p-4 sm:p-5 rounded-2xl text-left border border-white/5 flex flex-col justify-center">
-                        <div class="text-lg sm:text-2xl font-black text-white">Automation</div>
-                        <div class="text-xs text-rose-400 font-mono mt-1">Espresso UI Testing</div>
-                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 pt-4">
+                    <a href="#work" class="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-sm shadow-lg shadow-blue-500/20 hover:scale-105 active:scale-95 transition flex items-center gap-2">
+                        <span>View Selected Work</span>
+                        <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                    </a>
+                    <a href="https://github.com/vasistvr" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
+                        <i data-lucide="github" class="w-4 h-4 text-slate-400"></i>
+                        <span>GitHub</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- REALISTIC SCREENSHOT CONTAINER (PIXEL FRAME) -->
+            <div class="lg:col-span-5 flex justify-center lg:justify-end">
+                <div class="relative w-[280px] sm:w-[300px] aspect-[9/19.5] pixel-frame ring-1 ring-white/10">
+                    <div class="pixel-camera"></div>
+                    
+                    <!-- Injecting the actual iPlay UI screenshot -->
+                    <img src="image_9a1124.png" alt="iPlay Music Player" class="w-full h-full object-cover relative z-10" />
+                    
+                    <!-- Optional glass highlight over the screen -->
+                    <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent z-20"></div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 2: PROJECTS -->
-        <section id="projects" class="snap-start snap-always slide-section relative">
-            <div class="max-w-5xl w-full mx-auto flex flex-col h-full justify-center space-y-6 md:space-y-10 py-16">
-                
-                <div class="flex flex-col items-center text-center space-y-3">
-                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-semibold">
-                        <i data-lucide="code-2" class="w-3.5 h-3.5"></i> Native Showcase
-                    </div>
-                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-                        Featured <span class="text-gradient-accent">Engineering</span>
-                    </h2>
+        <!-- HOW I BUILD (Methodology) -->
+        <section id="how-i-build" class="space-y-8">
+            <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-6 flex items-center gap-2">
+                <i data-lucide="settings-2" class="w-4 h-4"></i> How I Build
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-slate-700">
+                    <div class="text-2xl font-black text-slate-700 font-mono">01</div>
+                    <h3 class="text-sm font-bold text-white">Understand</h3>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Requirements + lifecycle constraints.</p>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full">
-                    
-                    <!-- PROJECT 1: iplay Music Player -->
-                    <div class="project-wrapper relative w-full h-[35vh] min-h-[315px] max-h-[415px]" id="wrapper-iplay">
-                        <div id="card-iplay" onclick="expandCard('iplay')" class="project-card absolute inset-0 glass-card glass-card-hover rounded-3xl overflow-hidden flex flex-col border border-white/10 z-10">
-                            
-                            <div class="banner relative h-[40%] w-full overflow-hidden bg-gradient-to-br from-indigo-950 via-slate-900 to-dark-950 p-5 flex flex-col justify-between gap-4 border-b border-white/5 transition-all duration-500 shrink-0">
-                                <div class="flex justify-between items-start z-10 shrink-0">
-                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">Mobile App</span>
-                                    
-                                    <a href="https://play.google.com/store/apps/details?id=com.vasist.iplay" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="hide-expanded flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 hover:bg-emerald-900/80 transition-all cursor-pointer">
-                                        <i data-lucide="external-link" class="w-3 h-3"></i> <span>Play Store</span>
-                                    </a>
-                                </div>
-                                <div class="z-10 mt-auto flex flex-col shrink-0">
-                                    <div class="banner-title text-xl sm:text-2xl font-black tracking-wider text-white flex items-center flex-nowrap whitespace-nowrap gap-2.5 transition-all duration-500">
-                                        <div class="p-1.5 sm:p-2 rounded-xl bg-blue-600/30 border border-blue-500/40 text-blue-300 shrink-0"><i data-lucide="music" class="w-4 h-4 sm:w-5 sm:h-5"></i></div>
-                                        <span>iplay Music</span>
-                                    </div>
-                                    
-                                    <a href="https://play.google.com/store/apps/details?id=com.vasist.iplay" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="show-expanded inline-flex w-max items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 hover:bg-emerald-900/80 transition-all shadow-lg cursor-pointer">
-                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> <span>View on Play Store</span>
-                                    </a>
-                                </div>
-                                <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl"></div>
-                                <button onclick="closeCard(event, 'iplay')" class="close-btn absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white opacity-0 pointer-events-none transition-opacity duration-300 z-50 cursor-pointer">
-                                    <i data-lucide="x" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-
-                            <div class="relative flex-1 w-full h-full">
-                                <div class="summary-content absolute inset-0 p-5 sm:p-6 flex flex-col justify-between">
-                                    <div class="space-y-1.5 sm:space-y-2">
-                                        <h3 class="text-base sm:text-lg font-bold text-white">Offline Media & Audio Engine</h3>
-                                        <p class="text-xs font-mono text-indigo-300">Jetpack Compose • Media3</p>
-                                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed pt-1 line-clamp-3">
-                                            Built an offline audio streaming application from scratch. Designed an index-based hidden list queue architecture ensuring deterministic playback history.
-                                        </p>
-                                    </div>
-                                    <div class="pt-3 border-t border-white/5 flex justify-between items-center mt-auto">
-                                        <div class="flex flex-wrap gap-1.5">
-                                            <span class="px-2 py-1 rounded-md text-[10px] font-mono bg-white/5 text-slate-300 border border-white/5">Kotlin</span>
-                                            <span class="px-2 py-1 rounded-md text-[10px] font-mono bg-white/5 text-slate-300 border border-white/5">Realm DB</span>
-                                        </div>
-                                        <i data-lucide="expand" class="w-4 h-4 text-slate-400"></i>
-                                    </div>
-                                </div>
-
-                                <div class="detailed-content absolute inset-0 px-6 sm:px-12 py-6 overflow-y-auto no-scrollbar">
-                                    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-                                        <div class="md:col-span-2 space-y-5 sm:space-y-6">
-                                            <p class="text-sm sm:text-base text-slate-400 leading-relaxed">A fully featured offline media application engineered from scratch, focusing on seamless audio pipelines, custom playback architectures, and native Android performance.</p>
-                                            
-                                            <!-- NEW DETAILED IPLAY SECTIONS -->
-                                            <div class="space-y-2">
-                                                <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="layers" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i> Architecture & Core Stack</h3>
-                                                <ul class="list-disc list-outside ml-4 space-y-1.5 text-[13px] text-slate-300 leading-relaxed">
-                                                    <li>Decoupled business logic and UI layer using MVVM, Repository pattern, and Dagger Hilt, minimizing boilerplate and ensuring modular, maintainable code.</li>
-                                                    <li>Employed Kotlin Coroutines and StateFlow across the data and presentation layers for structured concurrency, background I/O operations, and predictable state transitions.</li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="space-y-2">
-                                                <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="music" class="w-4 h-4 sm:w-5 sm:h-5 text-purple-400"></i> Audio Engine & Media3</h3>
-                                                <ul class="list-disc list-outside ml-4 space-y-1.5 text-[13px] text-slate-300 leading-relaxed">
-                                                    <li>Engineered a custom index-based hidden list queue mechanism to ensure a non-destructive playback history that acts as a distinct display list, allowing seamless session reversals.</li>
-                                                    <li>Implemented Media3 MediaController and MediaSession APIs to synchronize UI state with background playback services across lock screens, quick settings, and external devices.</li>
-                                                    <li>Handled transient and permanent audio focus changes (calls, notifications, navigation prompts) with smooth ducking and automatic playback resumption.</li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="space-y-2">
-                                                <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="database" class="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400"></i> Storage & Library Indexing</h3>
-                                                <ul class="list-disc list-outside ml-4 space-y-1.5 text-[13px] text-slate-300 leading-relaxed">
-                                                    <li>Built a background media scanner utilizing Android’s MediaStore API and Realm DB to parse, categorize, and cache thousands of audio tracks, albums, and artists in milliseconds.</li>
-                                                    <li>Implemented real-time reactive search, multi-criteria sorting (duration, artist, date added), and automated metadata updates.</li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="space-y-2">
-                                                <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="sliders" class="w-4 h-4 sm:w-5 sm:h-5 text-rose-400"></i> UI & Audio Effects</h3>
-                                                <ul class="list-disc list-outside ml-4 space-y-1.5 text-[13px] text-slate-300 leading-relaxed">
-                                                    <li>Crafted a custom Equalizer UI in Jetpack Compose, binding slider states directly to Android's AudioEffect engine for low-latency sound shaping.</li>
-                                                    <li>Utilized Compose animations and gestures to deliver fluid screen transitions, bottom-sheet player controls, and custom playback scrubbers.</li>
-                                                </ul>
-                                            </div>
-
-                                        </div>
-                                        <div class="bg-white/5 rounded-2xl p-5 sm:p-6 h-fit border border-white/5 mt-4 md:mt-0 flex flex-col justify-between">
-                                            <div>
-                                                <h3 class="text-base font-bold text-white mb-3">Technical Specs</h3>
-                                                <div class="space-y-2.5 border-t border-white/5 pt-3">
-                                                    <div class="flex justify-between"><span class="text-xs text-slate-400">Language</span><span class="text-xs font-mono text-white">Kotlin</span></div>
-                                                    <div class="flex justify-between"><span class="text-xs text-slate-400">UI Framework</span><span class="text-xs font-mono text-white">Compose</span></div>
-                                                    <div class="flex justify-between"><span class="text-xs text-slate-400">Audio Engine</span><span class="text-xs font-mono text-white">Media3</span></div>
-                                                    <div class="flex justify-between"><span class="text-xs text-slate-400">Database</span><span class="text-xs font-mono text-white">Realm DB</span></div>
-                                                    <div class="flex justify-between"><span class="text-xs text-slate-400">Architecture</span><span class="text-xs font-mono text-white">MVVM</span></div>
-                                                </div>
-                                            </div>
-                                            
-                                            <a href="https://play.google.com/store/apps/details?id=com.vasist.iplay" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="mt-5 w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-lg transition-transform hover:scale-[1.02] active:scale-95 cursor-pointer">
-                                                <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
-                                                <span>Google Play Store</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PROJECT 2: GPS Camera App -->
-                    <div class="project-wrapper relative w-full h-[35vh] min-h-[315px] max-h-[415px]" id="wrapper-gps">
-                        <div id="card-gps" onclick="expandCard('gps')" class="project-card absolute inset-0 glass-card glass-card-hover rounded-3xl overflow-hidden flex flex-col border border-white/10 z-10">
-                            
-                            <div class="banner relative h-[40%] w-full overflow-hidden bg-gradient-to-br from-emerald-950 via-slate-900 to-dark-950 p-5 flex flex-col justify-between gap-4 border-b border-white/5 transition-all duration-500 shrink-0">
-                                <div class="flex justify-between items-start z-10 shrink-0">
-                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Mobile App</span>
-                                    
-                                    <span class="hide-expanded px-2.5 py-1 rounded-full text-[10px] font-mono text-slate-400 bg-white/5 border border-white/10">CameraX Integration</span>
-                                </div>
-                                <div class="z-10 mt-auto flex flex-col shrink-0">
-                                    <div class="banner-title text-xl sm:text-2xl font-black tracking-wider text-white flex items-center flex-nowrap whitespace-nowrap gap-2.5 transition-all duration-500">
-                                        <div class="p-1.5 sm:p-2 rounded-xl bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 shrink-0"><i data-lucide="camera" class="w-4 h-4 sm:w-5 sm:h-5"></i></div>
-                                        <span>GPS Camera</span>
-                                    </div>
-                                    
-                                    <span class="show-expanded inline-flex w-max px-3 py-1.5 rounded-full text-xs font-mono text-slate-400 bg-white/5 border border-white/10 shadow-lg">CameraX Integration</span>
-                                </div>
-                                <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
-                                <button onclick="closeCard(event, 'gps')" class="close-btn absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white opacity-0 pointer-events-none transition-opacity duration-300 z-50 cursor-pointer">
-                                    <i data-lucide="x" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-
-                            <div class="relative flex-1 w-full h-full">
-                                <div class="summary-content absolute inset-0 p-5 sm:p-6 flex flex-col justify-between">
-                                    <div class="space-y-1.5 sm:space-y-2">
-                                        <h3 class="text-base sm:text-lg font-bold text-white">Real-Time Metadata Stamping</h3>
-                                        <p class="text-xs font-mono text-emerald-300">CameraX • Location APIs</p>
-                                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed pt-1 line-clamp-3">
-                                            An Android camera utility executing real-time geotagging, altitude, address, and timestamp overlays directly onto video frames natively.
-                                        </p>
-                                    </div>
-                                    <div class="pt-3 border-t border-white/5 flex justify-between items-center mt-auto">
-                                        <div class="flex flex-wrap gap-1.5">
-                                            <span class="px-2 py-1 rounded-md text-[10px] font-mono bg-white/5 text-slate-300 border border-white/5">CameraX</span>
-                                            <span class="px-2 py-1 rounded-md text-[10px] font-mono bg-white/5 text-slate-300 border border-white/5">Coroutines</span>
-                                        </div>
-                                        <i data-lucide="expand" class="w-4 h-4 text-slate-400"></i>
-                                    </div>
-                                </div>
-
-                                <div class="detailed-content absolute inset-0 px-6 sm:px-12 py-6 overflow-y-auto no-scrollbar">
-                                    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-                                        <div class="md:col-span-2 space-y-5 sm:space-y-6">
-                                            <p class="text-sm sm:text-base text-slate-400 leading-relaxed">A specialized camera application designed for on-site field workers requiring indisputable proof of location and time on their captures.</p>
-                                            <div class="space-y-2">
-                                                <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="cpu" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i> The Challenge</h3>
-                                                <p class="text-slate-300 leading-relaxed text-sm">Managing hardware camera lifecycles while simultaneously fetching and burning high-accuracy GPS coordinates onto frames in real-time requires strict memory management and orientation handling.</p>
-                                            </div>
-                                            <div class="space-y-2">
-                                                <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="code-2" class="w-4 h-4 sm:w-5 sm:h-5 text-purple-400"></i> Architecture & Solution</h3>
-                                                <div class="text-slate-300 leading-relaxed text-sm">
-                                                    <p>The solution centered around a robust <strong>CameraX</strong> implementation combined with reactive data streams.</p>
-                                                    <ul class="list-disc list-inside space-y-1.5 mt-2">
-                                                        <li><strong>Custom Orientation:</strong> Engineered a system to compensate for device sensor data and physical device rotation, ensuring the metadata stamp always renders upright.</li>
-                                                        <li><strong>Real-time Stamping:</strong> Integrated Location Services to fetch coordinates and address data, burning it directly into the image outputs.</li>
-                                                        <li><strong>Coroutines:</strong> Utilized Kotlin Coroutines to handle the heavy lifting of image processing off the main thread.</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="bg-white/5 rounded-2xl p-5 sm:p-6 h-fit border border-white/5 mt-4 md:mt-0">
-                                            <h3 class="text-base font-bold text-white mb-3">Technical Specs</h3>
-                                            <div class="space-y-2.5 border-t border-white/5 pt-3">
-                                                <div class="flex justify-between"><span class="text-xs text-slate-400">Language</span><span class="text-xs font-mono text-white">Kotlin</span></div>
-                                                <div class="flex justify-between"><span class="text-xs text-slate-400">Camera API</span><span class="text-xs font-mono text-white">CameraX</span></div>
-                                                <div class="flex justify-between"><span class="text-xs text-slate-400">Location</span><span class="text-xs font-mono text-white">Location API</span></div>
-                                                <div class="flex justify-between"><span class="text-xs text-slate-400">Threading</span><span class="text-xs font-mono text-white">Coroutines</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-blue-500/50">
+                    <div class="text-2xl font-black text-blue-900 font-mono">02</div>
+                    <h3 class="text-sm font-bold text-white">Model</h3>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Domain + state + explicit data flows.</p>
+                </div>
+                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-purple-500/50">
+                    <div class="text-2xl font-black text-purple-900 font-mono">03</div>
+                    <h3 class="text-sm font-bold text-white">Architect</h3>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">MVVM + Clean boundaries + DI.</p>
+                </div>
+                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-emerald-500/50">
+                    <div class="text-2xl font-black text-emerald-900 font-mono">04</div>
+                    <h3 class="text-sm font-bold text-white">Implement</h3>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Kotlin + native Android APIs.</p>
+                </div>
+                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-amber-500/50">
+                    <div class="text-2xl font-black text-amber-900 font-mono">05</div>
+                    <h3 class="text-sm font-bold text-white">Validate</h3>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Tests + profiling + edge cases.</p>
+                </div>
+                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-rose-500/50">
+                    <div class="text-2xl font-black text-rose-900 font-mono">06</div>
+                    <h3 class="text-sm font-bold text-white">Ship</h3>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">CI + Play Console + monitoring.</p>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 3: EXPERIENCE -->
-        <section id="experience" class="snap-start snap-always slide-section relative">
-            <div class="max-w-5xl w-full mx-auto flex flex-col h-full justify-center space-y-6 md:space-y-10 py-16">
+        <!-- SELECTED WORK (Projects) -->
+        <section id="work" class="space-y-16">
+            <div class="space-y-2">
+                <div class="text-xs font-mono text-indigo-400 uppercase tracking-wider flex items-center gap-2">
+                    <i data-lucide="code-2" class="w-4 h-4"></i> Selected Work
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Engineering <span class="text-gradient-accent">Case Studies</span></h2>
+            </div>
+
+            <!-- 01: iPlay Music Player -->
+            <div class="glass-card rounded-3xl p-6 sm:p-10 space-y-10 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 text-6xl font-black text-white/5 select-none pointer-events-none">01</div>
                 
-                <div class="flex flex-col items-center text-center space-y-3">
-                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono font-semibold">
-                        <i data-lucide="briefcase" class="w-3.5 h-3.5"></i> Timeline
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
+                    <div class="space-y-2">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-[10px] font-bold tracking-wider font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">LIVE PRODUCT</span>
+                            <span class="text-xs text-slate-400 font-mono hidden sm:inline">•</span>
+                            <span class="text-xs text-slate-400 font-mono">Published Android Application</span>
+                        </div>
+                        <h3 class="text-2xl sm:text-4xl font-black text-white">iPlay Music Player</h3>
                     </div>
-                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-                        Professional <span class="text-gradient-accent">Experience</span>
-                    </h2>
+                    <a href="https://play.google.com/store/apps/details?id=com.vasist.iplay" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-2.5 rounded-lg subtle-card hover:bg-white/10 text-white font-semibold text-xs transition w-max">
+                        <span>View on Google Play</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
                 </div>
 
-                <div class="relative w-full max-w-4xl mx-auto">
-                    <div class="hidden sm:block absolute left-4 md:left-1/2 top-4 bottom-4 w-[1px] bg-gradient-to-b from-blue-500 via-indigo-500 to-transparent md:-translate-x-1/2 z-0"></div>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
                     
-                    <div class="space-y-6 md:space-y-12 relative z-10 w-full">
-                        <div class="relative flex flex-col md:flex-row items-center group w-full justify-center">
-                            
-                            <div class="hidden sm:flex items-center justify-center w-8 h-8 rounded-full bg-dark-950 border-2 border-blue-500 absolute left-0 md:left-1/2 md:-translate-x-1/2 shadow-[0_0_15px_rgba(59,130,246,0.5)] z-20 pointer-events-none">
-                                <div class="w-2.5 h-2.5 rounded-full bg-blue-400"></div>
+                    <!-- Screenshots Column -->
+                    <div class="lg:col-span-4 flex justify-center lg:justify-start">
+                        <div class="relative w-[260px] aspect-[9/19.5] pixel-frame ring-1 ring-white/10 shadow-2xl">
+                            <div class="pixel-camera"></div>
+                            <!-- Injecting the actual iPlay UI screenshot -->
+                            <img src="image_9a1124.png" alt="iPlay Music Player" class="w-full h-full object-cover relative z-10" />
+                            <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent z-20"></div>
+                        </div>
+                    </div>
+
+                    <!-- Engineering Copy Column -->
+                    <div class="lg:col-span-8 space-y-10">
+                        
+                        <!-- Core Engineering Text -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                            <div class="space-y-3">
+                                <h4 class="text-sm font-bold text-blue-400 border-b border-white/10 pb-2">Queue & Shuffle Engine</h4>
+                                <p class="text-sm text-slate-300 leading-relaxed">
+                                    Designed a stateful playback queue that separates display order from playback order, allowing shuffle, filtering, queue restoration, and playback history to operate without mutating the underlying library.
+                                </p>
                             </div>
+                            <div class="space-y-3">
+                                <h4 class="text-sm font-bold text-purple-400 border-b border-white/10 pb-2">Playback Architecture</h4>
+                                <p class="text-sm text-slate-300 leading-relaxed">
+                                    Built the playback layer around Media3 MediaController + MediaSession, keeping UI state, playback state, and the active queue synchronized across foreground and background playback.
+                                </p>
+                            </div>
+                            <div class="space-y-3 sm:col-span-2">
+                                <h4 class="text-sm font-bold text-emerald-400 border-b border-white/10 pb-2">Local Library</h4>
+                                <p class="text-sm text-slate-300 leading-relaxed">
+                                    Built a Realm-backed local music index over MediaStore, enabling reactive library updates and offline-first browsing of large local collections, keeping all UI work safely off the main thread.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Architecture Diagram -->
+                        <div class="subtle-card p-6 rounded-2xl space-y-4 shadow-inner">
+                            <div class="text-[10px] font-mono text-slate-400 uppercase tracking-wider mb-2">System Architecture</div>
                             
-                            <div class="project-wrapper relative w-full md:w-3/4 lg:w-2/3 h-[25vh] min-h-[235px] max-h-[285px]" id="wrapper-surveyheart">
+                            <div class="flex flex-col items-center gap-2 font-mono text-xs w-full">
+                                <div class="w-48 p-2.5 rounded-lg border border-blue-500/30 bg-blue-500/10 text-center text-blue-200">Compose UI</div>
+                                <div class="text-slate-600">↓</div>
+                                <div class="w-48 p-2.5 rounded-lg border border-blue-500/30 bg-blue-500/10 text-center text-blue-200">ViewModel</div>
+                                <div class="text-slate-600">↓</div>
+                                <div class="w-48 p-2.5 rounded-lg border border-indigo-500/30 bg-indigo-500/10 text-center text-indigo-200">StateFlow & Use Cases</div>
                                 
-                                <div id="card-surveyheart" onclick="expandCard('surveyheart')" class="project-card absolute inset-0 glass-card glass-card-hover rounded-3xl overflow-hidden flex flex-col border border-white/10 z-10">
-                                    
-                                    <div class="banner relative h-[40%] w-full overflow-hidden bg-gradient-to-br from-blue-950 via-slate-900 to-dark-950 p-5 flex flex-col justify-between gap-4 border-b border-white/5 transition-all duration-500 shrink-0">
-                                        <div class="flex justify-between items-start z-10 shrink-0">
-                                            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">Full-Time</span>
-                                            
-                                            <span class="hide-expanded px-2.5 py-1 rounded-full text-[10px] font-mono text-slate-400 bg-white/5 border border-white/10">09/2022 — 11/2024</span>
-                                        </div>
-                                        <div class="z-10 mt-auto flex flex-col shrink-0">
-                                            <div class="banner-title text-xl sm:text-2xl font-black tracking-wider text-white flex items-center flex-nowrap whitespace-nowrap gap-2.5 transition-all duration-500">
-                                                <div class="p-1.5 sm:p-2 rounded-xl bg-blue-600/30 border border-blue-500/40 text-blue-300 shrink-0"><i data-lucide="building" class="w-4 h-4 sm:w-5 sm:h-5"></i></div>
-                                                <span>Survey Heart</span>
-                                            </div>
-                                            
-                                            <span class="show-expanded inline-flex w-max px-3 py-1.5 rounded-full text-xs font-mono text-slate-400 bg-white/5 border border-white/10 shadow-lg">09/2022 — 11/2024 (2.4 years)</span>
-                                        </div>
-                                        <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl"></div>
-                                        <button onclick="closeCard(event, 'surveyheart')" class="close-btn absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white opacity-0 pointer-events-none transition-opacity duration-300 z-50 cursor-pointer">
-                                            <i data-lucide="x" class="w-4 h-4"></i>
-                                        </button>
+                                <div class="w-full flex justify-center text-slate-600 gap-[110px] px-8">
+                                    <span>↙</span><span>↘</span>
+                                </div>
+                                
+                                <div class="w-full grid grid-cols-2 gap-4">
+                                    <div class="p-2.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-center text-emerald-200 flex flex-col items-center">
+                                        <span>Media Repository</span>
+                                        <span class="text-[9px] text-emerald-400/60 mt-1">Realm / MediaStore</span>
                                     </div>
-
-                                    <div class="relative flex-1 w-full h-full">
-                                        <div class="summary-content absolute inset-0 p-5 sm:p-6 flex flex-col justify-between">
-                                            <div class="space-y-1.5 sm:space-y-2">
-                                                <h3 class="text-base sm:text-lg font-bold text-white">Junior Android Developer</h3>
-                                                <p class="text-[11px] sm:text-xs text-slate-400 leading-relaxed pt-1 line-clamp-3">
-                                                    Survey Heart – Android, iOS & Web. Engineered core features for production native apps, optimized data synchronization, and authored automated UI tests via Espresso.
-                                                </p>
-                                            </div>
-                                            <div class="pt-3 border-t border-white/5 flex justify-between items-center mt-auto">
-                                                <div class="flex flex-wrap gap-1.5">
-                                                    <span class="px-2 py-1 rounded-md text-[10px] font-mono bg-white/5 text-slate-300 border border-white/5">Kotlin</span>
-                                                    <span class="px-2 py-1 rounded-md text-[10px] font-mono bg-white/5 text-slate-300 border border-white/5">Espresso</span>
-                                                </div>
-                                                <i data-lucide="expand" class="w-4 h-4 text-slate-400"></i>
-                                            </div>
-                                        </div>
-
-                                        <div class="detailed-content absolute inset-0 px-6 sm:px-12 py-6 overflow-y-auto no-scrollbar">
-                                            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-                                                <div class="md:col-span-2 space-y-5 sm:space-y-6">
-                                                    <div class="space-y-2">
-                                                        <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="target" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i> Role Overview</h3>
-                                                        <p class="text-slate-300 leading-relaxed text-sm">As a Junior Android Developer at Survey Heart (Android, iOS & Web), I built scalable UI components, handled complex background data synchronizations, and improved core app stability through testing and crash monitoring.</p>
-                                                    </div>
-                                                    <div class="space-y-2">
-                                                        <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 sm:w-5 sm:h-5 text-purple-400"></i> Key Achievements</h3>
-                                                        <div class="text-slate-300 leading-relaxed text-[13px]">
-                                                            <ul class="list-disc list-outside ml-4 space-y-2 mt-2">
-                                                                <li><strong>Feature Discovery:</strong> Designed an interactive 'Spotlight' onboarding feature integrating targeted YouTube video redirects to improve feature discovery and user adoption.</li>
-                                                                <li><strong>Cloud Storage Pipeline:</strong> Developed a comprehensive cloud storage management system integrating a custom backend API and MongoDB, enabling users to seamlessly view and delete their uploaded image files hosted on AWS.</li>
-                                                                <li><strong>Database Migration:</strong> Contributed to a major architectural shift by assisting in the database migration from Room to Realm DB, improving cross-platform data handling and query performance.</li>
-                                                                <li><strong>Background Operations:</strong> Engineered a resilient background download pipeline using DownloadManager, WorkManager, and Coroutines, ensuring the seamless retrieval of large files without blocking the main thread.</li>
-                                                                <li><strong>Crash Analytics:</strong> Accelerated bug resolution by integrating Firebase Crashlytics with a custom post-crash feedback system, allowing users to attach screen recordings and comments upon relaunch.</li>
-                                                                <li><strong>Scalable UI:</strong> Scaled the core survey engine by developing dynamic, reusable UI components to quickly support and render complex new inputs, including signature, ranking, and slider question types.</li>
-                                                                <li><strong>Network Resilience:</strong> Reduced data synchronization failures on unstable networks by implementing WorkManager for reliable, deferred background syncing of user responses.</li>
-                                                                <li><strong>Quality Assurance:</strong> Bolstered application reliability by authoring automated UI tests using Espresso and building reusable test components to streamline the QA workflow.</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="bg-white/5 rounded-2xl p-5 sm:p-6 h-fit border border-white/5 mt-4 md:mt-0">
-                                                    <h3 class="text-base font-bold text-white mb-3">Position Details</h3>
-                                                    <div class="space-y-2.5 border-t border-white/5 pt-3 mb-5">
-                                                        <div class="flex justify-between"><span class="text-xs text-slate-400">Company</span><span class="text-xs font-mono text-white text-right ml-4">Survey Heart</span></div>
-                                                        <div class="flex justify-between"><span class="text-xs text-slate-400">Role</span><span class="text-xs font-mono text-white text-right ml-4">Jr. Android Dev</span></div>
-                                                        <div class="flex justify-between"><span class="text-xs text-slate-400">Duration</span><span class="text-xs font-mono text-white text-right ml-4">Sep '22 – Nov '24</span></div>
-                                                    </div>
-                                                    
-                                                    <h3 class="text-xs font-bold text-slate-400 mb-3 border-t border-white/5 pt-4">Tech Stack</h3>
-                                                    <div class="flex flex-wrap gap-1.5">
-                                                        <span class="px-2 py-1 rounded text-[10px] font-mono bg-white/5 text-slate-300 border border-white/10">Kotlin</span>
-                                                        <span class="px-2 py-1 rounded text-[10px] font-mono bg-white/5 text-slate-300 border border-white/10">Coroutines</span>
-                                                        <span class="px-2 py-1 rounded text-[10px] font-mono bg-white/5 text-slate-300 border border-white/10">XML & MVVM</span>
-                                                        <span class="px-2 py-1 rounded text-[10px] font-mono bg-white/5 text-slate-300 border border-white/10">Room DB</span>
-                                                        <span class="px-2 py-1 rounded text-[10px] font-mono bg-white/5 text-slate-300 border border-white/10">Realm DB</span>
-                                                        <span class="px-2 py-1 rounded text-[10px] font-mono bg-white/5 text-slate-300 border border-white/10">Retrofit</span>
-                                                        <span class="px-2 py-1 rounded text-[10px] font-mono bg-white/5 text-slate-300 border border-white/10">WorkManager</span>
-                                                        <span class="px-2 py-1 rounded text-[10px] font-mono bg-white/5 text-slate-300 border border-white/10">Crashlytics</span>
-                                                        <span class="px-2 py-1 rounded text-[10px] font-mono bg-white/5 text-slate-300 border border-white/10">Espresso</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="p-2.5 rounded-lg border border-purple-500/30 bg-purple-500/10 text-center text-purple-200 flex flex-col items-center">
+                                        <span>Playback Controller</span>
+                                        <span class="text-[9px] text-purple-400/60 mt-1">Media3 Service</span>
                                     </div>
                                 </div>
+
+                                <div class="w-full flex justify-center text-slate-600 gap-[110px] px-8">
+                                    <span>↘</span><span>↙</span>
+                                </div>
+                                
+                                <div class="w-48 p-2.5 rounded-lg border border-white/20 bg-dark-950 text-center text-slate-300">
+                                    Filter / Sort / Shuffle
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- SLIDE 4: TECH STACK -->
-        <section id="skills" class="snap-start snap-always slide-section">
-            <div class="max-w-6xl w-full mx-auto flex flex-col h-full justify-center space-y-6 md:space-y-10 py-16">
+            <!-- 02: GPS Camera -->
+            <div class="subtle-card rounded-3xl p-6 sm:p-10 space-y-10 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 text-6xl font-black text-white/5 select-none pointer-events-none">02</div>
                 
-                <div class="flex flex-col items-center text-center space-y-3">
-                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono font-semibold">
-                        <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Core Arsenal
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Camera & Location</span>
+                        </div>
+                        <h3 class="text-2xl sm:text-4xl font-black text-white">GPS Camera</h3>
+                        <p class="text-sm text-slate-400 font-mono">CameraX + Location Field Utility</p>
                     </div>
-                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-                        Tech Stack & <span class="text-gradient-accent">Skillset</span>
-                    </h2>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full px-2 max-w-5xl mx-auto">
-                    
-                    <div class="glass-card glass-card-hover p-5 rounded-2xl flex flex-col space-y-3">
-                        <div class="flex items-start justify-between gap-2">
-                            <div class="flex items-center gap-3">
-                                <div class="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400">
-                                    <i data-lucide="code-2" class="w-4 h-4"></i>
-                                </div>
-                                <h3 class="text-sm font-bold text-white leading-tight">Languages &<br/>Architecture</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
+                    <!-- Screenshots Column -->
+                    <div class="lg:col-span-4 flex justify-center lg:justify-start">
+                        <div class="relative w-[260px] aspect-[9/19.5] pixel-frame ring-1 ring-white/10 shadow-2xl">
+                            <div class="pixel-camera"></div>
+                            <div class="w-full h-full bg-[#0a0a0c] flex flex-col justify-center items-center text-center p-6 border border-white/5">
+                                <i data-lucide="camera" class="w-12 h-12 text-slate-600 mb-4"></i>
+                                <p class="text-xs font-mono text-slate-500 uppercase tracking-widest leading-relaxed">
+                                    [Insert Real Camera<br/>Screenshot Here]
+                                </p>
                             </div>
-                            <span class="px-2 py-0.5 rounded text-[9px] font-mono bg-blue-500/10 text-blue-300 border border-blue-500/20 shrink-0">Core</span>
+                            <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent z-10"></div>
                         </div>
-                        <p class="text-[13px] text-slate-400 leading-relaxed pt-1">
-                            <strong class="text-slate-200 font-medium">Kotlin</strong> (primary) and Java (basic). Architecting robust apps with <strong class="text-slate-200 font-medium">MVVM</strong>, <strong class="text-slate-200 font-medium">Repository Pattern</strong>, and Kotlin DSL.
-                        </p>
                     </div>
 
-                    <div class="glass-card glass-card-hover p-5 rounded-2xl flex flex-col space-y-3">
-                        <div class="flex items-start justify-between gap-2">
-                            <div class="flex items-center gap-3">
-                                <div class="p-2 rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-400">
-                                    <i data-lucide="cpu" class="w-4 h-4"></i>
-                                </div>
-                                <h3 class="text-sm font-bold text-white leading-tight">State &<br/>Injection</h3>
-                            </div>
-                            <span class="px-2 py-0.5 rounded text-[9px] font-mono bg-teal-500/10 text-teal-300 border border-teal-500/20 shrink-0">Logic</span>
-                        </div>
-                        <p class="text-[13px] text-slate-400 leading-relaxed pt-1">
-                            Managing UI state reactively using <strong class="text-slate-200 font-medium">Coroutines</strong>, <strong class="text-slate-200 font-medium">StateFlow</strong>, and LiveData. <strong class="text-slate-200 font-medium">Hilt</strong> for ViewModel & Repository dependency injection.
-                        </p>
-                    </div>
-
-                    <div class="glass-card glass-card-hover p-5 rounded-2xl flex flex-col space-y-3">
-                        <div class="flex items-start justify-between gap-2">
-                            <div class="flex items-center gap-3">
-                                <div class="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400">
-                                    <i data-lucide="smartphone" class="w-4 h-4"></i>
-                                </div>
-                                <h3 class="text-sm font-bold text-white leading-tight">UI/UX &<br/>Media Pipeline</h3>
-                            </div>
-                            <span class="px-2 py-0.5 rounded text-[9px] font-mono bg-purple-500/10 text-purple-300 border border-purple-500/20 shrink-0">Frontend</span>
-                        </div>
-                        <p class="text-[13px] text-slate-400 leading-relaxed pt-1">
-                            Modern interfaces via <strong class="text-slate-200 font-medium">Jetpack Compose</strong>, Material Design, and MotionLayout. Custom audio engines using <strong class="text-slate-200 font-medium">Media3</strong> (MediaSessionService).
-                        </p>
-                    </div>
-
-                    <div class="glass-card glass-card-hover p-5 rounded-2xl flex flex-col space-y-3">
-                        <div class="flex items-start justify-between gap-2">
-                            <div class="flex items-center gap-3">
-                                <div class="p-2 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400">
-                                    <i data-lucide="database" class="w-4 h-4"></i>
-                                </div>
-                                <h3 class="text-sm font-bold text-white leading-tight">Data &<br/>Networking</h3>
-                            </div>
-                            <span class="px-2 py-0.5 rounded text-[9px] font-mono bg-rose-500/10 text-rose-300 border border-rose-500/20 shrink-0">Backend</span>
-                        </div>
-                        <p class="text-[13px] text-slate-400 leading-relaxed pt-1">
-                            REST APIs with <strong class="text-slate-200 font-medium">Retrofit</strong> (sealed results). Persistence via <strong class="text-slate-200 font-medium">Realm DB</strong>, Room DB, Firebase (Auth/Analytics), and MongoDB Atlas.
-                        </p>
-                    </div>
-
-                    <div class="glass-card glass-card-hover p-5 rounded-2xl flex flex-col space-y-3">
-                        <div class="flex items-start justify-between gap-2">
-                            <div class="flex items-center gap-3">
-                                <div class="p-2 rounded-xl bg-slate-500/10 border border-slate-500/20 text-slate-400">
-                                    <i data-lucide="terminal" class="w-4 h-4"></i>
-                                </div>
-                                <h3 class="text-sm font-bold text-white leading-tight">Build Tools &<br/>CI/CD</h3>
-                            </div>
-                            <span class="px-2 py-0.5 rounded text-[9px] font-mono bg-slate-500/10 text-slate-300 border border-slate-500/20 shrink-0">DevOps</span>
-                        </div>
-                        <p class="text-[13px] text-slate-400 leading-relaxed pt-1">
-                            <strong class="text-slate-200 font-medium">Gradle</strong> (Kotlin DSL) and <code class="bg-white/10 px-1 rounded text-[11px]">libs.versions.toml</code>. Version control and automated pipelines with Git, GitHub, and <strong class="text-slate-200 font-medium">GitHub Actions</strong>.
-                        </p>
-                    </div>
-
-                    <div class="glass-card glass-card-hover p-5 rounded-2xl flex flex-col space-y-3">
-                        <div class="flex items-start justify-between gap-2">
-                            <div class="flex items-center gap-3">
-                                <div class="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
-                                    <i data-lucide="rocket" class="w-4 h-4"></i>
-                                </div>
-                                <h3 class="text-sm font-bold text-white leading-tight">Quality &<br/>Distribution</h3>
-                            </div>
-                            <span class="px-2 py-0.5 rounded text-[9px] font-mono bg-amber-500/10 text-amber-300 border border-amber-500/20 shrink-0">Production</span>
-                        </div>
-                        <p class="text-[13px] text-slate-400 leading-relaxed pt-1">
-                            Debugging via Crashlytics & Logcat. <strong class="text-slate-200 font-medium">Espresso</strong> for reusable UI test components. Publishing and ASO via <strong class="text-slate-200 font-medium">Google Play Console</strong>.
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- SLIDE 5: CONTACT -->
-        <section id="contact" class="snap-start snap-always slide-section">
-            <div class="flex flex-col justify-center max-w-4xl mx-auto w-full h-full py-16">
-                <div class="glass-card p-8 sm:p-16 rounded-[2.5rem] border border-white/10 text-center relative overflow-hidden flex flex-col justify-center min-h-[40vh]">
-                    <div class="absolute -top-24 -right-24 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
-                    <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
-
-                    <div class="relative z-10 space-y-6 sm:space-y-8">
-                        <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white">Let's Build Something <br/><span class="text-gradient-accent">Exceptional</span></h2>
-                        
-                        <div class="text-slate-400 text-sm sm:text-base max-w-lg mx-auto min-h-[48px] px-2 flex justify-center items-center">
-                            <span><span id="typewriter-text"></span><span class="w-1.5 h-4 sm:h-5 bg-emerald-400 inline-block align-middle ml-1 animate-pulse"></span></span>
+                    <!-- Engineering Copy Column -->
+                    <div class="lg:col-span-8 space-y-8">
+                        <div class="space-y-3">
+                            <h4 class="text-sm font-bold text-white">The Challenge</h4>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                Managing device camera lifecycles via CameraX while concurrently fetching high-accuracy GPS coordinates, timestamps, and address data to burn directly onto captured image frames natively.
+                            </p>
                         </div>
                         
-                        <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-6">
-                            
-                            <a href="tel:+919966955443" class="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 font-medium text-sm transition-all hover:scale-105 flex items-center gap-2 shadow-lg">
-                                <i data-lucide="phone" class="w-4 h-4"></i> Call
-                            </a>
+                        <div class="space-y-3">
+                            <h4 class="text-sm font-bold text-white">Architecture & Solution</h4>
+                            <ul class="space-y-3 text-sm text-slate-300">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                                    <span>Engineered a custom orientation handler compensating for physical device rotation and sensor data to ensure flawless metadata rendering.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                                    <span>Integrated Location Services to fetch real-time coordinates, applying them as a burned-in canvas overlay.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                                    <span>Utilized Kotlin Coroutines to offload heavy image processing pipelines completely away from the main thread.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                            <a href="mailto:vasistvr@gmail.com" class="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 font-medium text-sm transition-all hover:scale-105 flex items-center gap-2 shadow-lg">
-                                <i data-lucide="mail" class="w-4 h-4"></i> Email
-                            </a>
+            <!-- 03: Vitals -->
+            <div class="subtle-card rounded-3xl p-6 sm:p-10 space-y-10 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 text-6xl font-black text-white/5 select-none pointer-events-none">03</div>
+                
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300 border border-blue-500/30">System & Hardware</span>
+                            <span class="flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[10px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> In Development
+                            </span>
+                        </div>
+                        <h3 class="text-2xl sm:text-4xl font-black text-white">Vitals</h3>
+                        <p class="text-sm text-slate-400 font-mono">Hardware + System Telemetry</p>
+                    </div>
+                </div>
 
-                            <a href="https://wa.me/919966955443" target="_blank" rel="noopener noreferrer" class="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-medium text-sm transition-all hover:scale-105 flex items-center gap-2 shadow-lg">
-                                <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
-                            </a>
-                            
-                            <a href="https://www.linkedin.com/in/vasist-vamsi-bhukya-03304723a/" target="_blank" rel="noopener noreferrer" class="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-300 font-medium text-sm transition-all hover:scale-105 flex items-center gap-2 shadow-lg">
-                                <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
-                            </a>
-                            
-                            <a href="https://www.naukri.com/mnjuser/profile" target="_blank" rel="noopener noreferrer" class="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-medium text-sm transition-all hover:scale-105 flex items-center gap-2 shadow-lg">
-                                <i data-lucide="briefcase" class="w-4 h-4"></i> Naukri
-                            </a>
-                            
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
+                    <!-- Screenshots Column -->
+                    <div class="lg:col-span-4 flex justify-center lg:justify-start">
+                        <div class="relative w-[260px] aspect-[9/19.5] pixel-frame ring-1 ring-white/10 shadow-2xl">
+                            <div class="pixel-camera"></div>
+                            <div class="w-full h-full bg-[#0a0a0c] flex flex-col justify-center items-center text-center p-6 border border-white/5">
+                                <i data-lucide="activity" class="w-12 h-12 text-slate-600 mb-4"></i>
+                                <p class="text-xs font-mono text-slate-500 uppercase tracking-widest leading-relaxed">
+                                    [Insert Real Vitals<br/>Screenshot Here]
+                                </p>
+                            </div>
+                            <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent z-10"></div>
+                        </div>
+                    </div>
+
+                    <!-- Engineering Copy Column -->
+                    <div class="lg:col-span-8 space-y-8 flex flex-col justify-center h-full">
+                        <p class="text-sm text-slate-300 leading-relaxed max-w-2xl">
+                            A diagnostic utility tracking battery health, charging wattage, hardware profiles, and memory performance in real-time. Designed around native Android system receivers, BatteryManager APIs, and Coroutine flows to provide zero-jank telemetry.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROFESSIONAL EXPERIENCE -->
+        <section id="experience" class="space-y-10">
+            <div class="text-xs font-mono text-purple-400 uppercase tracking-wider mb-6 flex items-center gap-2">
+                <i data-lucide="briefcase" class="w-4 h-4"></i> Engineering Experience
+            </div>
+
+            <div class="relative pl-4 md:pl-0">
+                <!-- Timeline Line -->
+                <div class="hidden md:block absolute left-[120px] top-2 bottom-2 w-[1px] bg-white/10 z-0"></div>
+
+                <div class="relative z-10">
+                    <div class="flex flex-col md:flex-row md:gap-12">
+                        <div class="md:w-[120px] shrink-0 pt-2 pb-4 md:pb-0 font-mono text-xs text-slate-400 md:text-right relative">
+                            <!-- Timeline Dot -->
+                            <div class="hidden md:block absolute right-[-5px] top-1 w-2.5 h-2.5 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.8)] z-10"></div>
+                            2022 — 2024
+                        </div>
+                        
+                        <div class="subtle-card rounded-2xl p-6 sm:p-8 flex-grow space-y-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Junior Android Developer</h3>
+                                <div class="text-sm text-purple-400 font-medium">Survey Heart (Android, iOS & Web)</div>
+                            </div>
+
+                            <ul class="space-y-4 text-sm text-slate-300 leading-relaxed">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 shrink-0 mt-0.5"></i>
+                                    <span><strong>Cloud Storage Pipeline:</strong> Developed a comprehensive cloud storage manager integrating a custom backend API and MongoDB, enabling users to seamlessly view and manage AWS-hosted image files.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 shrink-0 mt-0.5"></i>
+                                    <span><strong>Database Architecture:</strong> Migrated persistence from Room to Realm DB to support the application's cross-platform data model and reactive local data access.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 shrink-0 mt-0.5"></i>
+                                    <span><strong>Background Operations:</strong> Designed a resilient background file-download pipeline using WorkManager, DownloadManager, and Coroutines, supporting retryable downloads while keeping long-running work outside the UI lifecycle.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 shrink-0 mt-0.5"></i>
+                                    <span><strong>Quality & Diagnostics:</strong> Integrated Firebase Crashlytics with custom post-crash feedback systems and authored automated UI tests using Espresso to bolster application reliability.</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    </main>
 
-    <!-- INTERACTIVITY JAVASCRIPT -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => { lucide.createIcons(); });
+        <!-- TECHNICAL DEPTH -->
+        <section id="depth" class="space-y-10">
+            <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-6 flex items-center gap-2">
+                <i data-lucide="layers" class="w-4 h-4"></i> Technical Depth
+            </div>
 
-        const spotlight = document.getElementById('spotlight');
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let isMoving = false;
-
-        window.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            if(!isMoving) {
-                window.requestAnimationFrame(updateSpotlight);
-                isMoving = true;
-            }
-        });
-
-        function updateSpotlight() {
-            document.documentElement.style.setProperty('--glow-x', `${mouseX}px`);
-            document.documentElement.style.setProperty('--glow-y', `${mouseY}px`);
-            isMoving = false;
-        }
-
-        function scrollToSection(id) {
-            document.getElementById('scroll-container').scrollTo({
-                top: document.getElementById(id).offsetTop,
-                behavior: 'smooth'
-            });
-        }
-
-        // --- POP-UP FLIP ANIMATION ---
-        let activeCard = null;
-
-        function expandCard(id) {
-            if (activeCard) return; 
-            
-            const card = document.getElementById('card-' + id);
-            if (card.classList.contains('is-expanded')) return;
-
-            const wrapper = document.getElementById('wrapper-' + id);
-            const scrollContainer = document.getElementById('scroll-container');
-            const nav = document.getElementById('main-nav');
-            
-            scrollContainer.style.overflowY = 'hidden';
-            nav.style.opacity = '0'; 
-
-            const rect = wrapper.getBoundingClientRect();
-
-            card.style.transition = 'none';
-            card.style.position = 'fixed';
-            card.style.top = rect.top + 'px';
-            card.style.left = rect.left + 'px';
-            card.style.width = rect.width + 'px';
-            card.style.height = rect.height + 'px';
-            card.style.margin = '0';
-            card.style.zIndex = '100';
-            
-            card.classList.remove('glass-card-hover');
-            void card.offsetWidth; 
-
-            card.style.transition = 'all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)';
-            card.classList.add('is-expanded');
-
-            const isMobile = window.innerWidth < 640;
-            const targetWidth = isMobile ? window.innerWidth * 0.95 : Math.min(window.innerWidth * 0.85, 950);
-            const targetHeight = isMobile ? window.innerHeight * 0.90 : Math.min(window.innerHeight * 0.85, 750);
-            const targetTop = (window.innerHeight - targetHeight) / 2;
-            const targetLeft = (window.innerWidth - targetWidth) / 2;
-
-            card.style.top = targetTop + 'px';
-            card.style.left = targetLeft + 'px';
-            card.style.width = targetWidth + 'px';
-            card.style.height = targetHeight + 'px';
-            card.style.borderRadius = '1.5rem'; 
-            
-            card.style.boxShadow = '0 0 0 100vmax rgba(3, 7, 18, 0.85), 0 25px 50px -12px rgba(0,0,0,0.5)';
-            
-            activeCard = { id, card, wrapper };
-        }
-
-        function closeCard(event, id) {
-            event.stopPropagation(); 
-            if (!activeCard) return;
-
-            const { card, wrapper } = activeCard;
-            const scrollContainer = document.getElementById('scroll-container');
-            const nav = document.getElementById('main-nav');
-
-            const rect = wrapper.getBoundingClientRect();
-
-            card.classList.remove('is-expanded');
-
-            card.style.top = rect.top + 'px';
-            card.style.left = rect.left + 'px';
-            card.style.width = rect.width + 'px';
-            card.style.height = rect.height + 'px';
-            card.style.borderRadius = '1.5rem'; 
-            
-            card.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
-
-            setTimeout(() => {
-                card.style.transition = 'none'; 
-                card.style.position = 'absolute';
-                card.style.top = '0';
-                card.style.left = '0';
-                card.style.width = '100%';
-                card.style.height = '100%';
-                card.style.zIndex = '10';
-                card.style.boxShadow = ''; 
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
                 
-                setTimeout(() => {
-                    card.style.transition = 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease';
-                    card.classList.add('glass-card-hover');
-                }, 30);
+                <div class="subtle-card p-5 rounded-xl space-y-4">
+                    <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Application</h3>
+                    <ul class="space-y-2 text-xs text-slate-400 font-mono">
+                        <li>Kotlin</li>
+                        <li>Coroutines</li>
+                        <li>Flow / StateFlow</li>
+                        <li>Jetpack Compose</li>
+                        <li>Material 3</li>
+                    </ul>
+                </div>
 
-                scrollContainer.style.overflowY = 'scroll';
-                nav.style.opacity = '1';
-                activeCard = null; 
-            }, 500); 
-        }
+                <div class="subtle-card p-5 rounded-xl space-y-4">
+                    <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Architecture</h3>
+                    <ul class="space-y-2 text-xs text-slate-400 font-mono">
+                        <li>MVVM</li>
+                        <li>Clean Architecture</li>
+                        <li>Repository Pattern</li>
+                        <li>Use Cases</li>
+                        <li>Dagger Hilt</li>
+                    </ul>
+                </div>
 
-        // --- TYPEWRITER SCROLL ANIMATION ---
-        const contactSection = document.getElementById('contact');
-        const typeElement = document.getElementById('typewriter-text');
-        const textToType = "Based in Hyderabad. Open to full-time Android engineering opportunities and freelancing part-time.";
-        let typeTimeout;
-        let isTyping = false;
+                <div class="subtle-card p-5 rounded-xl space-y-4">
+                    <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Data</h3>
+                    <ul class="space-y-2 text-xs text-slate-400 font-mono">
+                        <li>Realm DB</li>
+                        <li>Room DB</li>
+                        <li>MediaStore API</li>
+                        <li>Retrofit</li>
+                        <li>Offline Caching</li>
+                    </ul>
+                </div>
 
-        const contactObserver = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && !isTyping) {
-                isTyping = true;
-                typeElement.textContent = '';
-                let i = 0;
-                
-                function typeWriter() {
-                    if (i < textToType.length) {
-                        typeElement.textContent += textToType.charAt(i);
-                        i++;
-                        typeTimeout = setTimeout(typeWriter, 35);
-                    }
-                }
-                setTimeout(typeWriter, 500); 
-            } else if (!entries[0].isIntersecting) {
-                isTyping = false;
-                clearTimeout(typeTimeout);
-                typeElement.textContent = '';
-            }
-        }, { threshold: 0.6 });
+                <div class="subtle-card p-5 rounded-xl space-y-4">
+                    <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Platform</h3>
+                    <ul class="space-y-2 text-xs text-slate-400 font-mono">
+                        <li>Media3 / ExoPlayer</li>
+                        <li>CameraX</li>
+                        <li>Location APIs</li>
+                        <li>WorkManager</li>
+                        <li>Android Services</li>
+                    </ul>
+                </div>
 
-        contactObserver.observe(contactSection);
+                <div class="subtle-card p-5 rounded-xl space-y-4">
+                    <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Quality</h3>
+                    <ul class="space-y-2 text-xs text-slate-400 font-mono">
+                        <li>Espresso</li>
+                        <li>Crashlytics</li>
+                        <li>Git</li>
+                        <li>Gradle Kotlin DSL</li>
+                        <li>Version Catalogs</li>
+                    </ul>
+                </div>
 
-    </script>
-</body>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="pt-10">
+            <div class="glass-card p-10 sm:p-16 rounded-[2.5rem] text-center space-y-8 relative overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="space-y-3 relative z-10">
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">Building the Next <br/><span class="text-gradient-accent">Android System</span></h2>
+                    <p class="text-slate-400 text-sm max-w-md mx-auto">Available for full-time Android engineering roles. Based in Hyderabad, India.</p>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-center gap-4 relative z-10">
+                    <a href="mailto:vasistvr@gmail.com" class="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm transition flex items-center gap-2 shadow-lg">
+                        <i data-lucide="mail" class="w-4 h-4"></i> <span>Email Me</span>
+                    </a>
+                    <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
+                        <i data-lucide="file-text" class="w-4 h-4 text-slate-300"></i> <span>Resume PDF</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/vasist-vamsi-bhukya-03304723a/" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
+                        <i data-lucide="linkedin" class="w-4 h-4 text-blue-400"></i> <span>LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/vasistvr" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2"> 
+                        <i data-lucide="github" class="w-4 h-4 text-slate-300"></i> <span>GitHub</span> 
+                    </a> 
+                </div> 
+            </div> 
+        </section> 
+ 
+    </main> 
+ 
+    <footer class="w-full border-t border-white/5 py-8 mt-20 text-center"> 
+        <p class="text-xs font-mono text-slate-500"> 
+            Built with performance, accessibility, and clean architecture in mind.<br/> 
+            &copy; 2026 Vasist Vamsi Bhukya. 
+        </p> 
+    </footer> 
+ 
+    <script> 
+        document.addEventListener("DOMContentLoaded", () => { 
+            lucide.createIcons(); 
+        }); 
+    </script> 
+</body> 
 </html>
