@@ -10,7 +10,7 @@
     <meta name="author" content="Vasist Vamsi Bhukya">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://your-domain.com/">
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="Vasist Vamsi Bhukya — Android Software Engineer">
     <meta property="og:description" content="Building high-performance native Android applications with offline-first data pipelines and robust media systems.">
@@ -18,7 +18,7 @@
     <meta property="og:url" content="https://your-domain.com/">
     <meta property="og:image" content="https://your-domain.com/og-image.png">
     <meta property="og:site_name" content="Vasist Vamsi Bhukya">
-    
+
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Vasist Vamsi Bhukya — Android Software Engineer">
@@ -49,6 +49,12 @@
     <!-- Lucide Icons -->
     <script defer src="https://unpkg.com/lucide@latest"></script>
 
+    <!-- GSAP & AOS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <style>
         body {
             background-color: #030712;
@@ -57,22 +63,67 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
+
+        /* Premium Background Mesh - Slowed down and reduced opacity for maturity */
+        .bg-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(126, 34, 206, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 1) 0%, rgba(3, 7, 18, 1) 100%);
+            animation: mesh-move 30s ease-in-out infinite alternate;
+        }
+
+        @keyframes mesh-move {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
         .bg-grid {
             background-size: 40px 40px;
             background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
         }
-        
+
         .glass-card {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: border-color 0.3s ease;
         }
-        
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
         .subtle-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .subtle-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+        }
+
+
+        /* Scroll Progress */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(to right, #2563eb, #7e22ce);
+            z-index: 100;
+            width: 0%;
         }
 
         .text-gradient {
@@ -85,33 +136,72 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        
-        /* Pixel Device Mockup Frame */
+
+        /* Pixel 9 Pro Device Mockup Frame (Silver/Porcelain) */
         .pixel-frame {
-            border: 8px solid #1e293b;
-            border-radius: 2.5rem;
-            box-shadow: 
-                inset 0 0 0 2px #334155,
-                0 30px 80px rgba(0,0,0,0.6);
-            background-color: #000;
-            overflow: hidden;
+            background-color: #000; /* Creates the black bezel */
+            border: 1px solid #f8fafc; /* Ultra-thin Silver outer frame */
+            border-radius: 30px; /* Set to 40px (4dp-equivalent scaling) */
+            box-shadow:
+                0 30px 60px -12px rgba(0,0,0,0.5),
+                inset 0 0 0 1px rgba(255,255,255,0.1);
             position: relative;
+            z-index: 10;
         }
-        
-        /* Pixel Punch-hole Camera */
+
+        .pixel-screen {
+            position: absolute;
+            inset: 8px; /* Thick uniform black bezel matching Pixel 9 Pro */
+            border-radius: 22px; /* Matched to frame curve minus inset */
+            overflow: hidden;
+            background: #000;
+            z-index: 5;
+        }
+
+        /* Side Buttons for extra realism */
+        .pixel-frame::before, .pixel-frame::after {
+            content: "";
+            position: absolute;
+            right: -3px;
+            width: 3px;
+            background: #e2e8f0;
+            border-radius: 0 2px 2px 0;
+            z-index: -1;
+        }
+        /* Power Button */
+        .pixel-frame::before {
+            top: 100px;
+            height: 35px;
+        }
+        /* Volume Rocker */
+        .pixel-frame::after {
+            top: 155px;
+            height: 70px;
+        }
+
+        /* Pixel 9 Pro Punch-hole Camera */
         .pixel-camera {
             position: absolute;
-            top: 14px;
+            top: 24px; /* Centered in the top bezel area */
             left: 50%;
             transform: translateX(-50%);
-            width: 14px;
-            height: 14px;
+            width: 10px;
+            height: 10px;
             background-color: #0a0a0c;
             border-radius: 50%;
             z-index: 30;
-            box-shadow: inset 0 -1px 2px rgba(255,255,255,0.15), 0 0 1px rgba(0,0,0,0.8);
+            box-shadow: inset 0 -0.5px 1px rgba(255,255,255,0.15), 0 0 1px rgba(0,0,0,0.8);
         }
-        
+
+        /* Typography Refinement */
+        h1, h2, h3 {
+            letter-spacing: -0.02em;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
@@ -119,10 +209,15 @@
                 transition-duration: 0.01ms !important;
                 scroll-behavior: auto !important;
             }
+            #cursor, #cursor-blur { display: none; }
+            body { cursor: auto; }
         }
     </style>
 </head>
 <body class="antialiased selection:bg-blue-600 selection:text-white bg-grid min-h-screen flex flex-col">
+
+    <div id="scroll-progress"></div>
+    <div class="bg-mesh"></div>
 
     <!-- Navigation -->
     <header class="fixed top-4 inset-x-0 z-50 flex justify-center px-4">
@@ -137,14 +232,13 @@
             </a>
 
             <nav class="hidden md:flex items-center gap-1 bg-white/[0.03] p-1 rounded-full border border-white/5 text-xs">
-                <a href="#how-i-build" class="px-4 py-1.5 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition focus:outline-none focus:ring-2 focus:ring-blue-500">Methodology</a>
                 <a href="#work" class="px-4 py-1.5 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition focus:outline-none focus:ring-2 focus:ring-blue-500">Work</a>
                 <a href="#experience" class="px-4 py-1.5 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition focus:outline-none focus:ring-2 focus:ring-blue-500">Experience</a>
-                <a href="#depth" class="px-4 py-1.5 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition focus:outline-none focus:ring-2 focus:ring-blue-500">Depth</a>
+                <a href="#depth" class="px-4 py-1.5 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition focus:outline-none focus:ring-2 focus:ring-blue-500">Stack</a>
             </nav>
 
             <div class="flex items-center gap-2">
-                <a href="resume.pdf" target="_blank" aria-label="Download Resume PDF" class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition focus:outline-none focus:ring-2 focus:ring-blue-500 border border-white/5">
+                <a href="assets/Vasist_Resume_updated.pdf" target="_blank" aria-label="Download Resume PDF" class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition focus:outline-none focus:ring-2 focus:ring-blue-500 border border-white/5">
                     <i data-lucide="file-down" class="w-3.5 h-3.5"></i> <span>Resume</span>
                 </a>
                 <a href="#contact" class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400">
@@ -154,12 +248,12 @@
         </div>
     </header>
 
-    <main class="w-full flex-grow pt-32 pb-20 px-4 sm:px-6 max-w-6xl mx-auto space-y-32">
+    <main class="w-full flex-grow pt-24 pb-20 px-4 sm:px-6 max-w-6xl mx-auto space-y-20">
 
         <!-- HERO SECTION -->
-        <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" data-aos="fade-up" data-aos-duration="1000">
             <div class="lg:col-span-7 space-y-6 text-left">
-                
+
                 <div class="space-y-4">
                     <div class="text-xs font-mono text-blue-400 tracking-wider uppercase flex items-center gap-2">
                         <i data-lucide="terminal" class="w-4 h-4"></i> Android Software Engineer
@@ -170,33 +264,32 @@
                 </div>
 
                 <p class="text-base sm:text-lg text-slate-300 max-w-xl leading-relaxed font-light">
-                    Android Engineer building production-grade native applications, media systems, and offline-first architectures with Kotlin.
+                    Android Engineer building systems that feel simple. Focused on Kotlin-first, native Android development with offline-first data pipelines and robust media systems.
                 </p>
 
                 <div class="flex flex-wrap items-center gap-2 font-mono text-xs text-slate-400 pb-2">
-                    <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10">Kotlin</span>
+                    <span class="px-2.5 py-1 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">Kotlin Native</span>
                     <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10">Jetpack Compose</span>
                     <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10">Media3</span>
                     <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10">Realm</span>
                     <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10">Hilt</span>
-                    <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10">Coroutines</span>
                 </div>
 
                 <!-- Credibility Metrics -->
                 <div class="flex flex-wrap items-center gap-6 font-mono text-[11px] text-slate-300 border-t border-white/10 pt-4">
                     <div class="flex flex-col">
                         <span class="text-white font-bold text-base">3+ YEARS</span>
-                        <span class="text-slate-500 uppercase tracking-widest">Android Dev</span>
+                        <span class="text-slate-500 uppercase tracking-widest">Android Engineering</span>
                     </div>
                     <div class="w-px h-8 bg-white/10"></div>
                     <div class="flex flex-col">
-                        <span class="text-white font-bold text-base">3 NATIVE</span>
+                        <span class="text-white font-bold text-base">3</span>
                         <span class="text-slate-500 uppercase tracking-widest">Production Apps</span>
                     </div>
                     <div class="w-px h-8 bg-white/10"></div>
                     <div class="flex flex-col">
-                        <span class="text-white font-bold text-base">GOOGLE PLAY</span>
-                        <span class="text-slate-500 uppercase tracking-widest">Published</span>
+                        <span class="text-white font-bold text-base">1</span>
+                        <span class="text-slate-500 uppercase tracking-widest">Published on Google Play</span>
                     </div>
                 </div>
 
@@ -205,63 +298,62 @@
                         <span>View Selected Work</span>
                         <i data-lucide="arrow-down" class="w-4 h-4"></i>
                     </a>
-                    <a href="https://github.com/vasistvr" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
+                    <a href="https://github.com/VasistB" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
                         <i data-lucide="github" class="w-4 h-4 text-slate-400"></i>
                         <span>GitHub</span>
                     </a>
                 </div>
             </div>
 
-            <!-- REALISTIC SCREENSHOT CONTAINER (PIXEL FRAME) -->
             <div class="lg:col-span-5 flex justify-center lg:justify-end">
-                <div class="relative w-[280px] sm:w-[300px] aspect-[9/19.5] pixel-frame ring-1 ring-white/10">
+                <div class="relative w-[260px] sm:w-[280px] aspect-[9/20] pixel-frame ring-1 ring-white/10">
                     <div class="pixel-camera"></div>
-                    
-                    <!-- Hero iPlay UI screenshot -->
-                    <img src="assets/Playstore screen.jpeg" alt="iPlay Music Player" class="absolute inset-0 w-full h-full object-cover object-top z-10" />
-
-                    <!-- Optional glass highlight over the screen -->
-                    <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent z-20"></div>
+                    <div class="pixel-screen">
+                        <!-- Hero iPlay UI screenshot -->
+                        <img src="assets/play-store-screen.jpeg" alt="iPlay Music Player" class="absolute inset-0 w-full h-full object-cover object-top" />
+                        <!-- Optional glass highlight over the screen -->
+                        <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent"></div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- HOW I BUILD (Methodology) -->
-        <section id="how-i-build" class="space-y-8">
+        <!-- ENGINEERING APPROACH -->
+        <section id="engineering-approach" class="space-y-8" data-aos="fade-up">
             <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-6 flex items-center gap-2">
-                <i data-lucide="settings-2" class="w-4 h-4"></i> How I Build
+                <i data-lucide="settings-2" class="w-4 h-4"></i> Engineering Approach
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-slate-700">
+                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-slate-700" data-aos="fade-up" data-aos-delay="100">
                     <div class="text-2xl font-black text-slate-700 font-mono">01</div>
                     <h3 class="text-sm font-bold text-white">Understand</h3>
-                    <p class="text-[11px] text-slate-400 leading-relaxed">Requirements + lifecycle constraints.</p>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Lifecycle constraints & requirements.</p>
                 </div>
-                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-blue-500/50">
+                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-blue-500/50" data-aos="fade-up" data-aos-delay="200">
                     <div class="text-2xl font-black text-blue-900 font-mono">02</div>
                     <h3 class="text-sm font-bold text-white">Model</h3>
-                    <p class="text-[11px] text-slate-400 leading-relaxed">Domain + state + explicit data flows.</p>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Explicit state & domain models.</p>
                 </div>
-                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-purple-500/50">
+                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-purple-500/50" data-aos="fade-up" data-aos-delay="300">
                     <div class="text-2xl font-black text-purple-900 font-mono">03</div>
                     <h3 class="text-sm font-bold text-white">Architect</h3>
-                    <p class="text-[11px] text-slate-400 leading-relaxed">MVVM + Clean boundaries + DI.</p>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Clean boundaries & DI patterns.</p>
                 </div>
-                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-emerald-500/50">
+                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-emerald-500/50" data-aos="fade-up" data-aos-delay="400">
                     <div class="text-2xl font-black text-emerald-900 font-mono">04</div>
                     <h3 class="text-sm font-bold text-white">Implement</h3>
-                    <p class="text-[11px] text-slate-400 leading-relaxed">Kotlin + native Android APIs.</p>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Native APIs & idiomatic Kotlin.</p>
                 </div>
-                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-amber-500/50">
+                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-amber-500/50" data-aos="fade-up" data-aos-delay="500">
                     <div class="text-2xl font-black text-amber-900 font-mono">05</div>
                     <h3 class="text-sm font-bold text-white">Validate</h3>
-                    <p class="text-[11px] text-slate-400 leading-relaxed">Tests + profiling + edge cases.</p>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Profiling, tests & edge cases.</p>
                 </div>
-                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-rose-500/50">
+                <div class="subtle-card p-5 rounded-2xl space-y-2 border-t-2 border-t-rose-500/50" data-aos="fade-up" data-aos-delay="600">
                     <div class="text-2xl font-black text-rose-900 font-mono">06</div>
                     <h3 class="text-sm font-bold text-white">Ship</h3>
-                    <p class="text-[11px] text-slate-400 leading-relaxed">CI + Play Console + monitoring.</p>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Play Console & CI/CD pipeline.</p>
                 </div>
             </div>
         </section>
@@ -276,7 +368,7 @@
             </div>
 
             <!-- 01: iPlay Music Player -->
-            <div class="glass-card rounded-3xl p-6 sm:p-10 space-y-10 relative overflow-hidden">
+            <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-8 relative overflow-hidden" data-aos="fade-up">
                 <div class="absolute top-0 right-0 p-8 text-6xl font-black text-white/5 select-none pointer-events-none">01</div>
 
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
@@ -297,10 +389,12 @@
 
                     <!-- Screenshots Column -->
                     <div class="lg:col-span-4 flex justify-center lg:justify-start">
-                        <div class="relative w-[260px] aspect-[9/19.5] pixel-frame ring-1 ring-white/10 shadow-2xl">
+                        <div class="relative w-[240px] aspect-[9/20] pixel-frame ring-1 ring-white/10 shadow-2xl">
                             <div class="pixel-camera"></div>
-                            <img src="assets/iplay-screenshot.png" alt="iPlay Music Player" class="absolute inset-0 w-full h-full object-cover object-top z-10" />
-                            <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent z-20"></div>
+                            <div class="pixel-screen">
+                                <img src="assets/iplay-screenshot.png" alt="iPlay Music Player" class="absolute inset-0 w-full h-full object-cover object-top" />
+                                <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent"></div>
+                            </div>
                         </div>
                     </div>
 
@@ -329,34 +423,56 @@
                             </div>
                         </div>
 
+                        <!-- Engineering Results -->
+                        <div class="space-y-4">
+                            <h4 class="text-xs font-mono text-emerald-400 uppercase tracking-widest border-b border-emerald-500/20 pb-2">Engineering Results</h4>
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-xs text-slate-300">
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1 h-1 rounded-full bg-emerald-400"></span> Playback continues independently of UI lifecycle
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1 h-1 rounded-full bg-emerald-400"></span> Queue survives configuration/process restoration
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1 h-1 rounded-full bg-emerald-400"></span> Shuffle preserves current playback position
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1 h-1 rounded-full bg-emerald-400"></span> Local library remains available offline
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1 h-1 rounded-full bg-emerald-400"></span> MediaStore processed off the main thread
+                                </li>
+                            </ul>
+                        </div>
+
                         <!-- Architecture Diagram -->
-                        <div class="subtle-card p-6 rounded-2xl space-y-4 shadow-inner">
+                        <div class="subtle-card p-6 rounded-2xl space-y-4 shadow-inner overflow-x-auto">
                             <div class="text-[10px] font-mono text-slate-400 uppercase tracking-wider mb-2">System Architecture</div>
 
-                            <div class="flex flex-col items-center gap-2 font-mono text-xs w-full">
+                            <div class="flex flex-col items-center gap-2 font-mono text-xs min-w-[320px]">
                                 <div class="w-48 p-2.5 rounded-lg border border-blue-500/30 bg-blue-500/10 text-center text-blue-200">Compose UI</div>
-                                <div class="text-slate-600">↓</div>
+                                <div class="text-slate-600 text-lg">↓</div>
                                 <div class="w-48 p-2.5 rounded-lg border border-blue-500/30 bg-blue-500/10 text-center text-blue-200">ViewModel</div>
-                                <div class="text-slate-600">↓</div>
+                                <div class="text-slate-600 text-lg">↓</div>
                                 <div class="w-48 p-2.5 rounded-lg border border-indigo-500/30 bg-indigo-500/10 text-center text-indigo-200">StateFlow & Use Cases</div>
 
-                                <div class="w-full flex justify-center text-slate-600 gap-[110px] px-8">
-                                    <span>↙</span><span>↘</span>
+                                <div class="w-full flex justify-center text-slate-600 gap-24 sm:gap-32 px-4">
+                                    <span class="text-xl">↙</span><span class="text-xl">↘</span>
                                 </div>
 
                                 <div class="w-full grid grid-cols-2 gap-4">
                                     <div class="p-2.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-center text-emerald-200 flex flex-col items-center">
                                         <span>Media Repository</span>
-                                        <span class="text-[9px] text-emerald-400/60 mt-1">Realm / MediaStore</span>
+                                        <span class="text-[9px] text-emerald-400/60 mt-1 uppercase">Persistence</span>
                                     </div>
                                     <div class="p-2.5 rounded-lg border border-purple-500/30 bg-purple-500/10 text-center text-purple-200 flex flex-col items-center">
                                         <span>Playback Controller</span>
-                                        <span class="text-[9px] text-purple-400/60 mt-1">Media3 Service</span>
+                                        <span class="text-[9px] text-purple-400/60 mt-1 uppercase">Media3 Service</span>
                                     </div>
                                 </div>
 
-                                <div class="w-full flex justify-center text-slate-600 gap-[110px] px-8">
-                                    <span>↘</span><span>↙</span>
+                                <div class="w-full flex justify-center text-slate-600 gap-24 sm:gap-32 px-4">
+                                    <span class="text-xl">↘</span><span class="text-xl">↙</span>
                                 </div>
 
                                 <div class="w-48 p-2.5 rounded-lg border border-white/20 bg-dark-950 text-center text-slate-300">
@@ -370,7 +486,7 @@
             </div>
 
             <!-- 02: GPS Camera -->
-            <div class="subtle-card rounded-3xl p-6 sm:p-10 space-y-10 relative overflow-hidden">
+            <div class="subtle-card rounded-3xl p-6 sm:p-8 space-y-8 relative overflow-hidden" data-aos="fade-up">
                 <div class="absolute top-0 right-0 p-8 text-6xl font-black text-white/5 select-none pointer-events-none">02</div>
 
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
@@ -386,45 +502,70 @@
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
                     <!-- Screenshots Column -->
                     <div class="lg:col-span-4 flex justify-center lg:justify-start">
-                        <div class="relative w-[260px] aspect-[9/19.5] pixel-frame ring-1 ring-white/10 shadow-2xl">
+                        <div class="relative w-[240px] aspect-[9/20] pixel-frame ring-1 ring-white/10 shadow-2xl">
                             <div class="pixel-camera"></div>
-                            <img src="assets/gps-camera-screenshot.png" alt="GPS Camera App" class="absolute inset-0 w-full h-full object-cover object-top z-10" />
-                            <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent z-20"></div>
+                            <div class="pixel-screen">
+                                <img src="assets/gps-camera-screenshot.png" alt="GPS Camera App" class="absolute inset-0 w-full h-full object-cover object-top" />
+                                <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent"></div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Engineering Copy Column -->
                     <div class="lg:col-span-8 space-y-8">
                         <div class="space-y-3">
-                            <h4 class="text-sm font-bold text-white">The Challenge</h4>
+                            <h4 class="text-sm font-bold text-white border-b border-white/10 pb-2">The Challenge</h4>
                             <p class="text-sm text-slate-300 leading-relaxed">
-                                Managing device camera lifecycles via CameraX while concurrently fetching high-accuracy GPS coordinates, timestamps, and address data to burn directly onto captured image frames natively.
+                                Managed device camera lifecycles while fetching high-accuracy GPS coordinates, timestamps, and address data to burn directly onto captured image frames natively.
                             </p>
                         </div>
 
-                        <div class="space-y-3">
-                            <h4 class="text-sm font-bold text-white">Architecture & Solution</h4>
-                            <ul class="space-y-3 text-sm text-slate-300">
-                                <li class="flex items-start gap-3">
-                                    <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
-                                    <span>Engineered a custom orientation handler compensating for physical device rotation and sensor data to ensure flawless metadata rendering.</span>
-                                </li>
-                                <li class="flex items-start gap-3">
-                                    <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
-                                    <span>Integrated Location Services to fetch real-time coordinates, applying them as a burned-in canvas overlay.</span>
-                                </li>
-                                <li class="flex items-start gap-3">
-                                    <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
-                                    <span>Utilized Kotlin Coroutines to offload heavy image processing pipelines completely away from the main thread.</span>
-                                </li>
-                            </ul>
+                        <!-- Processing Pipeline -->
+                        <div class="space-y-4">
+                            <h4 class="text-xs font-mono text-blue-400 uppercase tracking-widest border-b border-blue-500/20 pb-2">Image Processing Pipeline</h4>
+                            <div class="flex flex-wrap items-center gap-3 font-mono text-[10px] text-slate-400">
+                                <span class="px-2 py-1 bg-white/5 rounded">CameraX</span>
+                                <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                <span class="px-2 py-1 bg-white/5 rounded">Image Capture</span>
+                                <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                <span class="px-2 py-1 bg-white/5 rounded">Location + Orientation</span>
+                                <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                <span class="px-2 py-1 bg-white/5 rounded">Metadata Composition</span>
+                                <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                <span class="px-2 py-1 bg-emerald-500/10 text-emerald-400 rounded">Final Image</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                            <div class="space-y-3">
+                                <h4 class="text-xs font-bold text-slate-400 uppercase">Architecture</h4>
+                                <ul class="space-y-2 text-[11px] text-slate-400 leading-relaxed">
+                                    <li class="flex items-start gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-blue-400 mt-1.5"></span> Custom orientation handler for sensor data.
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-blue-400 mt-1.5"></span> Location Services integration.
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="space-y-3">
+                                <h4 class="text-xs font-bold text-slate-400 uppercase">Result</h4>
+                                <ul class="space-y-2 text-[11px] text-slate-400 leading-relaxed">
+                                    <li class="flex items-start gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-emerald-400 mt-1.5"></span> Before: Raw capture
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="w-1 h-1 rounded-full bg-emerald-400 mt-1.5"></span> After: Metadata stamped image
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- 03: Vitals -->
-            <div class="subtle-card rounded-3xl p-6 sm:p-10 space-y-10 relative overflow-hidden">
+            <div class="subtle-card rounded-3xl p-6 sm:p-8 space-y-8 relative overflow-hidden" data-aos="fade-up">
                 <div class="absolute top-0 right-0 p-8 text-6xl font-black text-white/5 select-none pointer-events-none">03</div>
 
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
@@ -443,18 +584,35 @@
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
                     <!-- Screenshots Column -->
                     <div class="lg:col-span-4 flex justify-center lg:justify-start">
-                        <div class="relative w-[260px] aspect-[9/19.5] pixel-frame ring-1 ring-white/10 shadow-2xl">
+                        <div class="relative w-[240px] aspect-[9/20] pixel-frame ring-1 ring-white/10 shadow-2xl">
                             <div class="pixel-camera"></div>
-                            <img src="assets/vitals-screenshot.png" alt="Vitals Diagnostics App" class="absolute inset-0 w-full h-full object-cover object-top z-10" />
-                            <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent z-20"></div>
+                            <div class="pixel-screen">
+                                <img src="assets/vitals-screenshot.png" alt="Vitals Diagnostics App" class="absolute inset-0 w-full h-full object-cover object-top" />
+                                <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent"></div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Engineering Copy Column -->
-                    <div class="lg:col-span-8 space-y-8 flex flex-col justify-center h-full">
-                        <p class="text-sm text-slate-300 leading-relaxed max-w-2xl">
-                            A diagnostic utility tracking battery health, charging wattage, hardware profiles, and memory performance in real-time. Designed around native Android system receivers, BatteryManager APIs, and Coroutine flows to provide zero-jank telemetry.
-                        </p>
+                    <div class="lg:col-span-8 space-y-8 flex flex-col justify-start">
+                        <div class="space-y-4">
+                            <h4 class="text-sm font-bold text-white border-b border-white/10 pb-2">System Telemetry</h4>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                A diagnostic utility tracking battery health, charging wattage, and hardware profiles. Designed around native Android system receivers and Coroutine flows to provide efficient telemetry.
+                            </p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <h4 class="text-xs font-mono text-amber-400 uppercase tracking-widest border-b border-amber-500/20 pb-2">System Integration</h4>
+                            <div class="flex flex-wrap items-center gap-2 font-mono text-[10px] text-slate-400">
+                                <span class="px-2 py-1 bg-white/5 rounded border border-white/10">BatteryManager</span>
+                                <span class="px-2 py-1 bg-white/5 rounded border border-white/10">PowerManager</span>
+                                <span class="px-2 py-1 bg-white/5 rounded border border-white/10">Thermal APIs</span>
+                                <span class="px-2 py-1 bg-white/5 rounded border border-white/10">Build / Hardware APIs</span>
+                                <span class="px-2 py-1 bg-white/5 rounded border border-white/10">BroadcastReceiver</span>
+                                <span class="px-2 py-1 bg-white/5 rounded border border-white/10">StateFlow</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -478,99 +636,164 @@
                             2022 — 2024
                         </div>
 
-                        <div class="subtle-card rounded-2xl p-6 sm:p-8 flex-grow space-y-6">
+                        <div class="subtle-card rounded-2xl p-6 sm:p-8 flex-grow space-y-8" data-aos="fade-left">
                             <div>
                                 <h3 class="text-xl font-bold text-white">Junior Android Developer</h3>
                                 <div class="text-sm text-purple-400 font-medium">Survey Heart (Android, iOS & Web)</div>
                             </div>
 
-                            <ul class="space-y-4 text-sm text-slate-300 leading-relaxed">
-                                <li class="flex items-start gap-3">
-                                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 shrink-0 mt-0.5"></i>
-                                    <span><strong>Cloud Storage Pipeline:</strong> Developed a comprehensive cloud storage manager integrating a custom backend API and MongoDB, enabling users to seamlessly view and manage AWS-hosted image files.</span>
-                                </li>
-                                <li class="flex items-start gap-3">
-                                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 shrink-0 mt-0.5"></i>
-                                    <span><strong>Database Architecture:</strong> Migrated persistence from Room to Realm DB to support the application's cross-platform data model and reactive local data access.</span>
-                                </li>
-                                <li class="flex items-start gap-3">
-                                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 shrink-0 mt-0.5"></i>
-                                    <span><strong>Background Operations:</strong> Designed a resilient background file-download pipeline using WorkManager, DownloadManager, and Coroutines, supporting retryable downloads while keeping long-running work outside the UI lifecycle.</span>
-                                </li>
-                                <li class="flex items-start gap-3">
-                                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 shrink-0 mt-0.5"></i>
-                                    <span><strong>Quality & Diagnostics:</strong> Integrated Firebase Crashlytics with custom post-crash feedback systems and authored automated UI tests using Espresso to bolster application reliability.</span>
-                                </li>
-                            </ul>
+                            <div class="space-y-8">
+                                <!-- Achievement 1 -->
+                                <div class="space-y-2">
+                                    <div class="text-[10px] font-mono text-slate-500 uppercase">Cloud Storage Pipeline</div>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                                        <div class="text-slate-500">Problem</div>
+                                        <div class="md:col-span-2 text-slate-300">Users lacked a way to manage AWS-hosted image files directly from the mobile app.</div>
+                                        <div class="text-slate-500">Decision</div>
+                                        <div class="md:col-span-2 text-slate-300">Developed a custom storage manager integrating MongoDB and custom backend APIs.</div>
+                                        <div class="text-slate-500">Result</div>
+                                        <div class="md:col-span-2 text-emerald-400/80">Seamless file management and viewing within the application lifecycle.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Achievement 2 -->
+                                <div class="space-y-2">
+                                    <div class="text-[10px] font-mono text-slate-500 uppercase">Background Download Pipeline</div>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                                        <div class="text-slate-500">Problem</div>
+                                        <div class="md:col-span-2 text-slate-300">Large files could outlive the UI lifecycle, causing interrupted downloads.</div>
+                                        <div class="text-slate-500">Decision</div>
+                                        <div class="md:col-span-2 text-slate-300">Moved downloads into a WorkManager + DownloadManager pipeline with retry and persistent progress.</div>
+                                        <div class="text-slate-500">Result</div>
+                                        <div class="md:col-span-2 text-emerald-400/80">Downloads remained resilient across configuration changes and app lifecycle transitions.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Achievement 3 -->
+                                <div class="space-y-2">
+                                    <div class="text-[10px] font-mono text-slate-500 uppercase">Database Architecture</div>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                                        <div class="text-slate-500">Problem</div>
+                                        <div class="md:col-span-2 text-slate-300">Need for reactive, cross-platform local data access for complex models.</div>
+                                        <div class="text-slate-500">Decision</div>
+                                        <div class="md:col-span-2 text-slate-300">Migrated persistence layer from Room to Realm DB.</div>
+                                        <div class="text-slate-500">Result</div>
+                                        <div class="md:col-span-2 text-emerald-400/80">Achieved consistent reactive data flow across the Android and iOS implementations.</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- TECHNICAL DEPTH -->
-        <section id="depth" class="space-y-10">
+        <!-- TECHNICAL DEPTH (Technologies Marquee) -->
+        <section id="depth" class="space-y-10 overflow-hidden">
             <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-6 flex items-center gap-2">
                 <i data-lucide="layers" class="w-4 h-4"></i> Technical Depth
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-                
-                <div class="subtle-card p-5 rounded-xl space-y-4">
-                    <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Application</h3>
-                    <ul class="space-y-2 text-xs text-slate-400 font-mono">
-                        <li>Kotlin</li>
-                        <li>Coroutines</li>
-                        <li>Flow / StateFlow</li>
-                        <li>Jetpack Compose</li>
-                        <li>Material 3</li>
-                    </ul>
+            <div class="flex flex-col gap-8">
+                <!-- Tech Stack Grid with AOS -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+
+                    <div class="subtle-card p-5 rounded-xl space-y-4" data-aos="fade-up" data-aos-delay="0">
+                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Application</h3>
+                        <ul class="space-y-2 text-xs text-slate-400 font-mono">
+                            <li>Kotlin</li>
+                            <li>Coroutines</li>
+                            <li>Flow / StateFlow</li>
+                            <li>Jetpack Compose</li>
+                            <li>Material 3</li>
+                        </ul>
+                    </div>
+
+                    <div class="subtle-card p-5 rounded-xl space-y-4" data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Architecture</h3>
+                        <ul class="space-y-2 text-xs text-slate-400 font-mono">
+                            <li>MVVM</li>
+                            <li>Clean Architecture</li>
+                            <li>Repository Pattern</li>
+                            <li>Use Cases</li>
+                            <li>Dagger Hilt</li>
+                        </ul>
+                    </div>
+
+                    <div class="subtle-card p-5 rounded-xl space-y-4" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Data</h3>
+                        <ul class="space-y-2 text-xs text-slate-400 font-mono">
+                            <li>Realm DB</li>
+                            <li>Room DB</li>
+                            <li>MediaStore API</li>
+                            <li>Retrofit</li>
+                            <li>Offline Caching</li>
+                        </ul>
+                    </div>
+
+                    <div class="subtle-card p-5 rounded-xl space-y-4" data-aos="fade-up" data-aos-delay="300">
+                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Platform</h3>
+                        <ul class="space-y-2 text-xs text-slate-400 font-mono">
+                            <li>Media3 / ExoPlayer</li>
+                            <li>CameraX</li>
+                            <li>Location APIs</li>
+                            <li>WorkManager</li>
+                            <li>Android Services</li>
+                        </ul>
+                    </div>
+
+                    <div class="subtle-card p-5 rounded-xl space-y-4" data-aos="fade-up" data-aos-delay="400">
+                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Quality</h3>
+                        <ul class="space-y-2 text-xs text-slate-400 font-mono">
+                            <li>Espresso</li>
+                            <li>Crashlytics</li>
+                            <li>Git</li>
+                            <li>Gradle Kotlin DSL</li>
+                            <li>Version Catalogs</li>
+                        </ul>
+                    </div>
+
                 </div>
 
-                <div class="subtle-card p-5 rounded-xl space-y-4">
-                    <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Architecture</h3>
-                    <ul class="space-y-2 text-xs text-slate-400 font-mono">
-                        <li>MVVM</li>
-                        <li>Clean Architecture</li>
-                        <li>Repository Pattern</li>
-                        <li>Use Cases</li>
-                        <li>Dagger Hilt</li>
-                    </ul>
+                <!-- Subtle Status Bar -->
+                <div class="flex items-center justify-between text-[10px] font-mono text-slate-500 border-t border-white/5 pt-4">
+                    <div class="flex items-center gap-4">
+                        <span>ANDROID</span>
+                        <span>KOTLIN</span>
+                        <span>COMPOSE</span>
+                        <span>MEDIA3</span>
+                    </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="subtle-card p-5 rounded-xl space-y-4">
-                    <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Data</h3>
-                    <ul class="space-y-2 text-xs text-slate-400 font-mono">
-                        <li>Realm DB</li>
-                        <li>Room DB</li>
-                        <li>MediaStore API</li>
-                        <li>Retrofit</li>
-                        <li>Offline Caching</li>
-                    </ul>
+        <!-- ENGINEERING PHILOSOPHY -->
+        <section id="philosophy" class="space-y-10">
+            <div class="text-xs font-mono text-blue-400 uppercase tracking-wider mb-6 flex items-center gap-2">
+                <i data-lucide="book-open" class="w-4 h-4"></i> Engineering Philosophy
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="subtle-card p-6 rounded-2xl space-y-3">
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest">State is Explicit</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">UI should render state, not own business logic. I build with unidirectional data flow (UDF) to ensure predictable behavior.</p>
                 </div>
-
-                <div class="subtle-card p-5 rounded-xl space-y-4">
-                    <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Platform</h3>
-                    <ul class="space-y-2 text-xs text-slate-400 font-mono">
-                        <li>Media3 / ExoPlayer</li>
-                        <li>CameraX</li>
-                        <li>Location APIs</li>
-                        <li>WorkManager</li>
-                        <li>Android Services</li>
-                    </ul>
+                <div class="subtle-card p-6 rounded-2xl space-y-3">
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest">Offline First</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Local data should remain useful when the network disappears. Persistence is a first-class citizen in my architectures.</p>
                 </div>
-
-                <div class="subtle-card p-5 rounded-xl space-y-4">
-                    <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Quality</h3>
-                    <ul class="space-y-2 text-xs text-slate-400 font-mono">
-                        <li>Espresso</li>
-                        <li>Crashlytics</li>
-                        <li>Git</li>
-                        <li>Gradle Kotlin DSL</li>
-                        <li>Version Catalogs</li>
-                    </ul>
+                <div class="subtle-card p-6 rounded-2xl space-y-3">
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest">Lifecycle Aware</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Long-running work should not depend on an Activity or Composable. I leverage WorkManager and Service-based solutions.</p>
                 </div>
-
+                <div class="subtle-card p-6 rounded-2xl space-y-3">
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest">Measure Before Optimizing</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Performance decisions come from profiling, not assumptions. I use Benchmark and Profiler tools to validate changes.</p>
+                </div>
+                <div class="subtle-card p-6 rounded-2xl space-y-3">
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest">Failure is a State</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Loading, empty, partial and error states are part of the core architecture, not an afterthought.</p>
+                </div>
             </div>
         </section>
 
@@ -580,22 +803,26 @@
                 <div class="absolute -top-24 -right-24 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
                 <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                <div class="space-y-3 relative z-10">
-                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">Building the Next <br/><span class="text-gradient-accent">Android System</span></h2>
-                    <p class="text-slate-400 text-sm max-w-md mx-auto">Available for full-time Android engineering roles. Based in Hyderabad, India.</p>
+                <div class="space-y-3 relative z-10" data-aos="zoom-in">
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">Let's build something <br/><span class="text-gradient-accent">that works.</span></h2>
+                    <p class="text-slate-400 text-sm max-w-md mx-auto">Android engineering • Native systems • Media • Offline-first • Compose</p>
+                    <div class="flex items-center justify-center gap-2 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full w-max mx-auto mt-4 border border-emerald-500/20">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        AVAILABLE FOR FULL-TIME ROLES
+                    </div>
                 </div>
 
                 <div class="flex flex-wrap items-center justify-center gap-4 relative z-10">
                     <a href="mailto:vasistvr@gmail.com" class="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm transition flex items-center gap-2 shadow-lg">
                         <i data-lucide="mail" class="w-4 h-4"></i> <span>Email Me</span>
                     </a>
-                    <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
+                    <a href="assets/resume.pdf" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
                         <i data-lucide="file-text" class="w-4 h-4 text-slate-300"></i> <span>Resume PDF</span>
                     </a>
                     <a href="https://www.linkedin.com/in/vasist-vamsi-bhukya-03304723a/" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
                         <i data-lucide="linkedin" class="w-4 h-4 text-blue-400"></i> <span>LinkedIn</span>
                     </a>
-                    <a href="https://github.com/vasistvr" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
+                    <a href="https://github.com/VasistB" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
                         <i data-lucide="github" class="w-4 h-4 text-slate-300"></i> <span>GitHub</span>
                     </a>
                 </div>
@@ -614,6 +841,32 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             lucide.createIcons();
+
+            // Initialize AOS
+            AOS.init({
+                once: true,
+                duration: 800,
+                offset: 100,
+                easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+            });
+
+
+            // Scroll Progress Logic
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById("scroll-progress").style.width = scrolled + "%";
+            });
+
+            // Hero Device Floating Animation
+            gsap.to(".pixel-frame", {
+                y: -10,
+                duration: 3,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
         });
     </script>
 </body>
