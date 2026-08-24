@@ -10,6 +10,7 @@
     <meta name="author" content="Vasist Vamsi Bhukya">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://your-domain.com/">
+    <link rel="icon" type="image/svg+xml" href="assets/android.svg">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Vasist Vamsi Bhukya — Android Software Engineer">
@@ -95,23 +96,92 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: border-color 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-card:hover {
-            border-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.25);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-button {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .glass-button:active {
+            transform: scale(0.95);
+            transition: all 0.1s ease;
+        }
+
+        /* Ripple/Water Wave Effect */
+        .glass-button .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: waterRipple 0.8s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes waterRipple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .glass-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .glass-button:hover::before {
+            left: 100%;
         }
 
         .subtle-card {
             background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.04);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .subtle-card:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
 
 
@@ -127,7 +197,8 @@
         }
 
         .text-gradient {
-            background: linear-gradient(135deg, #ffffff 30%, #93c5fd 70%, #c084fc 100%);
+            background: linear-gradient(135deg, #ffffff 20%, #93c5fd 50%, #c084fc 80%);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -140,7 +211,7 @@
         /* Pixel 9 Pro Device Mockup Frame (Silver/Porcelain) */
         .pixel-frame {
             background-color: #000; /* Creates the black bezel */
-            border: 1px solid #f8fafc; /* Ultra-thin Silver outer frame */
+            border: 2px solid #f8fafc; /* Ultra-thin Silver outer frame */
             border-radius: 30px; /* Set to 40px (4dp-equivalent scaling) */
             box-shadow:
                 0 30px 60px -12px rgba(0,0,0,0.5),
@@ -151,42 +222,61 @@
 
         .pixel-screen {
             position: absolute;
-            inset: 8px; /* Thick uniform black bezel matching Pixel 9 Pro */
+            inset: 6px; /* Thick uniform black bezel matching Pixel 9 Pro */
             border-radius: 22px; /* Matched to frame curve minus inset */
             overflow: hidden;
             background: #000;
             z-index: 5;
         }
 
-        /* Side Buttons for extra realism */
-        .pixel-frame::before, .pixel-frame::after {
-            content: "";
+        /* Hero Slider Specific - Hidden by default for GSAP animation */
+        #hero-device-stack .pixel-screen img {
+            opacity: 0;
+            transform: scale(1.05) translateY(10px);
+            transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out, filter 1.2s ease-in-out;
+            filter: blur(4px);
+            z-index: 1;
+        }
+
+        #hero-device-stack .pixel-screen img.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            filter: blur(0);
+            z-index: 2;
+        }
+
+        /* Project Section Images - Visible by default */
+        #work .pixel-screen img {
+            opacity: 1;
+            filter: none;
+            transform: none;
+        }
+
+        /* Device Stack Styling */
+        .device-stack {
+            position: relative;
+            width: 280px;
+            height: 560px; /* matched to aspect ratio approx */
+        }
+
+        .device-stack .pixel-frame {
             position: absolute;
-            right: -3px;
-            width: 3px;
-            background: #e2e8f0;
-            border-radius: 0 2px 2px 0;
-            z-index: -1;
-        }
-        /* Power Button */
-        .pixel-frame::before {
-            top: 100px;
-            height: 35px;
-        }
-        /* Volume Rocker */
-        .pixel-frame::after {
-            top: 155px;
-            height: 70px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: scale(0.8) translateY(50px);
         }
 
         /* Pixel 9 Pro Punch-hole Camera */
         .pixel-camera {
             position: absolute;
-            top: 24px; /* Centered in the top bezel area */
+            top: 20px; /* Centered in the top bezel area */
             left: 50%;
             transform: translateX(-50%);
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             background-color: #0a0a0c;
             border-radius: 50%;
             z-index: 30;
@@ -238,10 +328,10 @@
             </nav>
 
             <div class="flex items-center gap-2">
-                <a href="assets/Vasist_Resume_updated.pdf" target="_blank" aria-label="Download Resume PDF" class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition focus:outline-none focus:ring-2 focus:ring-blue-500 border border-white/5">
+                <a href="assets/Vasist_Resume_updated.pdf" target="_blank" aria-label="Download Resume PDF" class="glass-button px-4 py-2 rounded-full text-white text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <i data-lucide="file-down" class="w-3.5 h-3.5"></i> <span>Resume</span>
                 </a>
-                <a href="#contact" class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <a href="#contact" class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-400 hover:scale-105 active:scale-95">
                     <i data-lucide="mail" class="w-3.5 h-3.5"></i> <span>Contact</span>
                 </a>
             </div>
@@ -294,25 +384,57 @@
                 </div>
 
                 <div class="flex flex-wrap items-center gap-3 pt-4">
-                    <a href="#work" class="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-sm shadow-lg shadow-blue-500/20 hover:scale-105 active:scale-95 transition flex items-center gap-2">
+                    <a href="#work" class="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-sm shadow-lg shadow-blue-500/20 hover:scale-105 active:scale-95 transition flex items-center gap-2 group">
                         <span>View Selected Work</span>
-                        <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                        <i data-lucide="arrow-down" class="w-4 h-4 group-hover:translate-y-1 transition-transform"></i>
                     </a>
-                    <a href="https://github.com/VasistB" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
-                        <i data-lucide="github" class="w-4 h-4 text-slate-400"></i>
+                    <a href="https://github.com/VasistB" target="_blank" rel="noopener noreferrer" class="glass-button px-6 py-3 rounded-xl text-white font-semibold text-sm">
+                        <img src="assets/github.svg" class="w-4 h-4 opacity-80" alt="GitHub">
                         <span>GitHub</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/vasist-vamsi-bhukya-03304723a/" target="_blank" rel="noopener noreferrer" class="glass-button px-6 py-3 rounded-xl text-white font-semibold text-sm">
+                        <img src="assets/linkedin.svg" class="w-4 h-4" alt="LinkedIn">
+                        <span>LinkedIn</span>
                     </a>
                 </div>
             </div>
 
-            <div class="lg:col-span-5 flex justify-center lg:justify-end">
-                <div class="relative w-[260px] sm:w-[280px] aspect-[9/20] pixel-frame ring-1 ring-white/10">
-                    <div class="pixel-camera"></div>
-                    <div class="pixel-screen">
-                        <!-- Hero iPlay UI screenshot -->
-                        <img src="assets/play-store-screen.jpeg" alt="iPlay Music Player" class="absolute inset-0 w-full h-full object-cover object-top" />
-                        <!-- Optional glass highlight over the screen -->
-                        <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent"></div>
+            <div class="lg:col-span-5 flex flex-col items-center lg:items-end gap-12 pt-10">
+                <div class="device-stack" id="hero-device-stack">
+                    <!-- GPS Camera: Center back (Backmost) -->
+                    <div class="pixel-frame ring-1 ring-white/5 shadow-2xl" style="z-index: 5;" data-label="GCAM: Location Field Utility">
+                        <div class="pixel-camera"></div>
+                        <div class="pixel-screen">
+                            <img src="assets/gps-camera-screenshot.png" alt="GPS Camera" class="absolute inset-0 w-full h-full object-cover active" />
+                        </div>
+                    </div>
+                    <!-- iPlay: Left -->
+                    <div class="pixel-frame ring-1 ring-white/10 shadow-2xl" style="z-index: 10;" data-label="iPlay: Media3 Player">
+                        <div class="pixel-camera"></div>
+                        <div class="pixel-screen">
+                            <img src="assets/iplay-screenshot.png" alt="iPlay" class="absolute inset-0 w-full h-full object-cover active" />
+                        </div>
+                    </div>
+                    <!-- Vitals: Right -->
+                    <div class="pixel-frame ring-1 ring-white/15 shadow-2xl" style="z-index: 15;" data-label="VITALS: System Diagnostics">
+                        <div class="pixel-camera"></div>
+                        <div class="pixel-screen">
+                            <img src="assets/vitals-screenshot.png" alt="Vitals" class="absolute inset-0 w-full h-full object-cover active" />
+                        </div>
+                    </div>
+                    <!-- Play Store: Center Front (Main) -->
+                    <div class="pixel-frame ring-1 ring-white/20 shadow-2xl" style="z-index: 20;" data-label="Available on Google Play">
+                        <div class="pixel-camera"></div>
+                        <div class="pixel-screen">
+                            <img src="assets/play-store-screen.jpeg" alt="Play Store" class="absolute inset-0 w-full h-full object-cover active" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Label -->
+                <div class="w-full flex justify-center lg:justify-center">
+                    <div id="hero-stack-label" class="bg-blue-500/10 backdrop-blur-md border border-blue-500/20 rounded-full py-2 px-6 text-[10px] font-mono text-blue-400 tracking-wider uppercase opacity-0">
+                        Available on Google Play
                     </div>
                 </div>
             </div>
@@ -380,7 +502,7 @@
                         </div>
                         <h3 class="text-2xl sm:text-4xl font-black text-white">iPlay Music Player</h3>
                     </div>
-                    <a href="https://play.google.com/store/apps/details?id=com.vasist.iplay" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-5 py-2.5 rounded-lg subtle-card hover:bg-white/10 text-white font-semibold text-xs transition w-max">
+                    <a href="https://play.google.com/store/apps/details?id=com.vasist.iplay" target="_blank" rel="noopener noreferrer" class="glass-button px-5 py-2.5 rounded-lg text-white font-semibold text-xs w-max">
                         <span>View on Google Play</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                 </div>
@@ -389,7 +511,7 @@
 
                     <!-- Screenshots Column -->
                     <div class="lg:col-span-4 flex justify-center lg:justify-start">
-                        <div class="relative w-[240px] aspect-[9/20] pixel-frame ring-1 ring-white/10 shadow-2xl">
+                        <div class="relative w-[240px] aspect-[9/20] pixel-frame ring-1 ring-white/10 shadow-2xl" data-reveal="left">
                             <div class="pixel-camera"></div>
                             <div class="pixel-screen">
                                 <img src="assets/iplay-screenshot.png" alt="iPlay Music Player" class="absolute inset-0 w-full h-full object-cover object-top" />
@@ -502,7 +624,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
                     <!-- Screenshots Column -->
                     <div class="lg:col-span-4 flex justify-center lg:justify-start">
-                        <div class="relative w-[240px] aspect-[9/20] pixel-frame ring-1 ring-white/10 shadow-2xl">
+                        <div class="relative w-[240px] aspect-[9/20] pixel-frame ring-1 ring-white/10 shadow-2xl" data-reveal="right">
                             <div class="pixel-camera"></div>
                             <div class="pixel-screen">
                                 <img src="assets/gps-camera-screenshot.png" alt="GPS Camera App" class="absolute inset-0 w-full h-full object-cover object-top" />
@@ -584,7 +706,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
                     <!-- Screenshots Column -->
                     <div class="lg:col-span-4 flex justify-center lg:justify-start">
-                        <div class="relative w-[240px] aspect-[9/20] pixel-frame ring-1 ring-white/10 shadow-2xl">
+                        <div class="relative w-[240px] aspect-[9/20] pixel-frame ring-1 ring-white/10 shadow-2xl" data-reveal="left">
                             <div class="pixel-camera"></div>
                             <div class="pixel-screen">
                                 <img src="assets/vitals-screenshot.png" alt="Vitals Diagnostics App" class="absolute inset-0 w-full h-full object-cover object-top" />
@@ -699,69 +821,79 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
 
                     <div class="subtle-card p-5 rounded-xl space-y-4" data-aos="fade-up" data-aos-delay="0">
-                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Application</h3>
+                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2 flex items-center gap-2">
+                            <i data-lucide="smartphone" class="w-4 h-4 text-blue-400"></i> Application
+                        </h3>
                         <ul class="space-y-2 text-xs text-slate-400 font-mono">
-                            <li>Kotlin</li>
-                            <li>Coroutines</li>
-                            <li>Flow / StateFlow</li>
-                            <li>Jetpack Compose</li>
-                            <li>Material 3</li>
+                            <li class="flex items-center gap-2"><img src="assets/kotlin.svg" class="w-3.5 h-3.5" alt=""> Kotlin</li>
+                            <li class="flex items-center gap-2"><i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i> Coroutines</li>
+                            <li class="flex items-center gap-2"><i data-lucide="waves" class="w-3.5 h-3.5 text-blue-400"></i> Flow / StateFlow</li>
+                            <li class="flex items-center gap-2"><i data-lucide="layout-template" class="w-3.5 h-3.5 text-purple-400"></i> Jetpack Compose</li>
+                            <li class="flex items-center gap-2"><i data-lucide="palette" class="w-3.5 h-3.5 text-rose-400"></i> Material 3</li>
                         </ul>
                     </div>
 
                     <div class="subtle-card p-5 rounded-xl space-y-4" data-aos="fade-up" data-aos-delay="100">
-                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Architecture</h3>
+                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2 flex items-center gap-2">
+                            <i data-lucide="component" class="w-4 h-4 text-purple-400"></i> Architecture
+                        </h3>
                         <ul class="space-y-2 text-xs text-slate-400 font-mono">
-                            <li>MVVM</li>
-                            <li>Clean Architecture</li>
-                            <li>Repository Pattern</li>
-                            <li>Use Cases</li>
-                            <li>Dagger Hilt</li>
+                            <li class="flex items-center gap-2"><i data-lucide="layers" class="w-3.5 h-3.5 text-slate-400"></i> MVVM</li>
+                            <li class="flex items-center gap-2"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Clean Architecture</li>
+                            <li class="flex items-center gap-2"><i data-lucide="database" class="w-3.5 h-3.5 text-blue-400"></i> Repository Pattern</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-indigo-400"></i> Use Cases</li>
+                            <li class="flex items-center gap-2"><i data-lucide="cpu" class="w-3.5 h-3.5 text-rose-400"></i> Dagger Hilt</li>
                         </ul>
                     </div>
 
                     <div class="subtle-card p-5 rounded-xl space-y-4" data-aos="fade-up" data-aos-delay="200">
-                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Data</h3>
+                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2 flex items-center gap-2">
+                            <i data-lucide="database" class="w-4 h-4 text-emerald-400"></i> Data
+                        </h3>
                         <ul class="space-y-2 text-xs text-slate-400 font-mono">
-                            <li>Realm DB</li>
-                            <li>Room DB</li>
-                            <li>MediaStore API</li>
-                            <li>Retrofit</li>
-                            <li>Offline Caching</li>
+                            <li class="flex items-center gap-2"><img src="assets/realm.svg" class="w-3.5 h-3.5" alt=""> Realm DB</li>
+                            <li class="flex items-center gap-2"><i data-lucide="table" class="w-3.5 h-3.5 text-blue-400"></i> Room DB</li>
+                            <li class="flex items-center gap-2"><i data-lucide="image" class="w-3.5 h-3.5 text-purple-400"></i> MediaStore API</li>
+                            <li class="flex items-center gap-2"><i data-lucide="globe" class="w-3.5 h-3.5 text-emerald-400"></i> Retrofit</li>
+                            <li class="flex items-center gap-2"><i data-lucide="hard-drive" class="w-3.5 h-3.5 text-slate-400"></i> Offline Caching</li>
                         </ul>
                     </div>
 
                     <div class="subtle-card p-5 rounded-xl space-y-4" data-aos="fade-up" data-aos-delay="300">
-                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Platform</h3>
+                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2 flex items-center gap-2">
+                            <i data-lucide="cpu" class="w-4 h-4 text-rose-400"></i> Platform
+                        </h3>
                         <ul class="space-y-2 text-xs text-slate-400 font-mono">
-                            <li>Media3 / ExoPlayer</li>
-                            <li>CameraX</li>
-                            <li>Location APIs</li>
-                            <li>WorkManager</li>
-                            <li>Android Services</li>
+                            <li class="flex items-center gap-2"><i data-lucide="play-circle" class="w-3.5 h-3.5 text-blue-400"></i> Media3 / ExoPlayer</li>
+                            <li class="flex items-center gap-2"><i data-lucide="camera" class="w-3.5 h-3.5 text-emerald-400"></i> CameraX</li>
+                            <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-rose-400"></i> Location APIs</li>
+                            <li class="flex items-center gap-2"><i data-lucide="calendar" class="w-3.5 h-3.5 text-indigo-400"></i> WorkManager</li>
+                            <li class="flex items-center gap-2"><img src="assets/android.svg" class="w-3.5 h-3.5" alt=""> Android Services</li>
                         </ul>
                     </div>
 
                     <div class="subtle-card p-5 rounded-xl space-y-4" data-aos="fade-up" data-aos-delay="400">
-                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2">Quality</h3>
+                        <h3 class="text-sm font-bold text-white border-b border-white/10 pb-2 flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-indigo-400"></i> Quality
+                        </h3>
                         <ul class="space-y-2 text-xs text-slate-400 font-mono">
-                            <li>Espresso</li>
-                            <li>Crashlytics</li>
-                            <li>Git</li>
-                            <li>Gradle Kotlin DSL</li>
-                            <li>Version Catalogs</li>
+                            <li class="flex items-center gap-2"><i data-lucide="test-tube" class="w-3.5 h-3.5 text-rose-400"></i> Espresso</li>
+                            <li class="flex items-center gap-2"><img src="assets/firebase.svg" class="w-3.5 h-3.5" alt=""> Crashlytics</li>
+                            <li class="flex items-center gap-2"><i data-lucide="git-branch" class="w-3.5 h-3.5 text-orange-400"></i> Git</li>
+                            <li class="flex items-center gap-2"><i data-lucide="box" class="w-3.5 h-3.5 text-blue-400"></i> Gradle Kotlin DSL</li>
+                            <li class="flex items-center gap-2"><i data-lucide="file-code" class="w-3.5 h-3.5 text-slate-400"></i> Version Catalogs</li>
                         </ul>
                     </div>
 
                 </div>
 
-                <!-- Subtle Status Bar -->
-                <div class="flex items-center justify-between text-[10px] font-mono text-slate-500 border-t border-white/5 pt-4">
-                    <div class="flex items-center gap-4">
-                        <span>ANDROID</span>
-                        <span>KOTLIN</span>
-                        <span>COMPOSE</span>
-                        <span>MEDIA3</span>
+                <!-- Subtle Status Bar & Marquee -->
+                <div class="flex flex-col gap-6 border-t border-white/5 pt-8">
+                    <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em]">
+                        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Android Native</span>
+                        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> Jetpack Compose</span>
+                        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Media Systems</span>
+                        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Offline-First</span>
                     </div>
                 </div>
             </div>
@@ -806,30 +938,35 @@
                 <div class="space-y-3 relative z-10" data-aos="zoom-in">
                     <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">Let's build something <br/><span class="text-gradient-accent">that works.</span></h2>
                     <p class="text-slate-400 text-sm max-w-md mx-auto">Android engineering • Native systems • Media • Offline-first • Compose</p>
-                    <div class="flex items-center justify-center gap-2 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full w-max mx-auto mt-4 border border-emerald-500/20">
+                    <div class="flex flex-wrap items-center justify-center gap-2 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-full w-max mx-auto mt-4 border border-emerald-500/20">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                        AVAILABLE FOR FULL-TIME ROLES
+                        AVAILABLE FOR FULL-TIME, PART-TIME & FREELANCING
                     </div>
                 </div>
 
                 <div class="flex flex-wrap items-center justify-center gap-4 relative z-10">
-                    <a href="mailto:vasistvr@gmail.com" class="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm transition flex items-center gap-2 shadow-lg">
-                        <i data-lucide="mail" class="w-4 h-4"></i> <span>Email Me</span>
+                    <a href="mailto:vasistvr@gmail.com" class="glass-button px-6 py-3 rounded-xl text-white font-semibold text-sm">
+                        <img src="assets/gmail.svg" class="w-4 h-4" alt="Gmail"> <span>Gmail</span>
                     </a>
-                    <a href="assets/resume.pdf" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
-                        <i data-lucide="file-text" class="w-4 h-4 text-slate-300"></i> <span>Resume PDF</span>
+                    <a href="assets/Vasist_Resume_updated.pdf" target="_blank" rel="noopener noreferrer" class="glass-button px-6 py-3 rounded-xl text-white font-semibold text-sm">
+                        <i data-lucide="file-text" class="w-4 h-4 text-slate-300"></i> <span>Resume</span>
                     </a>
-                    <a href="https://www.linkedin.com/in/vasist-vamsi-bhukya-03304723a/" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
-                        <i data-lucide="linkedin" class="w-4 h-4 text-blue-400"></i> <span>LinkedIn</span>
+                    <a href="https://www.linkedin.com/in/vasist-vamsi-bhukya-03304723a/" target="_blank" rel="noopener noreferrer" class="glass-button px-6 py-3 rounded-xl text-white font-semibold text-sm">
+                        <img src="assets/linkedin.svg" class="w-4 h-4" alt="LinkedIn"> <span>LinkedIn</span>
                     </a>
-                    <a href="https://github.com/VasistB" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl subtle-card text-white font-semibold text-sm hover:bg-white/10 transition flex items-center gap-2">
-                        <i data-lucide="github" class="w-4 h-4 text-slate-300"></i> <span>GitHub</span>
+                    <a href="https://github.com/VasistB" target="_blank" rel="noopener noreferrer" class="glass-button px-6 py-3 rounded-xl text-white font-semibold text-sm">
+                        <img src="assets/github.svg" class="w-4 h-4 opacity-80" alt="GitHub"> <span>GitHub</span>
                     </a>
                 </div>
             </div>
         </section>
 
     </main>
+
+    <!-- Floating Action Button: Back to Top -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 z-50 glass-button w-12 h-12 rounded-full opacity-0 translate-y-10 pointer-events-none transition-all duration-300 shadow-2xl">
+        <i data-lucide="arrow-up" class="w-5 h-5 text-white"></i>
+    </button>
 
     <footer class="w-full border-t border-white/5 py-8 mt-20 text-center">
         <p class="text-xs font-mono text-slate-500">
@@ -857,16 +994,129 @@
                 const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
                 const scrolled = (winScroll / height) * 100;
                 document.getElementById("scroll-progress").style.width = scrolled + "%";
+
+                // Back to Top Visibility
+                const btt = document.getElementById("back-to-top");
+                if (winScroll > 300) {
+                    btt.classList.remove("opacity-0", "translate-y-10", "pointer-events-none");
+                } else {
+                    btt.classList.add("opacity-0", "translate-y-10", "pointer-events-none");
+                }
             });
 
-            // Hero Device Floating Animation
-            gsap.to(".pixel-frame", {
-                y: -10,
-                duration: 3,
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut"
+            // Back to Top Click
+            document.getElementById("back-to-top").addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
+
+            // Glass Button Water/Wood Interaction
+            document.querySelectorAll('.glass-button').forEach(button => {
+                button.addEventListener('mousedown', function(e) {
+                    // Create Ripple
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    this.appendChild(ripple);
+
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+
+                    ripple.style.width = ripple.style.height = `${size}px`;
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+
+                    ripple.addEventListener('animationend', () => ripple.remove());
+                });
+            });
+
+            // Android Scroll Reveal Effect
+            const revealOnScroll = () => {
+                const elements = document.querySelectorAll('.subtle-card, .glass-card, section h2, .pixel-frame[data-reveal]');
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    const isVisible = rect.top < window.innerHeight - 100;
+                    if (isVisible) {
+                        const revealType = el.getAttribute('data-reveal');
+                        const config = {
+                            opacity: 1,
+                            duration: 1.2,
+                            ease: "power3.out"
+                        };
+
+                        if (revealType === 'left' || revealType === 'right') {
+                            config.x = 0;
+                        } else {
+                            config.y = 0;
+                        }
+
+                        gsap.to(el, config);
+                    }
+                });
+            };
+
+            // Set initial state for reveal
+            document.querySelectorAll('.subtle-card, .glass-card, section h2, .pixel-frame[data-reveal]').forEach(el => {
+                el.style.opacity = "0";
+                const revealType = el.getAttribute('data-reveal');
+                if (revealType === 'left') {
+                    gsap.set(el, { x: -100 });
+                } else if (revealType === 'right') {
+                    gsap.set(el, { x: 100 });
+                } else {
+                    gsap.set(el, { y: 30 });
+                }
+            });
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Trigger once on load
+
+            // Hero Device Stack Animation
+            const devices = document.querySelectorAll('#hero-device-stack .pixel-frame');
+            const stackLabel = document.getElementById('hero-stack-label');
+
+            if (devices.length > 0) {
+                const tl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
+
+                gsap.set(devices, { opacity: 0, scale: 0.8, y: 50, x: 0, rotate: 0 });
+                gsap.set(stackLabel, { opacity: 0, y: 10 });
+
+                // Function to update label with fluid fade
+                const updateLabel = (text) => {
+                    tl.to(stackLabel, { opacity: 0, y: 5, duration: 0.2 })
+                      .add(() => { stackLabel.textContent = text; })
+                      .to(stackLabel, { opacity: 1, y: 0, duration: 0.3 });
+                };
+
+                // Pop-up Sequence
+                // 1. GPS Camera (Center Back)
+                tl.to(devices[0], { opacity: 1, x: 0, y: -40, rotate: 0, scale: 0.8, duration: 1, ease: "back.out(1.5)" });
+                updateLabel(devices[0].getAttribute('data-label'));
+
+                // 2. iPlay (Left)
+                tl.to(devices[1], { opacity: 1, x: -95, y: -10, rotate: -15, scale: 0.85, duration: 1, ease: "back.out(1.5)" }, "+=0.5");
+                updateLabel(devices[1].getAttribute('data-label'));
+
+                // 3. Vitals (Right)
+                tl.to(devices[2], { opacity: 1, x: 95, y: -10, rotate: 15, scale: 0.85, duration: 1, ease: "back.out(1.5)" }, "+=0.5");
+                updateLabel(devices[2].getAttribute('data-label'));
+
+                // 4. Play Store (Center Front - Main)
+                tl.to(devices[3], { opacity: 1, x: 0, y: 0, rotate: 0, scale: 1, duration: 1.8, ease: "elastic.out(1, 0.8)" }, "+=0.5");
+                updateLabel(devices[3].getAttribute('data-label'));
+
+                // Hold and then Collapse Out
+                tl.to([devices, stackLabel], { opacity: 0, y: 30, duration: 0.8, delay: 10, ease: "power2.in" });
+
+                // Constant Floating
+                gsap.to("#hero-device-stack", {
+                    y: -15,
+                    duration: 4,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+            }
+
         });
     </script>
 </body>
