@@ -92,7 +92,7 @@ export default function App() {
       }
 
       // Track active nav section
-      const sections = ['work', 'experience', 'depth', 'philosophy', 'contact']
+      const sections = ['work', 'experience', 'depth', 'architecture', 'contact']
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId)
         if (el) {
@@ -220,7 +220,7 @@ export default function App() {
                   : 'text-slate-300 hover:text-white hover:bg-white/10'
               }`}
             >
-              Work
+              Projects
             </a>
             <a
               href="#experience"
@@ -240,17 +240,17 @@ export default function App() {
                   : 'text-slate-300 hover:text-white hover:bg-white/10'
               }`}
             >
-              Stack
+              Tech Stack
             </a>
             <a
-              href="#philosophy"
+              href="#architecture"
               className={`px-4 py-1.5 rounded-full transition-all duration-300 ${
-                activeNav === 'philosophy'
+                activeNav === 'architecture'
                   ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
                   : 'text-slate-300 hover:text-white hover:bg-white/10'
               }`}
             >
-              Philosophy
+              Architecture
             </a>
           </nav>
 
@@ -292,7 +292,7 @@ export default function App() {
               onClick={() => setMobileMenuOpen(false)}
               className="px-4 py-2.5 rounded-xl text-slate-200 hover:bg-white/10 text-sm font-medium flex items-center justify-between"
             >
-              <span>Work</span> <Code2 className="w-4 h-4 text-blue-400" />
+              <span>Projects</span> <Code2 className="w-4 h-4 text-blue-400" />
             </a>
             <a
               href="#experience"
@@ -306,14 +306,14 @@ export default function App() {
               onClick={() => setMobileMenuOpen(false)}
               className="px-4 py-2.5 rounded-xl text-slate-200 hover:bg-white/10 text-sm font-medium flex items-center justify-between"
             >
-              <span>Stack</span> <Layers className="w-4 h-4 text-emerald-400" />
+              <span>Tech Stack</span> <Layers className="w-4 h-4 text-emerald-400" />
             </a>
             <a
-              href="#philosophy"
+              href="#architecture"
               onClick={() => setMobileMenuOpen(false)}
               className="px-4 py-2.5 rounded-xl text-slate-200 hover:bg-white/10 text-sm font-medium flex items-center justify-between"
             >
-              <span>Philosophy</span> <BookOpen className="w-4 h-4 text-amber-400" />
+              <span>Architecture</span> <Cpu className="w-4 h-4 text-amber-400" />
             </a>
             <div className="border-t border-white/10 pt-2 flex gap-2">
               <GlassButton
@@ -1598,23 +1598,62 @@ export default function App() {
           </div>
         </section>
 
-        {/* ENGINEERING PHILOSOPHY */}
-        <section id="philosophy" className="space-y-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-mono text-blue-400 uppercase tracking-wider">
-            <BookOpen className="w-4 h-4" /> Engineering Philosophy
+        {/* ANDROID ARCHITECTURE & SYSTEM DESIGN */}
+        <section id="architecture" className="space-y-10">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-mono text-blue-400 uppercase tracking-wider">
+              <Cpu className="w-4 h-4" /> Android Architecture &amp; System Design
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Engineering <span className="text-gradient">Principles</span>
+            </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { title: 'State is Explicit', body: 'UI should render state, not own business logic. I build with unidirectional data flow (UDF) to ensure predictable behavior.' },
-              { title: 'Offline First', body: 'Local data should remain useful when network disappears. Persistence is a first-class citizen in my architectures.' },
-              { title: 'Lifecycle Aware', body: 'Long-running work should not depend on an Activity or Composable. I leverage WorkManager and Service-based solutions.' },
-              { title: 'Measure Before Optimizing', body: 'Performance decisions come from profiling, not assumptions. I use Benchmark and Profiler tools to validate changes.' },
-              { title: 'Failure is a State', body: 'Loading, empty, partial and error states are part of the core architecture, not an afterthought.' },
+              {
+                title: 'Unidirectional Data Flow (UDF)',
+                badge: 'MVI / MVVM',
+                body: 'UI surfaces strictly observe immutable state and emit user intents. StateFlow pipelines guarantee deterministic rendering with zero multi-threaded UI desync.',
+              },
+              {
+                title: 'Offline-First Single Source of Truth',
+                badge: 'Room & Realm',
+                body: 'Local persistence acts as the authoritative truth while network calls act as data synchronizers. Ensures instant screen loads and resilient offline operations.',
+              },
+              {
+                title: 'Process & Lifecycle Isolation',
+                badge: 'WorkManager & Services',
+                body: 'Decoupling heavy execution from Activity lifecycles. Long-running workloads leverage Foreground Services, and deferred tasks run safely via WorkManager.',
+              },
+              {
+                title: 'Structured Concurrency & Dispatchers',
+                badge: 'Coroutines & Flow',
+                body: 'Scoping coroutine lifecycles strictly to viewModels and components. Enforcing Dispatchers.Main for UI while offloading disk and network I/O to background thread pools.',
+              },
+              {
+                title: 'Exhaustive Sealed State Modeling',
+                badge: 'Kotlin Sealed Types',
+                body: 'Modeling domain and UI states with exhaustive sealed interfaces (Loading, Success, Empty, Error). Eliminates runtime null checks and catches unhandled states at compile time.',
+              },
+              {
+                title: 'Trace-Driven Profiling',
+                badge: 'Perfetto & Android Profiler',
+                body: 'Performance decisions driven by data, not guesswork. Continuous memory heap analysis, frame rendering audits, and LeakCanary checks prevent main-thread jank and leaks.',
+              },
             ].map((item, idx) => (
-              <div key={idx} className="subtle-card p-6 rounded-2xl space-y-3">
-                <h3 className="text-xs font-bold text-white uppercase tracking-widest font-mono text-blue-300">{item.title}</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">{item.body}</p>
+              <div key={idx} className="subtle-card p-6 rounded-2xl space-y-3 hover:border-blue-500/30 transition-all duration-300 group">
+                <div className="flex items-center justify-between gap-2 border-b border-white/5 pb-2">
+                  <span className="text-[10px] font-mono font-bold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
+                    {item.badge}
+                  </span>
+                </div>
+                <h3 className="text-sm font-bold text-white font-mono group-hover:text-blue-300 transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed font-light">
+                  {item.body}
+                </p>
               </div>
             ))}
           </div>
