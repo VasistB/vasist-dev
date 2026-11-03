@@ -38,7 +38,16 @@ import {
   X,
   Check,
   ExternalLink,
-  Sparkles
+  Sparkles,
+  Tv,
+  Activity,
+  Gauge,
+  BatteryCharging,
+  Cast,
+  Compass,
+  Film,
+  Lock,
+  User
 } from 'lucide-react'
 import gsap from 'gsap'
 import AOS from 'aos'
@@ -121,21 +130,25 @@ export default function App() {
       }
 
       // Pop-up Sequence
-      // 1. GPS Camera (Center Back)
-      heroTimeline.to(devices[0], { opacity: 1, x: 0, y: -40, rotate: 0, scale: 0.8, duration: 1, ease: 'back.out(1.5)' })
+      // 1. GPS Camera (Back Left)
+      heroTimeline.to(devices[0], { opacity: 1, x: -50, y: -40, rotate: -6, scale: 0.8, duration: 1, ease: 'back.out(1.5)' })
       updateLabel(devices[0].getAttribute('data-label'))
 
-      // 2. iPlay (Left)
-      heroTimeline.to(devices[1], { opacity: 1, x: -85, y: -10, rotate: -12, scale: 0.85, duration: 1, ease: 'back.out(1.5)' }, '+=0.4')
+      // 2. VStream (Back Right)
+      heroTimeline.to(devices[1], { opacity: 1, x: 50, y: -40, rotate: 6, scale: 0.8, duration: 1, ease: 'back.out(1.5)' }, '+=0.3')
       updateLabel(devices[1].getAttribute('data-label'))
 
-      // 3. Vitals (Right)
-      heroTimeline.to(devices[2], { opacity: 1, x: 85, y: -10, rotate: 12, scale: 0.85, duration: 1, ease: 'back.out(1.5)' }, '+=0.4')
+      // 3. iPlay (Mid Left)
+      heroTimeline.to(devices[2], { opacity: 1, x: -95, y: -10, rotate: -12, scale: 0.85, duration: 1, ease: 'back.out(1.5)' }, '+=0.3')
       updateLabel(devices[2].getAttribute('data-label'))
 
-      // 4. Play Store (Center Front - Main)
-      heroTimeline.to(devices[3], { opacity: 1, x: 0, y: 0, rotate: 0, scale: 1, duration: 1.6, ease: 'elastic.out(1, 0.8)' }, '+=0.4')
+      // 4. Vitals (Mid Right)
+      heroTimeline.to(devices[3], { opacity: 1, x: 95, y: -10, rotate: 12, scale: 0.85, duration: 1, ease: 'back.out(1.5)' }, '+=0.3')
       updateLabel(devices[3].getAttribute('data-label'))
+
+      // 5. Play Store (Center Front - Main)
+      heroTimeline.to(devices[4], { opacity: 1, x: 0, y: 0, rotate: 0, scale: 1, duration: 1.6, ease: 'elastic.out(1, 0.8)' }, '+=0.3')
+      updateLabel(devices[4].getAttribute('data-label'))
 
       // Hold and then Collapse Out
       heroTimeline.to([devices, stackLabel], { opacity: 0, y: 30, duration: 0.8, delay: 9, ease: 'power2.in' })
@@ -360,11 +373,11 @@ export default function App() {
             {/* Credibility Metrics */}
             <div className="grid grid-cols-3 gap-4 font-mono text-[11px] text-slate-300 border-t border-white/10 pt-6">
               <div className="flex flex-col">
-                <span className="text-white font-extrabold text-lg sm:text-2xl">3+ YEARS</span>
+                <span className="text-white font-extrabold text-lg sm:text-2xl">4+ YEARS</span>
                 <span className="text-slate-400 uppercase tracking-wider text-[10px]">Android Dev</span>
               </div>
               <div className="flex flex-col border-l border-white/10 pl-4">
-                <span className="text-white font-extrabold text-lg sm:text-2xl">3</span>
+                <span className="text-white font-extrabold text-lg sm:text-2xl">4</span>
                 <span className="text-slate-400 uppercase tracking-wider text-[10px]">Production Apps</span>
               </div>
               <div className="flex flex-col border-l border-white/10 pl-4">
@@ -404,9 +417,9 @@ export default function App() {
 
           <div className="lg:col-span-5 flex flex-col items-center lg:items-end gap-6 pt-4 lg:pt-0">
             <div className="device-stack" id="hero-device-stack">
-              {/* GPS Camera: Center back (Backmost) */}
+              {/* GPS Camera: Back-Left */}
               <div
-                className="pixel-frame ring-1 ring-white/10 shadow-2xl"
+                className="pixel-frame ring-1 ring-white/10 shadow-2xl cursor-pointer"
                 style={{ zIndex: 5 }}
                 data-label="GCAM: Location Field Utility"
               >
@@ -419,9 +432,24 @@ export default function App() {
                   />
                 </div>
               </div>
-              {/* iPlay: Left */}
+              {/* VStream: Back-Right */}
               <div
-                className="pixel-frame ring-1 ring-white/15 shadow-2xl"
+                className="pixel-frame ring-1 ring-white/10 shadow-2xl cursor-pointer"
+                style={{ zIndex: 6 }}
+                data-label="VStream: Dual-Platform OTT"
+              >
+                <div className="pixel-camera"></div>
+                <div className="pixel-screen">
+                  <img
+                    src="./assets/vstream-home.png"
+                    alt="VStream"
+                    className="absolute inset-0 w-full h-full object-cover active"
+                  />
+                </div>
+              </div>
+              {/* iPlay: Mid-Left */}
+              <div
+                className="pixel-frame ring-1 ring-white/15 shadow-2xl cursor-pointer"
                 style={{ zIndex: 10 }}
                 data-label="iPlay: Media3 Player"
               >
@@ -434,9 +462,9 @@ export default function App() {
                   />
                 </div>
               </div>
-              {/* Vitals: Right */}
+              {/* Vitals: Mid-Right */}
               <div
-                className="pixel-frame ring-1 ring-white/15 shadow-2xl"
+                className="pixel-frame ring-1 ring-white/15 shadow-2xl cursor-pointer"
                 style={{ zIndex: 15 }}
                 data-label="VITALS: System Diagnostics"
               >
@@ -451,7 +479,7 @@ export default function App() {
               </div>
               {/* Play Store: Center Front (Main) */}
               <div
-                className="pixel-frame ring-1 ring-white/20 shadow-2xl"
+                className="pixel-frame ring-1 ring-white/20 shadow-2xl cursor-pointer"
                 style={{ zIndex: 20 }}
                 data-label="Available on Google Play"
               >
@@ -532,18 +560,34 @@ export default function App() {
                   </span>
                   <span className="text-xs text-slate-400 font-mono hidden sm:inline">•</span>
                   <span className="text-xs text-slate-400 font-mono">Published Android Application</span>
+                  <span className="text-xs text-slate-400 font-mono hidden sm:inline">•</span>
+                  <span className="text-xs text-purple-400 font-mono">Zero-Copy Audio Engine</span>
                 </div>
                 <h3 className="text-2xl sm:text-4xl font-black text-white">iPlay Music Player</h3>
+                <p className="text-xs sm:text-sm text-slate-400 font-mono">
+                  High-Performance Local Audio Player with Realm Zero-Copy Indexing &amp; Media3 Architecture
+                </p>
               </div>
-              <GlassButton
-                href="https://play.google.com/store/apps/details?id=com.vasist.iplay"
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="primary"
-                size="md"
-              >
-                <span>View on Google Play</span> <ExternalLink className="w-4 h-4" />
-              </GlassButton>
+              <div className="flex flex-wrap items-center gap-3">
+                <GlassButton
+                  href="https://play.google.com/store/apps/details?id=com.vasist.iplay"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="primary"
+                  size="md"
+                >
+                  <span>View on Google Play</span> <ExternalLink className="w-4 h-4" />
+                </GlassButton>
+                <GlassButton
+                  href="https://github.com/VasistB/Music-Play"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="outline"
+                  size="md"
+                >
+                  <GitBranch className="w-4 h-4 text-purple-400" /> <span>Repository</span> <ExternalLink className="w-4 h-4" />
+                </GlassButton>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
@@ -566,75 +610,264 @@ export default function App() {
 
               {/* Engineering Copy Column */}
               <div className="lg:col-span-8 space-y-10">
-                {/* Core Engineering Text */}
+                {/* Core Engineering Highlights */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                   <div className="space-y-3">
                     <h4 className="text-sm font-bold text-blue-400 border-b border-white/10 pb-2 flex items-center gap-2">
-                      <Zap className="w-4 h-4" /> Queue & Shuffle Engine
+                      <Zap className="w-4 h-4 text-blue-400" /> High-Parallelism Media Scanner
                     </h4>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                      Designed a stateful playback queue that separates display order from playback order, allowing shuffle, filtering, queue restoration, and playback history to operate seamlessly without mutating the underlying library.
+                      Eliminated main-thread choking when indexing massive local audio collections by architecting a decoupled <strong className="text-white font-medium">Producer-Consumer pipeline</strong> using Kotlin Channels and structured Coroutines (4 concurrent worker threads parsing MediaStore cursors into a 500-capacity buffered channel with 50-track batch saves into Realm).
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-bold text-emerald-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <Database className="w-4 h-4 text-emerald-400" /> Realm Zero-Copy Persistence
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Selected <strong className="text-white font-medium">Realm Database</strong> over Room to eliminate Java/Kotlin object-copy allocation overhead for libraries with 10,000+ tracks. Maps database files directly to memory for instant 120 FPS scrolling and native reactive <code className="text-[11px] font-mono text-slate-200">Flow</code> stream bindings without SQL trigger boilerplate.
                     </p>
                   </div>
                   <div className="space-y-3">
                     <h4 className="text-sm font-bold text-purple-400 border-b border-white/10 pb-2 flex items-center gap-2">
-                      <PlayCircle className="w-4 h-4" /> Playback Architecture
+                      <PlayCircle className="w-4 h-4 text-purple-400" /> Media3 Core &amp; Google Cast
                     </h4>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                      Built the playback layer around Media3 MediaController + MediaSession, keeping UI state, playback state, and the active queue synchronized across foreground and background playback.
+                      Engineered the audio pipeline around <code className="text-[11px] font-mono text-slate-200">androidx.media3</code> MediaSession + MediaController, surviving Activity process death and configuration changes. Integrated Google Cast framework for seamless local-to-Chromecast audio stream handoff.
                     </p>
                   </div>
-                  <div className="space-y-3 sm:col-span-2">
-                    <h4 className="text-sm font-bold text-emerald-400 border-b border-white/10 pb-2 flex items-center gap-2">
-                      <Database className="w-4 h-4" /> Local Library Indexing
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-bold text-amber-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <Layers className="w-4 h-4 text-amber-400" /> Morphing UI &amp; Dynamic Palette
                     </h4>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                      Built a Realm-backed local music index over MediaStore, enabling reactive library updates and offline-first browsing of large local collections, keeping all UI work safely off the main thread.
+                      Constructed a context-morphing Mini-to-Full player using <code className="text-[11px] font-mono text-slate-200">ConstraintLayout Compose</code> and <code className="text-[11px] font-mono text-slate-200">BoxWithConstraints</code> with zero hardcoded dimension dependencies. Integrated Android Palette API to extract vibrant artwork colors dynamically.
                     </p>
                   </div>
                 </div>
 
-                {/* Engineering Results */}
+                {/* Engineering Results & Impact */}
                 <div className="space-y-4">
                   <h4 className="text-xs font-mono text-emerald-400 uppercase tracking-widest border-b border-emerald-500/20 pb-2">
-                    Engineering Results & Impact
+                    Engineering Results &amp; Impact
                   </h4>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5 text-xs text-slate-300">
                     <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Playback continues independently of UI lifecycle
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 4x faster library indexing via concurrent producer-consumer pipeline
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Queue survives configuration/process restoration
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Zero UI thread jank or frame drops during fast scrolling (Realm zero-copy)
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Shuffle preserves current playback position
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Playback and active queue survive Activity lifecycle transitions
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Local library remains available offline
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Seamless local-to-Chromecast audio stream casting handoff
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> MediaStore processed off main thread
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Precision 5-band equalizer with custom presets and reactive audio feedback
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Dynamic palette color extraction from album art with smooth transitions
                     </li>
                   </ul>
                 </div>
 
-                {/* Architecture Diagram */}
+                {/* Architecture Diagram: Producer-Consumer Scanner */}
                 <div className="subtle-card p-6 rounded-2xl space-y-4 shadow-inner overflow-x-auto">
                   <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-blue-400" /> System Architecture Flow
+                    <Sparkles className="w-3.5 h-3.5 text-blue-400" /> High-Parallelism Media Scanner Pipeline
                   </div>
 
-                  <div className="flex flex-col items-center gap-2 font-mono text-xs min-w-[320px]">
-                    <div className="w-48 p-2.5 rounded-lg border border-blue-500/30 bg-blue-500/10 text-center text-blue-200 shadow-sm">
-                      Compose UI
+                  <div className="flex flex-col items-center gap-2 font-mono text-xs min-w-[340px]">
+                    <div className="w-64 p-2.5 rounded-lg border border-blue-500/30 bg-blue-500/10 text-center text-blue-200">
+                      <div className="font-bold">MediaStore Audio Cursor</div>
+                      <span className="text-[9px] text-blue-400/80 mt-0.5 block">Raw System Audio Provider</span>
                     </div>
-                    <div className="text-slate-600 text-base">↓</div>
-                    <div className="w-48 p-2.5 rounded-lg border border-blue-500/30 bg-blue-500/10 text-center text-blue-200">
-                      ViewModel
+
+                    <div className="text-slate-600 text-xs">↓ Producer Jobs (Parallelism: 4) ↓</div>
+
+                    <div className="w-72 p-2.5 rounded-lg border border-indigo-500/30 bg-indigo-500/10 text-center text-indigo-200">
+                      <div className="font-bold">Buffered Channel (Capacity: 500)</div>
+                      <span className="text-[9px] text-indigo-400/80 block">Asynchronous Non-Blocking Queue</span>
                     </div>
-                    <div className="text-slate-600 text-base">↓</div>
-                    <div className="w-48 p-2.5 rounded-lg border border-indigo-500/30 bg-indigo-500/10 text-center text-indigo-200">
-                      StateFlow & Use Cases
+
+                    <div className="text-slate-600 text-xs">↓ Consumer Job (Batch Size: 50) ↓</div>
+
+                    <div className="w-full grid grid-cols-2 gap-4">
+                      <div className="p-2.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-center text-emerald-200 flex flex-col items-center">
+                        <span className="font-bold">Realm DB (Zero-Copy)</span>
+                        <span className="text-[9px] text-emerald-400/70 mt-1 uppercase">Direct Memory Mapped Index</span>
+                      </div>
+                      <div className="p-2.5 rounded-lg border border-purple-500/30 bg-purple-500/10 text-center text-purple-200 flex flex-col items-center">
+                        <span className="font-bold">Media3 Service &amp; Cast</span>
+                        <span className="text-[9px] text-purple-400/70 mt-1 uppercase">Foreground MediaSession</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Tech Badges */}
+                <div className="space-y-3 pt-2">
+                  <h4 className="text-xs font-mono text-blue-400 uppercase tracking-widest border-b border-blue-500/20 pb-2">
+                    Core Technologies &amp; Libraries
+                  </h4>
+                  <div className="flex flex-wrap items-center gap-2 font-mono text-[10px] text-slate-300">
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Kotlin</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Jetpack Compose</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">ConstraintLayout Compose</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Media3 ExoPlayer</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">MediaSession</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Google Cast SDK</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Realm Database</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Dagger Hilt (KSP)</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Palette API</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Kotlin Channels &amp; Flows</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 02: VStream */}
+          <div className="glass-card rounded-3xl p-6 sm:p-10 space-y-8 relative overflow-hidden" data-aos="fade-up">
+            <div className="absolute top-0 right-0 p-8 text-7xl font-black text-white/5 select-none pointer-events-none">
+              02
+            </div>
+
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider font-mono bg-purple-500/20 text-purple-300 border border-purple-500/40 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+                    OTT STREAMING
+                  </span>
+                  <span className="text-xs text-slate-400 font-mono hidden sm:inline">•</span>
+                  <span className="text-xs text-slate-400 font-mono flex items-center gap-1.5">
+                    <Smartphone className="w-3.5 h-3.5 text-purple-400" /> Mobile &amp; <Tv className="w-3.5 h-3.5 text-blue-400" /> Android TV
+                  </span>
+                </div>
+                <h3 className="text-2xl sm:text-4xl font-black text-white">VStream</h3>
+                <p className="text-xs sm:text-sm text-slate-400 font-mono">
+                  Dual-Platform OTT Streaming Application with Adaptive Media3 &amp; MVI Architecture
+                </p>
+              </div>
+              <GlassButton
+                href="https://github.com/VasistB/V_stream"
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="primary"
+                size="md"
+              >
+                <GitBranch className="w-4 h-4" /> <span>View Repository</span> <ExternalLink className="w-4 h-4" />
+              </GlassButton>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
+              {/* Screenshots Column */}
+              <div className="lg:col-span-4 flex justify-center lg:justify-start">
+                <div
+                  className="relative w-[230px] sm:w-[250px] aspect-[9/20] pixel-frame ring-1 ring-white/15 shadow-2xl group"
+                >
+                  <div className="pixel-camera"></div>
+                  <div className="pixel-screen">
+                    <img
+                      src="./assets/vstream-home.png"
+                      alt="VStream Dual-Platform OTT Streaming"
+                      className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent"></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Engineering Copy Column */}
+              <div className="lg:col-span-8 space-y-10">
+                {/* Core Engineering Highlights */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-bold text-purple-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <Tv className="w-4 h-4 text-purple-400" /> Dual-Surface Architecture
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Engineered a unified codebase targeting both Android Mobile and Android TV from a single module. Uses <span className="text-purple-300 font-mono text-xs">DeviceUiModeResolver</span> to dynamically switch between touch layouts (<code className="text-[11px] font-mono text-slate-200">Compose M3</code>) and 10-foot remote D-Pad focus (<code className="text-[11px] font-mono text-slate-200">TV Material3</code>), sharing 100% of domain logic, repositories, and ViewModels.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-bold text-blue-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <PlayCircle className="w-4 h-4 text-blue-400" /> Media3 ExoPlayer Engine
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Architected a resilient video streaming engine supporting adaptive HLS (<code className="text-[11px] font-mono text-slate-200">.m3u8</code>) streams, custom seek clamping, background audio lifecycle management, and real-time state tracking via <span className="text-blue-300 font-mono text-xs">StateFlow&lt;PlaybackSnapshot&gt;</span>.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-bold text-emerald-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <Layers className="w-4 h-4 text-emerald-400" /> Unidirectional MVI Pattern
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Structured all features around a strict MVI contract (<span className="text-emerald-300 font-mono text-xs">UiState</span>, <span className="text-emerald-300 font-mono text-xs">UiEvent</span>, <span className="text-emerald-300 font-mono text-xs">UiEffect</span>) extending <code className="text-[11px] font-mono text-slate-200">MviViewModel</code>. Eliminates mutable state leaks and reliably handles one-shot navigation and toast side effects.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-bold text-amber-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <Zap className="w-4 h-4 text-amber-400" /> Lifecycle &amp; Playback Gating
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Implemented guest preview restrictions with a 30-second clamp. Integrated a custom <code className="text-[11px] font-mono text-slate-200">LifecycleEventObserver</code> and auth redirect flow that preserves exact playback position and automatically resumes video upon successful login.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Engineering Results & Impact */}
+                <div className="space-y-4">
+                  <h4 className="text-xs font-mono text-emerald-400 uppercase tracking-widest border-b border-emerald-500/20 pb-2">
+                    Engineering Results &amp; Impact
+                  </h4>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5 text-xs text-slate-300">
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Single APK &amp; module powering both Mobile &amp; TV
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 100% shared ViewModels across touch &amp; D-Pad UIs
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Multi-profile local data isolation in Room DB
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Sub-second resume-playback with timestamp restoration
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Full TMDB API caching with offline browsing
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Adaptive HLS video streaming via Jetpack Media3
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Unified Architecture Diagram */}
+                <div className="subtle-card p-6 rounded-2xl space-y-4 shadow-inner overflow-x-auto">
+                  <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-purple-400" /> Unified Dual-Surface Architecture
+                  </div>
+
+                  <div className="flex flex-col items-center gap-2 font-mono text-xs min-w-[340px]">
+                    <div className="w-full grid grid-cols-2 gap-3">
+                      <div className="p-2.5 rounded-lg border border-purple-500/30 bg-purple-500/10 text-center text-purple-200">
+                        <div className="font-bold flex items-center justify-center gap-1.5"><Smartphone className="w-3.5 h-3.5" /> Mobile UI</div>
+                        <span className="text-[9px] text-purple-400/80 mt-0.5 block">Touch &amp; Gestures (Compose M3)</span>
+                      </div>
+                      <div className="p-2.5 rounded-lg border border-blue-500/30 bg-blue-500/10 text-center text-blue-200">
+                        <div className="font-bold flex items-center justify-center gap-1.5"><Tv className="w-3.5 h-3.5" /> Android TV UI</div>
+                        <span className="text-[9px] text-blue-400/80 mt-0.5 block">D-Pad &amp; Focus (TV Material3)</span>
+                      </div>
+                    </div>
+
+                    <div className="text-slate-600 text-xs">↓ DeviceUiModeResolver ↓</div>
+
+                    <div className="w-64 p-2.5 rounded-lg border border-indigo-500/30 bg-indigo-500/10 text-center text-indigo-200">
+                      <div className="font-bold">Shared MviViewModel</div>
+                      <span className="text-[9px] text-indigo-400/80 block">StateFlow&lt;UiState&gt; • UiEvent • Channel&lt;UiEffect&gt;</span>
                     </div>
 
                     <div className="w-full flex justify-center text-slate-600 gap-24 sm:gap-32 px-4">
@@ -644,35 +877,61 @@ export default function App() {
 
                     <div className="w-full grid grid-cols-2 gap-4">
                       <div className="p-2.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-center text-emerald-200 flex flex-col items-center">
-                        <span>Media Repository</span>
-                        <span className="text-[9px] text-emerald-400/70 mt-1 uppercase">Persistence Layer</span>
+                        <span className="font-bold">Media3 ExoPlayer</span>
+                        <span className="text-[9px] text-emerald-400/70 mt-1 uppercase">HLS Engine &amp; PlaybackSnapshot</span>
                       </div>
-                      <div className="p-2.5 rounded-lg border border-purple-500/30 bg-purple-500/10 text-center text-purple-200 flex flex-col items-center">
-                        <span>Playback Controller</span>
-                        <span className="text-[9px] text-purple-400/70 mt-1 uppercase">Media3 Service</span>
+                      <div className="p-2.5 rounded-lg border border-cyan-500/30 bg-cyan-500/10 text-center text-cyan-200 flex flex-col items-center">
+                        <span className="font-bold">Room DB &amp; TMDB API</span>
+                        <span className="text-[9px] text-cyan-400/70 mt-1 uppercase">Multi-Profile Persistence &amp; Caching</span>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                {/* Tech Badges */}
+                <div className="space-y-3 pt-2">
+                  <h4 className="text-xs font-mono text-purple-400 uppercase tracking-widest border-b border-purple-500/20 pb-2">
+                    Core Technologies &amp; Libraries
+                  </h4>
+                  <div className="flex flex-wrap items-center gap-2 font-mono text-[10px] text-slate-300">
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Kotlin</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Jetpack Compose</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Android TV (Leanback &amp; TV M3)</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Media3 ExoPlayer</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">HLS (.m3u8) Streaming</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">MVI Pattern</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Google Hilt</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Room DB (KSP)</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Retrofit 2 &amp; OkHttp 4</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">TMDB API</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">StateFlow &amp; Coroutines</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* 02: GPS Camera */}
+          {/* 03: GPS Camera */}
           <div className="subtle-card rounded-3xl p-6 sm:p-10 space-y-8 relative overflow-hidden" data-aos="fade-up">
             <div className="absolute top-0 right-0 p-8 text-7xl font-black text-white/5 select-none pointer-events-none">
-              02
+              03
             </div>
 
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-1 rounded-md text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                    Camera & Location
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                    CAMERA &amp; SENSORS
+                  </span>
+                  <span className="text-xs text-slate-400 font-mono hidden sm:inline">•</span>
+                  <span className="text-xs text-slate-400 font-mono flex items-center gap-1.5">
+                    <Camera className="w-3.5 h-3.5 text-emerald-400" /> Real-Time EXIF Pipeline
                   </span>
                 </div>
                 <h3 className="text-2xl sm:text-4xl font-black text-white">GPS Camera</h3>
-                <p className="text-xs sm:text-sm text-slate-400 font-mono">CameraX + Location Field Utility</p>
+                <p className="text-xs sm:text-sm text-slate-400 font-mono">
+                  Hardware CameraX &amp; Real-Time Geospatial Metadata Composition Utility
+                </p>
               </div>
             </div>
 
@@ -695,81 +954,145 @@ export default function App() {
               </div>
 
               {/* Engineering Copy Column */}
-              <div className="lg:col-span-8 space-y-8">
-                <div className="space-y-3">
-                  <h4 className="text-sm font-bold text-white border-b border-white/10 pb-2 flex items-center gap-2">
-                    <Camera className="w-4 h-4 text-emerald-400" /> Engineering Challenge
-                  </h4>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    Managed hardware camera lifecycles with CameraX while fetching high-accuracy GPS coordinates, sensor orientation, timestamps, and address data to burn directly onto captured image frames natively.
-                  </p>
-                </div>
-
-                {/* Processing Pipeline */}
-                <div className="space-y-4">
-                  <h4 className="text-xs font-mono text-blue-400 uppercase tracking-widest border-b border-blue-500/20 pb-2">
-                    Image Processing Pipeline
-                  </h4>
-                  <div className="flex flex-wrap items-center gap-2.5 font-mono text-[10px] text-slate-300">
-                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">CameraX</span>
-                    <ArrowRight className="w-3 h-3 text-blue-400" />
-                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Image Capture</span>
-                    <ArrowRight className="w-3 h-3 text-blue-400" />
-                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Location & Sensors</span>
-                    <ArrowRight className="w-3 h-3 text-blue-400" />
-                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Metadata Composition</span>
-                    <ArrowRight className="w-3 h-3 text-blue-400" />
-                    <span className="px-2.5 py-1 bg-emerald-500/20 text-emerald-300 rounded-lg border border-emerald-500/30">Final Image</span>
-                  </div>
-                </div>
-
+              <div className="lg:col-span-8 space-y-10">
+                {/* Core Engineering Highlights */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                   <div className="space-y-3">
-                    <h4 className="text-xs font-bold text-slate-400 uppercase font-mono">Architecture</h4>
-                    <ul className="space-y-2 text-xs text-slate-300 leading-relaxed">
-                      <li className="flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5"></span> Custom sensor orientation handling.
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5"></span> FusedLocationProviderClient integration.
-                      </li>
-                    </ul>
+                    <h4 className="text-sm font-bold text-emerald-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <Camera className="w-4 h-4 text-emerald-400" /> CameraX Lifecycle Management
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Orchestrated native camera pipelines using <code className="text-[11px] font-mono text-slate-200">CameraX 1.4</code> across Preview, ImageCapture, and ImageAnalysis use cases. Bound strictly to lifecycle owners to eliminate camera hardware locking, battery drain, and memory leaks during orientation transitions.
+                    </p>
                   </div>
                   <div className="space-y-3">
-                    <h4 className="text-xs font-bold text-slate-400 uppercase font-mono">Result</h4>
-                    <ul className="space-y-2 text-xs text-slate-300 leading-relaxed">
-                      <li className="flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5"></span> Zero lag during photo composition
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5"></span> Embedded EXIF & stamped image output
-                      </li>
-                    </ul>
+                    <h4 className="text-sm font-bold text-blue-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <Compass className="w-4 h-4 text-blue-400" /> Geospatial &amp; Orientation Fusion
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Fused high-accuracy GPS coordinates via <code className="text-[11px] font-mono text-slate-200">FusedLocationProviderClient</code> with hardware sensors (magnetometer + accelerometer) to compute low-pass filtered compass azimuth, pitch, and magnetic declination in real time.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-bold text-purple-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <Layers className="w-4 h-4 text-purple-400" /> Canvas Stamp &amp; EXIF Injection
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Built a non-blocking in-memory bitmap composition engine that stamps dynamic address tags, geohashes, coordinates, and timestamps onto image frames while writing standard GPS metadata into JPEG <code className="text-[11px] font-mono text-slate-200">ExifInterface</code> headers without UI jank.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-bold text-amber-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <HardDrive className="w-4 h-4 text-amber-400" /> Scoped Storage &amp; MediaStore
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Engineered a resilient storage pipeline compliant with modern Android scoped storage rules, writing captured images safely to public DCIM / Pictures directories via MediaStore while handling runtime permission states with zero friction.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Engineering Results & Impact */}
+                <div className="space-y-4">
+                  <h4 className="text-xs font-mono text-emerald-400 uppercase tracking-widest border-b border-emerald-500/20 pb-2">
+                    Engineering Results &amp; Impact
+                  </h4>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5 text-xs text-slate-300">
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Sub-second shutter latency during high-res canvas metadata stamping
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> High-precision GPS coordinate lock with geocoded reverse address lookup
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Dual metadata layer: visible watermark stamp + embedded standard EXIF tags
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Real-time compass azimuth and magnetic declination calculation
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Robust scoped storage pipeline writing directly to DCIM via MediaStore
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Hardware camera lifecycle resilience across rotation and backgrounding
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Processing Pipeline Diagram */}
+                <div className="subtle-card p-6 rounded-2xl space-y-4 shadow-inner overflow-x-auto">
+                  <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-400" /> Real-time Image Processing &amp; EXIF Pipeline
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-between gap-2.5 font-mono text-[10px] text-slate-300 min-w-[340px]">
+                    <span className="px-2.5 py-1.5 bg-white/5 rounded-lg border border-white/10">CameraX 1.4 Capture</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                    <span className="px-2.5 py-1.5 bg-white/5 rounded-lg border border-white/10">FusedLocation &amp; Sensor Fusion</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                    <span className="px-2.5 py-1.5 bg-white/5 rounded-lg border border-white/10">In-Memory Canvas Stamp</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                    <span className="px-2.5 py-1.5 bg-white/5 rounded-lg border border-white/10">EXIF Tag Injection</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                    <span className="px-2.5 py-1.5 bg-emerald-500/20 text-emerald-300 rounded-lg border border-emerald-500/30">MediaStore Output</span>
+                  </div>
+                </div>
+
+                {/* Tech Badges */}
+                <div className="space-y-3 pt-2">
+                  <h4 className="text-xs font-mono text-emerald-400 uppercase tracking-widest border-b border-emerald-500/20 pb-2">
+                    Core Technologies &amp; Libraries
+                  </h4>
+                  <div className="flex flex-wrap items-center gap-2 font-mono text-[10px] text-slate-300">
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Kotlin</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">CameraX (1.4)</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">FusedLocationProviderClient</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Hardware SensorManager</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">ExifInterface</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">MediaStore API</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Scoped Storage</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Coroutines &amp; StateFlow</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Jetpack Lifecycle</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* 03: Vitals */}
+          {/* 04: Vitals */}
           <div className="subtle-card rounded-3xl p-6 sm:p-10 space-y-8 relative overflow-hidden" data-aos="fade-up">
             <div className="absolute top-0 right-0 p-8 text-7xl font-black text-white/5 select-none pointer-events-none">
-              03
+              04
             </div>
 
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-1 rounded-md text-[10px] font-mono bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                    System & Hardware
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider font-mono bg-blue-500/20 text-blue-300 border border-blue-500/40 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                    SYSTEM &amp; TELEMETRY
                   </span>
-                  <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  <span className="text-xs text-slate-400 font-mono hidden sm:inline">•</span>
+                  <span className="text-xs text-slate-400 font-mono flex items-center gap-1.5">
+                    <Activity className="w-3.5 h-3.5 text-blue-400" /> Hardware Diagnostics Engine
+                  </span>
+                  <span className="text-xs text-slate-400 font-mono hidden sm:inline">•</span>
+                  <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[10px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> In Active Development
                   </span>
                 </div>
                 <h3 className="text-2xl sm:text-4xl font-black text-white">Vitals</h3>
-                <p className="text-xs sm:text-sm text-slate-400 font-mono">Hardware & System Telemetry Diagnostic Utility</p>
+                <p className="text-xs sm:text-sm text-slate-400 font-mono">
+                  Real-Time Hardware Diagnostics, Fast Charging Protocols &amp; System Telemetry Suite
+                </p>
               </div>
+              <GlassButton
+                href="https://github.com/VasistB/Vitals"
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="primary"
+                size="md"
+              >
+                <GitBranch className="w-4 h-4" /> <span>View Repository</span> <ExternalLink className="w-4 h-4" />
+              </GlassButton>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
@@ -791,27 +1114,134 @@ export default function App() {
               </div>
 
               {/* Engineering Copy Column */}
-              <div className="lg:col-span-8 space-y-8 flex flex-col justify-start">
-                <div className="space-y-4">
-                  <h4 className="text-sm font-bold text-white border-b border-white/10 pb-2 flex items-center gap-2">
-                    <Cpu className="w-4 h-4 text-amber-400" /> Real-time System Telemetry
-                  </h4>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    A diagnostic utility tracking battery health, charging wattage, thermal status, and hardware profiles. Designed around native Android system receivers and Coroutine flows to provide efficient telemetry.
-                  </p>
+              <div className="lg:col-span-8 space-y-10">
+                {/* Core Engineering Highlights */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-bold text-amber-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <BatteryCharging className="w-4 h-4 text-amber-400" /> Fast-Charging Protocol Detection
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Engineered a hardware telemetry detector (<code className="text-[11px] font-mono text-slate-200">ChargingProtocolDetector</code>) that decodes raw kernel voltage/amperage profiles to identify 12+ proprietary charging standards including USB Power Delivery PPS, Qualcomm Quick Charge (QC), Samsung SFC, VOOC/SuperVOOC, and Mi HyperCharge.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-bold text-blue-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <Gauge className="w-4 h-4 text-blue-400" /> Multi-Tier Power &amp; Wattage Analytics
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Computes real-time wattage (<code className="text-[11px] font-mono text-slate-200">V × A</code>), microamperes (mA), and thermal dissipation, dynamically categorizing charging throughput across 7 speed classifications from Legacy 5W up to 240W Extreme Fast charging tiers with live health degradation indexing.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-bold text-purple-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <Cpu className="w-4 h-4 text-purple-400" /> Floating Telemetry HUD Overlay
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Architected a low-overhead foreground <code className="text-[11px] font-mono text-slate-200">TelemetryService</code> paired with a floating window manager overlay (<code className="text-[11px] font-mono text-slate-200">TelemetryOverlayHelper</code>) enabling real-time PiP FPS, battery drain, thermal throttling, and CPU frequency tracking over gaming and benchmarking sessions.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-bold text-emerald-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                      <Layers className="w-4 h-4 text-emerald-400" /> Modular Multi-Domain Repositories
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Structured across 8 specialized repositories (<span className="text-emerald-300 font-mono text-xs">Battery</span>, <span className="text-emerald-300 font-mono text-xs">CPU</span>, <span className="text-emerald-300 font-mono text-xs">Thermals</span>, <span className="text-emerald-300 font-mono text-xs">Display</span>, <span className="text-emerald-300 font-mono text-xs">Hardware</span>, <span className="text-emerald-300 font-mono text-xs">Memory/Storage</span>, <span className="text-emerald-300 font-mono text-xs">Network</span>) emitting immutable <code className="text-[11px] font-mono text-slate-200">StateFlow</code> streams to Compose ViewModels via Dagger Hilt (KSP).
+                    </p>
+                  </div>
                 </div>
 
+                {/* Engineering Results & Impact */}
                 <div className="space-y-4">
+                  <h4 className="text-xs font-mono text-emerald-400 uppercase tracking-widest border-b border-emerald-500/20 pb-2">
+                    Engineering Results &amp; Impact
+                  </h4>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5 text-xs text-slate-300">
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Real-time wattage, voltage, and mA telemetry sampled at sub-second intervals
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Accurate OEM fast-charging protocol detection (USB-PD PPS, QC, SFC, VOOC)
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Thermal throttling warning states (Safe, Warm, Hot, Thermal Limited)
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Low-overhead floating PiP overlay for live gaming and benchmark telemetry
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> TargetSdk 37 compilation with modern Android battery &amp; power APIs
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Custom Compose gauges, segmented progress bars, and vertical charge charts
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Telemetry Architecture Diagram */}
+                <div className="subtle-card p-6 rounded-2xl space-y-4 shadow-inner overflow-x-auto">
+                  <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Real-time System Telemetry Engine
+                  </div>
+
+                  <div className="flex flex-col items-center gap-2 font-mono text-xs min-w-[340px]">
+                    <div className="w-full grid grid-cols-3 gap-2">
+                      <div className="p-2 rounded-lg border border-amber-500/30 bg-amber-500/10 text-center text-amber-200">
+                        <span className="font-bold block">BatteryManager</span>
+                        <span className="text-[9px] text-amber-400/80">Volts / Amps / Temp</span>
+                      </div>
+                      <div className="p-2 rounded-lg border border-blue-500/30 bg-blue-500/10 text-center text-blue-200">
+                        <span className="font-bold block">Power &amp; Thermals</span>
+                        <span className="text-[9px] text-blue-400/80">Throttling Status</span>
+                      </div>
+                      <div className="p-2 rounded-lg border border-purple-500/30 bg-purple-500/10 text-center text-purple-200">
+                        <span className="font-bold block">CPU &amp; Memory</span>
+                        <span className="text-[9px] text-purple-400/80">Frequency / RAM</span>
+                      </div>
+                    </div>
+
+                    <div className="text-slate-600 text-xs">↓ Foreground TelemetryService (Off-Thread Coroutines) ↓</div>
+
+                    <div className="w-72 p-2.5 rounded-lg border border-indigo-500/30 bg-indigo-500/10 text-center text-indigo-200">
+                      <div className="font-bold">StateFlow Telemetry Streams</div>
+                      <span className="text-[9px] text-indigo-400/80 block">Immutable Multi-Domain Repository Layer</span>
+                    </div>
+
+                    <div className="w-full flex justify-center text-slate-600 gap-24 sm:gap-32 px-4">
+                      <span className="text-lg">↙</span>
+                      <span className="text-lg">↘</span>
+                    </div>
+
+                    <div className="w-full grid grid-cols-2 gap-4">
+                      <div className="p-2.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-center text-emerald-200 flex flex-col items-center">
+                        <span className="font-bold">Compose Material 3 Dashboard</span>
+                        <span className="text-[9px] text-emerald-400/70 mt-1 uppercase">Advanced Gauges &amp; Charts</span>
+                      </div>
+                      <div className="p-2.5 rounded-lg border border-cyan-500/30 bg-cyan-500/10 text-center text-cyan-200 flex flex-col items-center">
+                        <span className="font-bold">Floating Diagnostic HUD</span>
+                        <span className="text-[9px] text-cyan-400/70 mt-1 uppercase">WindowManager PiP Overlay</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Tech Badges */}
+                <div className="space-y-3 pt-2">
                   <h4 className="text-xs font-mono text-amber-400 uppercase tracking-widest border-b border-amber-500/20 pb-2">
-                    System Integration APIs
+                    Core Technologies &amp; Libraries
                   </h4>
                   <div className="flex flex-wrap items-center gap-2 font-mono text-[10px] text-slate-300">
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Kotlin</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Jetpack Compose (BOM)</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Material 3</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Dagger Hilt (KSP)</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Navigation Compose</span>
                     <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">BatteryManager</span>
                     <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">PowerManager</span>
                     <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Thermal APIs</span>
-                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">Build / Hardware APIs</span>
-                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">BroadcastReceiver</span>
-                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">StateFlow</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">WindowManager Overlay</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">BroadcastReceivers</span>
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">StateFlow &amp; Coroutines</span>
                   </div>
                 </div>
               </div>
@@ -829,80 +1259,195 @@ export default function App() {
             {/* Timeline Line */}
             <div className="hidden md:block absolute left-[120px] top-2 bottom-2 w-[1px] bg-white/10 z-0"></div>
 
-            <div className="relative z-10">
+            <div className="relative z-10 space-y-12">
+              {/* 01: X-YUG Technology (Current Role) */}
+              <div className="flex flex-col md:flex-row md:gap-12">
+                <div className="md:w-[120px] shrink-0 pt-2 pb-4 md:pb-0 font-mono text-xs text-slate-400 md:text-right relative">
+                  {/* Timeline Dot */}
+                  <div className="hidden md:block absolute right-[-5px] top-2.5 w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.9)] z-10"></div>
+                  <div>Sept 2026 —<br className="hidden md:inline" /> Present</div>
+                  <div className="text-[11px] text-emerald-400 font-mono mt-0.5 flex items-center md:justify-end gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Current
+                  </div>
+                </div>
+
+                <div className="subtle-card rounded-3xl p-6 sm:p-8 flex-grow space-y-8 border-t-2 border-t-emerald-500/50" data-aos="fade-left">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-5">
+                    <div>
+                      <h3 className="text-xl sm:text-2xl font-extrabold text-white">Android Developer</h3>
+                      <div className="text-xs sm:text-sm text-emerald-400 font-medium font-mono mt-0.5 flex flex-wrap items-center gap-2">
+                        <span>X-YUG Technology</span>
+                        <span className="text-slate-500">•</span>
+                        <span className="text-slate-300 font-semibold">Dealshot (OTT Platform)</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-[11px] font-mono text-emerald-300 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/30 flex items-center gap-1.5 shadow-[0_0_12px_rgba(52,211,153,0.15)]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Sept 2026 – Present (Current)
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Tech Stack */}
+                  <div className="space-y-2.5">
+                    <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <Layers className="w-3.5 h-3.5 text-emerald-400" /> Tech Stack
+                    </div>
+                    <div className="flex flex-wrap gap-1.5 font-mono text-[11px]">
+                      {[
+                        'Kotlin',
+                        'Jetpack Compose',
+                        'ExoPlayer',
+                        'Dagger Hilt',
+                        'Retrofit & OkHttp',
+                        'Coroutines & Flow',
+                        'Clean Architecture',
+                        'MVVM / MVI',
+                        'Room DB',
+                        'Material 3',
+                      ].map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2.5 py-1 bg-white/5 text-slate-300 rounded-lg border border-white/10 hover:border-emerald-500/30 transition-colors"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Key Contributions */}
+                  <div className="space-y-4 pt-2">
+                    <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-400" /> Key Engineering Focus — Dealshot OTT Platform
+                    </div>
+
+                    <ul className="space-y-3.5 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 shrink-0 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+                        <span>
+                          Architecting core streaming features for <strong className="text-white font-semibold">Dealshot</strong>, an OTT entertainment platform, integrating <strong className="text-white font-semibold">ExoPlayer</strong> for seamless, high-performance media playback, dynamic buffer configuration, and adaptive bitrate streaming.
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 shrink-0 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+                        <span>
+                          Engineered a precision <strong className="text-white font-semibold">preview restriction and content-gating engine</strong>, enforcing time-capped preview windows and subscription paywall prompts for unauthorized or trial sessions.
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 shrink-0 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+                        <span>
+                          Constructed intuitive, modern <strong className="text-white font-semibold">Login and Profile screens</strong> in <strong className="text-white font-semibold">Jetpack Compose</strong>, implementing secure token management, session persistence, and smooth state animations.
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 shrink-0 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+                        <span>
+                          Designed resilient REST API client pipelines with <strong className="text-white font-semibold">Retrofit &amp; OkHttp</strong>, injecting repositories and use cases seamlessly across the app using <strong className="text-white font-semibold">Dagger Hilt</strong>.
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 shrink-0 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+                        <span>
+                          Established a decoupled presentation layer following <strong className="text-white font-semibold">Clean Architecture &amp; MVVM</strong>, using <strong className="text-white font-semibold">Kotlin Coroutines, StateFlow, and SharedFlow</strong> for deterministic unidirectional data flow.
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* 02: Survey Heart */}
               <div className="flex flex-col md:flex-row md:gap-12">
                 <div className="md:w-[120px] shrink-0 pt-2 pb-4 md:pb-0 font-mono text-xs text-slate-400 md:text-right relative">
                   {/* Timeline Dot */}
                   <div className="hidden md:block absolute right-[-5px] top-2.5 w-2.5 h-2.5 rounded-full bg-purple-500 shadow-[0_0_12px_rgba(168,85,247,0.8)] z-10"></div>
-                  2022 — 2024
+                  <div>Sept 2022 —<br className="hidden md:inline" /> Nov 2024</div>
+                  <div className="text-[11px] text-purple-400/90 font-mono mt-0.5">2.4 years</div>
                 </div>
 
                 <div className="subtle-card rounded-3xl p-6 sm:p-8 flex-grow space-y-8" data-aos="fade-left">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-5">
                     <div>
-                      <h3 className="text-xl font-extrabold text-white">Junior Android Developer</h3>
-                      <div className="text-xs sm:text-sm text-purple-400 font-medium font-mono">Survey Heart (Android, iOS & Web)</div>
+                      <h3 className="text-xl sm:text-2xl font-extrabold text-white">Junior Android Developer</h3>
+                      <div className="text-xs sm:text-sm text-purple-400 font-medium font-mono mt-0.5">
+                        Survey Heart – Android, iOS &amp; Web
+                      </div>
                     </div>
-                    <span className="text-[10px] font-mono text-slate-400 bg-white/5 px-2.5 py-1 rounded-md border border-white/10 w-max">
-                      Mobile & Cloud Engineering
-                    </span>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-[11px] font-mono text-purple-300 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">
+                        Sept 2022 – Nov 2024 (2.4 years)
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="space-y-8">
-                    {/* Achievement 1 */}
-                    <div className="space-y-2">
-                      <div className="text-[10px] font-mono text-blue-400 uppercase tracking-wider">Cloud Storage Pipeline</div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-                        <div className="text-slate-400 font-medium">Problem</div>
-                        <div className="md:col-span-2 text-slate-300 leading-relaxed">
-                          Users lacked a way to manage AWS-hosted image files directly from the mobile app.
-                        </div>
-                        <div className="text-slate-400 font-medium">Decision</div>
-                        <div className="md:col-span-2 text-slate-300 leading-relaxed">
-                          Developed a custom storage manager integrating MongoDB and custom backend APIs.
-                        </div>
-                        <div className="text-slate-400 font-medium">Result</div>
-                        <div className="md:col-span-2 text-emerald-400 font-medium">
-                          Seamless file management and viewing within the application lifecycle.
-                        </div>
-                      </div>
+                  {/* Tech Stack */}
+                  <div className="space-y-2.5">
+                    <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <Layers className="w-3.5 h-3.5 text-purple-400" /> Tech Stack
+                    </div>
+                    <div className="flex flex-wrap gap-1.5 font-mono text-[11px]">
+                      {[
+                        'Kotlin',
+                        'Coroutines',
+                        'XML',
+                        'MVVM',
+                        'Room DB',
+                        'Realm DB',
+                        'Retrofit',
+                        'WorkManager',
+                        'Firebase Crashlytics',
+                        'Espresso',
+                      ].map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2.5 py-1 bg-white/5 text-slate-300 rounded-lg border border-white/10 hover:border-purple-500/30 transition-colors"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Key Contributions */}
+                  <div className="space-y-4 pt-2">
+                    <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-purple-400" /> Key Engineering Contributions
                     </div>
 
-                    {/* Achievement 2 */}
-                    <div className="space-y-2">
-                      <div className="text-[10px] font-mono text-blue-400 uppercase tracking-wider">Background Download Pipeline</div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-                        <div className="text-slate-400 font-medium">Problem</div>
-                        <div className="md:col-span-2 text-slate-300 leading-relaxed">
-                          Large files could outlive the UI lifecycle, causing interrupted downloads.
-                        </div>
-                        <div className="text-slate-400 font-medium">Decision</div>
-                        <div className="md:col-span-2 text-slate-300 leading-relaxed">
-                          Moved downloads into a WorkManager + DownloadManager pipeline with retry and persistent progress.
-                        </div>
-                        <div className="text-slate-400 font-medium">Result</div>
-                        <div className="md:col-span-2 text-emerald-400 font-medium">
-                          Downloads remained resilient across configuration changes and app lifecycle transitions.
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Achievement 3 */}
-                    <div className="space-y-2">
-                      <div className="text-[10px] font-mono text-blue-400 uppercase tracking-wider">Database Architecture</div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-                        <div className="text-slate-400 font-medium">Problem</div>
-                        <div className="md:col-span-2 text-slate-300 leading-relaxed">
-                          Need for reactive, cross-platform local data access for complex models.
-                        </div>
-                        <div className="text-slate-400 font-medium">Decision</div>
-                        <div className="md:col-span-2 text-slate-300 leading-relaxed">Migrated persistence layer from Room to Realm DB.</div>
-                        <div className="text-slate-400 font-medium">Result</div>
-                        <div className="md:col-span-2 text-emerald-400 font-medium">
-                          Achieved consistent reactive data flow across the Android and iOS implementations.
-                        </div>
-                      </div>
-                    </div>
+                    <ul className="space-y-3.5 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 shrink-0 shadow-[0_0_8px_rgba(168,85,247,0.8)]"></span>
+                        <span>
+                          Designed an interactive <strong className="text-white font-semibold">'Spotlight'</strong> onboarding feature to highlight new application capabilities, integrating targeted YouTube video redirects to improve feature discovery and user adoption.
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 shrink-0 shadow-[0_0_8px_rgba(168,85,247,0.8)]"></span>
+                        <span>
+                          Developed a comprehensive <strong className="text-white font-semibold">cloud storage management system</strong> integrating a custom backend API and MongoDB, enabling users to seamlessly view and delete their uploaded image files hosted on AWS.
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 shrink-0 shadow-[0_0_8px_rgba(168,85,247,0.8)]"></span>
+                        <span>
+                          Contributed to a major architectural shift by assisting in the <strong className="text-white font-semibold">database migration from Room to Realm DB</strong>, improving cross-platform data handling and query performance.
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 shrink-0 shadow-[0_0_8px_rgba(168,85,247,0.8)]"></span>
+                        <span>
+                          Engineered with a resilient <strong className="text-white font-semibold">background download pipeline</strong> using DownloadManager, WorkManager, and Coroutines, ensuring the seamless and uninterrupted retrieval of large files without blocking the main thread.
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 shrink-0 shadow-[0_0_8px_rgba(168,85,247,0.8)]"></span>
+                        <span>
+                          Accelerated bug resolution by integrating <strong className="text-white font-semibold">Firebase Crashlytics</strong> with a custom post-crash feedback system, allowing users to attach screen recordings and comments upon relaunch.
+                        </span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
